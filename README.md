@@ -13,3 +13,10 @@ _Small Shop Module for CMS Ilch 2_
 
 ### Links
 - **[Ilch.de - Website](https://www.ilch.de)**  |  **[Ilch - 2 CMS](https://github.com/IlchCMS/Ilch-2.0/releases/latest)**  |  **[Ilch 2 - Wiki](https://github.com/IlchCMS/Ilch-2.0/wiki)**
+
+***
+![Logo](https://github.com/LordSchirmer/Ilch2_Shop/blob/main/application/modules/media/static/upload/img/shop.jpg)
+![Logo](https://github.com/LordSchirmer/Ilch2_Shop/blob/main/application/modules/media/static/upload/img/basket.jpg)
+![Logo](https://github.com/LordSchirmer/Ilch2_Shop/blob/main/application/modules/media/static/upload/img/admin_view.jpg)
+![Logo](https://github.com/LordSchirmer/Ilch2_Shop/blob/main/application/modules/media/static/upload/img/org_order.jpg)
+![Logo](https://github.com/LordSchirmer/Ilch2_Shop/blob/main/application/modules/media/static/upload/img/bill.jpg)
