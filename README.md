@@ -1,4 +1,4 @@
-# Ilch2_Gameserver-View
+# Ilch2_Shop
 _Small Shop Module for CMS Ilch 2_
 
 ### Installation
