@@ -190,9 +190,19 @@ class Config extends \Ilch\Config\Install
                     (3, "2020-04-25 11:51:36", "Bernd", "Mustermann", "Musterstr. 13", 56789, "Musterdorf", "Deutschland", "bernd@mustermann.de", "{\'rawcaporange_1587485061\':{\'id\':4,\'code\':\'rawcaporange_1587485061\',\'quantity\':\'1\'},\'rawcapblack_1587485064\':{\'id\':5,\'code\':\'rawcapblack_1587485064\',\'quantity\':\'2\'},\'rawcapblau_1587485067\':{\'id\':6,\'code\':\'rawcapblau_1587485067\',\'quantity\':\'1\'}}", 1),
                     (4, "2020-04-26 09:54:38", "Ingrid", "Musterfrau", "Musterstr. 7", 34567, "Musterort", "Deutschland", "ingrid@musterfrau.de", "{\'sporttasche_1587485069\':{\'id\':7,\'code\':\'sporttasche_1587485069\',\'quantity\':\'5\'}}", 0);
 
-/***   example entries   ***/
-                
-                ';
+            INSERT INTO `[prefix]_emails` (`moduleKey`, `type`, `desc`, `text`, `locale`) VALUES
+                ("shop", "order_confirmed_mail", "Bestellung eingegangen", "<p>Sehr geehrte(r) Herr oder Frau <b>{name}</b>,</p>
+                    <p>&nbsp;</p>
+                    <p>Ihre Bestellung auf <i>{shopname}</i> ist eingegangen.
+                    <p>&nbsp;</p>
+                    <p>Mit freundlichen Gr&uuml;&szlig;en</p>
+                    <p>Administrator</p>", "de_DE"),
+                ("shop", "order_confirmed_mail", "Order received", "<p>Dear Sir or Madam <b>{name}</b>,</p>
+                    <p>&nbsp;</p>
+                    <p>your order at <i>{shopname}</i> has been received.
+                    <p>&nbsp;</p>
+                    <p>Best regards</p>
+                    <p>Administrator</p>", "en_EN");';
     }
 
     public function getUpdate($installedVersion)

@@ -192,7 +192,7 @@ return [
     'totalPrice' => 'Gesamtsumme',
     'visibleFor' => 'Sichtbar für',
     'visibility' => 'Sichtbarkeit',
-    'withTax' => 'incl. USt.',
+    'withTax' => 'inkl. USt.',
     'withoutTax' => 'ohne USt.',
     'yellow' => 'Gelb',
 ];

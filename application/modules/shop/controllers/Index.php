@@ -6,6 +6,7 @@
 
 namespace Modules\Shop\Controllers;
 
+use Modules\Admin\Mappers\Emails as EmailsMapper;
 use Modules\Shop\Mappers\Category as CategoryMapper;
 use Modules\Shop\Mappers\Currency as CurrencyMapper;
 use Modules\Shop\Mappers\Items as ItemsMapper;
@@ -125,9 +126,11 @@ class Index extends \Ilch\Controller\Frontend
 
     public function orderAction()
     {
+        $emailsMapper = new EmailsMapper();
         $currencyMapper = new CurrencyMapper();
         $itemsMapper = new ItemsMapper();
         $ordersMapper = new OrdersMapper;
+        $settingsMapper = new SettingsMapper();
         $ilchDate = new \Ilch\Date;
         $captchaNeeded = captchaNeeded();
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
@@ -171,6 +174,38 @@ class Index extends \Ilch\Controller\Frontend
                 foreach ($arrayOrder as $product) {
                     $itemsMapper->updateStock($product["id"], $product["quantity"]);
                 }
+
+                // Send confirmation email.
+                $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
+                $date = new \Ilch\Date();
+                $mailContent = $emailsMapper->getEmail('shop', 'order_confirmed_mail', $this->getTranslator()->getLocale());
+                $name = $this->getLayout()->escape($model->getLastname());
+
+                $layout = $_SESSION['layout'] ?? '';
+
+                if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/shop/layouts/mail/orderconfirmed.php')) {
+                    $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/shop/layouts/mail/orderconfirmed.php');
+                } else {
+                    $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/shop/layouts/mail/orderconfirmed.php');
+                }
+                $messageReplace = [
+                    '{content}' => $this->getLayout()->purify($mailContent->getText()),
+                    '{shopname}' => $this->getLayout()->escape($settingsMapper->getSettings()->getShopName()),
+                    '{date}' => $date->format('l, d. F Y', true),
+                    '{name}' => $name,
+                    '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
+                ];
+                $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
+
+                $mail = new \Ilch\Mail();
+                $mail->setFromName($siteTitle)
+                    ->setFromEmail($this->getConfig()->get('standardMail'))
+                    ->setToName($name)
+                    ->setToEmail($this->getRequest()->getPost('email'))
+                    ->setSubject($this->getLayout()->purify($mailContent->getDesc()))
+                    ->setMessage($message)
+                    ->send();
+
                 $this->redirect()
                     ->to(['action' => 'success']);
             } else {

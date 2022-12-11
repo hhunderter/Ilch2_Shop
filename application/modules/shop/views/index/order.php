@@ -304,7 +304,7 @@ if(!empty($_SESSION["shopping_cart"])) {
                     <a class="btn btn-default" href="<?=$this->getUrl('shop/index/cart') ?>#shopAnker">
                         <i class="fas fa-shopping-basket"></i> <?=$this->getTrans('menuCart') ?>
                     </a>
-                    <a class="btn btn-default" href="<?=$this->getUrl('shop/index/agb') ?>#shopAnker">
+                    <a class="btn btn-default" href="<?=$this->getUrl('shop/index/agb') ?>#shopAnker" target="_blank">
                         <i class="fas fa-gavel"></i> <?=$this->getTrans('menuAGB') ?>
                     </a>
                 </div>
