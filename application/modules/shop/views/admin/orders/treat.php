@@ -1,6 +1,7 @@
 <link href="<?=$this->getModuleUrl('static/css/shop_admin.css') ?>" rel="stylesheet">
 <?php
-$itemsMapper = $this->get('itemsMapper'); 
+$itemsMapper = $this->get('itemsMapper');
+$ordersMapper = $this->get('ordersMapper');
 $settingsMapper = $this->get('settingsMapper'); 
 ?>
 <?php if ($this->get('order') != ''): ?>
@@ -213,12 +214,21 @@ $settingsMapper = $this->get('settingsMapper');
                 <td>
                     <form class="form-horizontal" method="POST" action="">
                         <?php
+                        $invoiceFilename = '';
                         $nameInvoice = utf8_decode($this->getTrans('invoice'));
                         $shopInvoicePath = '/application/modules/shop/static/invoice/';
-                        $file_location = ROOT_PATH.$shopInvoicePath.$nameInvoice.'_'.$invoiceNr.'.pdf';
-                        $file_show = BASE_URL.$shopInvoicePath.$nameInvoice.'_'.$invoiceNr.'.pdf';
+
+                        if (empty($order->getInvoiceFIlename())) {
+                            $hash = bin2hex(random_bytes(32));
+                            $invoiceFilename = $nameInvoice.'_'.$invoiceNr.'_'.$hash;
+                        } else {
+                            $invoiceFilename = $order->getInvoiceFIlename();
+                        }
+
+                        $file_location = ROOT_PATH.$shopInvoicePath.$invoiceFilename.'.pdf';
+                        $file_show = BASE_URL.$shopInvoicePath.$invoiceFilename.'.pdf';
                         if (file_exists($file_location)) { ?>
-                            <a href="<?=$file_show ?>" target="_blank" class="btn btn-sm alert-success">
+                            <a href="<?=$this->getUrl(['action' => 'download', 'id' => $order->getId()], null, true) ?>" target="_blank" class="btn btn-sm alert-success">
                                 <i class="fas fa-file-pdf" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('showPDF') ?>
                             </a>
                             <button type="submit" name="PDF" value="delete" class="btn btn-sm alert-danger">
@@ -414,9 +424,9 @@ $settingsMapper = $this->get('settingsMapper');
         $pdf = new PDF('P','mm','A4');
         // data
         if ($settingsMapper->getSettings()->getShopLogo() && file_exists(ROOT_PATH.'/'.$settingsMapper->getSettings()->getShopLogo())) {
-            $pdf->shopLogo = BASE_URL.'/'.$settingsMapper->getSettings()->getShopLogo();
+            $pdf->shopLogo = ROOT_PATH.'/'.$settingsMapper->getSettings()->getShopLogo();
         } else {
-            $pdf->shopLogo = BASE_URL.'/application/modules/shop/static/img/empty.jpg';
+            $pdf->shopLogo = ROOT_PATH.'/application/modules/shop/static/img/empty.jpg';
         }
         $pdf->nameDateInvoice = utf8_decode($this->getTrans('dateOfInvoice'));
         $pdf->DateInvoice = $dateInvoice = date("d.m.Y", time());
@@ -491,9 +501,14 @@ $settingsMapper = $this->get('settingsMapper');
         $pdf->SetCreator('Shop-Modul by ilch.de');
         $pdf->SetKeywords($nameInvoice.', '.$nameOrder);
         $pdf->Output($file_location,'F');
+
+        $order->setInvoiceFilename($invoiceFilename);
+        $ordersMapper->save($order);
         header('Location: '.$order->getId());
         exit();
     } elseif (isset($_POST['PDF']) && $_POST['PDF'] == 'delete') {
+        $order->setInvoiceFilename('');
+        $ordersMapper->save($order);
         unlink($file_location);
         header('Location: '.$order->getId());
         exit();

@@ -115,23 +115,19 @@ class Orders extends \Ilch\Controller\Admin
         $ordersMapper = new OrdersMapper();
         $settingsMapper = new SettingsMapper();
 
+        $this->getLayout()->getAdminHmenu()
+            ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuOrders'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('manage'), ['action' => 'treat', 'id' => 'treat']);
+
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
 
         if ($this->getRequest()->getParam('id')) {
-            $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuOrders'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('manage'), ['action' => 'treat', 'id' => 'treat']);
-
             $this->getView()->set('order', $ordersMapper->getOrdersById($this->getRequest()->getParam('id')));
             $this->getView()->set('currency', $currency->getName());
             $this->getView()->set('itemsMapper', $itemsMapper);
+            $this->getView()->set('ordersMapper', $ordersMapper);
             $this->getView()->set('settingsMapper', $settingsMapper);
-        } else {
-            $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuOrders'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('manage'), ['action' => 'treat', 'id' => 'treat']);
         }
 
         if ($this->getRequest()->isPost()) {
@@ -145,7 +141,6 @@ class Orders extends \Ilch\Controller\Admin
             }
 
             if ($this->getRequest()->getPost('delete') == 1) {
-                $ordersMapper = new OrdersMapper();
                 if ($ordersMapper->getOrdersById($this->getRequest()->getParam('id'))->getStatus() == 0 || $ordersMapper->getOrdersById($this->getRequest()->getParam('id'))->getStatus() == 1) {
                     $this->addMessage('orderInUse', 'danger');
                 } else {
@@ -155,6 +150,47 @@ class Orders extends \Ilch\Controller\Admin
                 }
             }
         }
+    }
+
+    public function downloadAction()
+    {
+        if (!$this->getRequest()->isSecure()) {
+            return;
+        }
+
+        set_time_limit(0);
+        $shopInvoicePath = ROOT_PATH.'/application/modules/shop/static/invoice/';
+
+        $id = $this->getRequest()->getParam('id');
+
+        if (!empty($id)) {
+            $ordersMapper = new OrdersMapper();
+            $order = $ordersMapper->getOrdersById($id);
+
+            if ($order !== null) {
+                $fullPath = $shopInvoicePath.$order->getInvoiceFilename().'.pdf';
+                if ($fd = fopen($fullPath, 'rb')) {
+                    $path_parts = pathinfo($fullPath);
+                    // Remove the random part of the filename as it should not end in e.g. the browser history.
+                    $publicFileName = preg_replace('/_[^_.]*\./', '.', $path_parts['basename']);
+
+                    header('Content-type: application/pdf');
+                    header('Content-Disposition: filename="' .$publicFileName. '"');
+                    header('Content-length: ' .filesize($fullPath));
+                    // RFC2616 section 14.9.1: Indicates that all or part of the response message is intended for a single user and MUST NOT be cached by a shared cache, such as a proxy server.
+                    header('Cache-control: private');
+                    while(!feof($fd)) {
+                        $buffer = fread($fd, 2048);
+                        echo $buffer;
+                    }
+                } else {
+                    $this->addMessage('invoiceNotFound', 'danger');
+                }
+                fclose($fd);
+            }
+        }
+
+        $this->redirect(['controller' => 'orders', 'action' => 'treat', 'id' => $id]);
     }
 
     public function delOrderAction()
@@ -170,5 +206,4 @@ class Orders extends \Ilch\Controller\Admin
         }
         $this->redirect(['action' => 'index']);
     }
-
 }

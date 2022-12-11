@@ -42,6 +42,7 @@ class Orders extends \Ilch\Mapper
             $orderModel->setCountry($orderRow['country']);
             $orderModel->setEmail($orderRow['email']);
             $orderModel->setOrder($orderRow['order']);
+            $orderModel->setInvoiceFilename($orderRow['invoicefilename']);
             $orderModel->setStatus($orderRow['status']);
 
             $orders[] = $orderModel;
@@ -65,7 +66,7 @@ class Orders extends \Ilch\Mapper
     /**
      * Inserts or updates order model.
      *
-     * @param OrdersModel $shop
+     * @param OrdersModel $order
      */
     public function save(OrdersModel $order)
     {
@@ -79,6 +80,7 @@ class Orders extends \Ilch\Mapper
             'country' => $order->getCountry(),
             'email' => $order->getEmail(),
             'order' => $order->getOrder(),
+            'invoicefilename' => $order->getInvoiceFilename(),
             'status' => $order->getStatus(),  
         ];
 
@@ -97,7 +99,7 @@ class Orders extends \Ilch\Mapper
     /**
      * Inserts or updates order status.
      *
-     * @param OrdersModel $shop
+     * @param OrdersModel $order
      */
     public function updateStatus(OrdersModel $order)
     {

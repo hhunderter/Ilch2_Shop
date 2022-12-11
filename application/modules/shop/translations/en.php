@@ -179,6 +179,7 @@ return [
     'shortInfo' => 'Short information',
     'show' => 'Show',
     'showPDF' => 'SHOW PDF',
+    'invoiceNotFound' => 'Invoice not found.',
     'singlePrice' => 'Unit price',
     'site' => 'Page',
     'status' => 'Status',

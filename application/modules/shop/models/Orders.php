@@ -79,6 +79,13 @@ class Orders extends \Ilch\Model
     protected $order;
 
     /**
+     * The filename of the invoice.
+     *
+     * @var string
+     */
+    protected $invoicefilename;
+
+    /**
      * The status of the order.
      *
      * @var integer
@@ -300,6 +307,29 @@ class Orders extends \Ilch\Model
     public function getOrder()
     {
         return $this->order;
+    }
+
+    /**
+     * Gets the filename of the invoice.
+     *
+     * @return string
+     */
+    public function getInvoiceFilename()
+    {
+        return $this->invoicefilename;
+    }
+
+    /**
+     * Sets the filename of the invoice.
+     *
+     * @param string $invoicefilename
+     * @return this
+     */
+    public function setInvoiceFilename($invoicefilename)
+    {
+        $this->invoicefilename = (string)$invoicefilename;
+
+        return $this;
     }
 
     /**

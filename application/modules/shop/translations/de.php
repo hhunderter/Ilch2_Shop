@@ -179,6 +179,7 @@ return [
     'shortInfo' => 'Kurzinformation',
     'show' => 'Anzeigen',
     'showPDF' => 'PDF ANZEIGEN',
+    'invoiceNotFound' => 'Rechnung nicht gefunden.',
     'singlePrice' => 'Einzelpreis',
     'site' => 'Seite',
     'status' => 'Status',
