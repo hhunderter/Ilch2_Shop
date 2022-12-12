@@ -6,6 +6,7 @@
 
 namespace Modules\Shop\Controllers\Admin;
 
+use Modules\Admin\Mappers\Emails as EmailsMapper;
 use Modules\Shop\Mappers\Currency as CurrencyMapper;
 use Modules\Shop\Mappers\Items as ItemsMapper;
 use Modules\Shop\Mappers\Orders as OrdersMapper;
@@ -190,6 +191,62 @@ class Orders extends \Ilch\Controller\Admin
             }
         }
 
+        $this->redirect(['controller' => 'orders', 'action' => 'treat', 'id' => $id]);
+    }
+
+    public function sendInvoiceAction()
+    {
+        if (!$this->getRequest()->isSecure()) {
+            return;
+        }
+
+        $emailsMapper = new EmailsMapper();
+        $orderMapper = new OrdersMapper();
+        $settingsMapper = new SettingsMapper();
+
+        $id = $this->getRequest()->getParam('id');
+        $order = $orderMapper->getOrdersById($id);
+        $shopInvoicePath = '/application/modules/shop/static/invoice/';
+        $pathInvoice = ROOT_PATH.$shopInvoicePath.$order->getInvoiceFilename().'.pdf';
+        $path_parts = pathinfo($pathInvoice);
+        $publicFileNameInvoice = preg_replace('/_[^_.]*\./', '.', $path_parts['basename']);
+
+        // Send invoice to customer.
+        $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
+        $date = new \Ilch\Date();
+        $mailContent = $emailsMapper->getEmail('shop', 'send_invoice_mail', $this->getTranslator()->getLocale());
+        $name = $this->getLayout()->escape($order->getLastname());
+
+        $layout = $_SESSION['layout'] ?? '';
+
+        if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/shop/layouts/mail/sendinvoice.php')) {
+            $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/shop/layouts/mail/sendinvoice.php');
+        } else {
+            $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/shop/layouts/mail/sendinvoice.php');
+        }
+        $messageReplace = [
+            '{content}' => $this->getLayout()->purify($mailContent->getText()),
+            '{shopname}' => $this->getLayout()->escape($settingsMapper->getSettings()->getShopName()),
+            '{date}' => $date->format('l, d. F Y', true),
+            '{name}' => $name,
+            '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
+        ];
+        $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
+
+        $mail = new \Ilch\Mail();
+        $mail->setFromName($siteTitle)
+            ->setFromEmail($this->getConfig()->get('standardMail'))
+            ->setToName($name)
+            ->setToEmail($order->getEmail())
+            ->setSubject($this->getLayout()->purify($mailContent->getDesc()))
+            ->setMessage($message)
+            ->addAttachment($pathInvoice, $publicFileNameInvoice)
+            ->send();
+
+        $order->setDatetimeInvoiceSent(new \Ilch\Date('now', $this->getConfig()->get('timezone')));
+        $orderMapper->save($order);
+
+        $this->addMessage('sendInvoiceSuccess');
         $this->redirect(['controller' => 'orders', 'action' => 'treat', 'id' => $id]);
     }
 

@@ -86,6 +86,13 @@ class Orders extends \Ilch\Model
     protected $invoicefilename;
 
     /**
+     * The datetime when the invoice was sent to the costumer.
+     *
+     * @var string
+     */
+    protected $datetimeInvoiceSent;
+
+    /**
      * The status of the order.
      *
      * @var integer
@@ -310,6 +317,19 @@ class Orders extends \Ilch\Model
     }
 
     /**
+     * Sets the orderarray of the order.
+     *
+     * @param array $order
+     * @return this
+     */
+    public function setOrder($order)
+    {
+        $this->order = (string)$order;
+
+        return $this;
+    }
+
+    /**
      * Gets the filename of the invoice.
      *
      * @return string
@@ -333,14 +353,24 @@ class Orders extends \Ilch\Model
     }
 
     /**
-     * Sets the orderarray of the order.
+     * Gets the datetime when the invoice was sent to the costumer.
      *
-     * @param array $order
+     * @return string
+     */
+    public function getDatetimeInvoiceSent()
+    {
+        return $this->datetimeInvoiceSent;
+    }
+
+    /**
+     * Sets the datetime when the invoice was sent to the costumer.
+     *
+     * @param string $datetimeInvoiceSent
      * @return this
      */
-    public function setOrder($order)
+    public function setDatetimeInvoiceSent($datetimeInvoiceSent)
     {
-        $this->order = (string)$order;
+        $this->datetimeInvoiceSent = (string)$datetimeInvoiceSent;
 
         return $this;
     }

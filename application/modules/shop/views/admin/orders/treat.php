@@ -212,6 +212,9 @@ $settingsMapper = $this->get('settingsMapper');
             </tr>
             <tr>
                 <td>
+                    <?php if ($order->getDateTimeInvoiceSent() != '0000-00-00 00:00:00') : ?>
+                        <p><?=$this->getTrans('invoiceLastSent').$order->getDateTimeInvoiceSent() ?></p>
+                    <?php endif ?>
                     <form class="form-horizontal" method="POST" action="">
                         <?php
                         $invoiceFilename = '';
@@ -230,6 +233,9 @@ $settingsMapper = $this->get('settingsMapper');
                         if (file_exists($file_location)) { ?>
                             <a href="<?=$this->getUrl(['action' => 'download', 'id' => $order->getId()], null, true) ?>" target="_blank" class="btn btn-sm alert-success">
                                 <i class="fas fa-file-pdf" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('showPDF') ?>
+                            </a>
+                            <a href="<?=$this->getUrl(['action' => 'sendInvoice', 'id' => $order->getId()], null, true) ?>" class="btn btn-sm alert-success">
+                                <i class="fas fa-file-pdf" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('sendInvoice') ?>
                             </a>
                             <button type="submit" name="PDF" value="delete" class="btn btn-sm alert-danger">
                                 <i class="fas fa-minus-square" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('deletePDF') ?>

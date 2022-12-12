@@ -43,6 +43,7 @@ class Orders extends \Ilch\Mapper
             $orderModel->setEmail($orderRow['email']);
             $orderModel->setOrder($orderRow['order']);
             $orderModel->setInvoiceFilename($orderRow['invoicefilename']);
+            $orderModel->setDatetimeInvoiceSent($orderRow['datetimeInvoiceSent']);
             $orderModel->setStatus($orderRow['status']);
 
             $orders[] = $orderModel;
@@ -81,7 +82,8 @@ class Orders extends \Ilch\Mapper
             'email' => $order->getEmail(),
             'order' => $order->getOrder(),
             'invoicefilename' => $order->getInvoiceFilename(),
-            'status' => $order->getStatus(),  
+            'datetimeInvoiceSent' => $order->getDatetimeInvoiceSent(),
+            'status' => $order->getStatus(),
         ];
 
         if ($order->getId()) {
