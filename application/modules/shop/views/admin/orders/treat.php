@@ -251,6 +251,7 @@ $settingsMapper = $this->get('settingsMapper');
             <tr>
                 <th><?=$this->getTrans('delOrder') ?></th>
             </tr>
+            <tr>
                 <td>
                     <div class="btn-group btn-group-sm">
                         <button type="submit" name="delete" value="1" class="btn btn-sm alert-default delete_button">

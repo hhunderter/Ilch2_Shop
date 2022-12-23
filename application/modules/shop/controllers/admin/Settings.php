@@ -7,7 +7,6 @@
 namespace Modules\Shop\Controllers\Admin;
 
 use Modules\Shop\Mappers\Currency as CurrencyMapper;
-use Modules\Shop\Models\Currency as CurrencyModel;
 use Modules\Shop\Mappers\Settings as SettingsMapper;
 use Modules\Shop\Models\Settings as SettingsModel;
 use Ilch\Validation;

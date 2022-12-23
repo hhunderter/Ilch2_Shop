@@ -559,9 +559,9 @@ class Items extends \Ilch\Model
     /**
      * Sets the image3 of the item.
      *
-     * @param string $image2
+     * @param string $image3
      * @return this
-     */    
+     */
     public function setImage3($image3)
     {
         $this->image3 = (string)$image3;

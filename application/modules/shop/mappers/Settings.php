@@ -58,20 +58,20 @@ class Settings extends \Ilch\Mapper
      *
      * @param SettingsModel $settingShop
      */
-    public function updateSettingShop(SettingsModel $settings)
+    public function updateSettingShop(SettingsModel $settingShop)
     {
         $this->db()->update('shop_settings')
             ->values([
-                      'shopName' => $settings->getShopName(),
-                      'shopLogo' => $settings->getShopLogo(),
-                      'shopStreet' => $settings->getShopStreet(),
-                      'shopPlz' => $settings->getShopPlz(),
-                      'shopCity' => $settings->getShopCity(),
-                      'shopTel' => $settings->getShopTel(),
-                      'shopFax' => $settings->getShopFax(),
-                      'shopMail' => $settings->getShopMail(),
-                      'shopWeb' => $settings->getShopWeb(),
-                      'shopStNr' => $settings->getShopStNr()
+                      'shopName' => $settingShop->getShopName(),
+                      'shopLogo' => $settingShop->getShopLogo(),
+                      'shopStreet' => $settingShop->getShopStreet(),
+                      'shopPlz' => $settingShop->getShopPlz(),
+                      'shopCity' => $settingShop->getShopCity(),
+                      'shopTel' => $settingShop->getShopTel(),
+                      'shopFax' => $settingShop->getShopFax(),
+                      'shopMail' => $settingShop->getShopMail(),
+                      'shopWeb' => $settingShop->getShopWeb(),
+                      'shopStNr' => $settingShop->getShopStNr()
                     ])
             ->where(['id' => '1'])
             ->execute();
@@ -82,14 +82,14 @@ class Settings extends \Ilch\Mapper
      *
      * @param SettingsModel $settingBank
      */
-    public function updateSettingBank(SettingsModel $settings)
+    public function updateSettingBank(SettingsModel $settingBank)
     {
         $this->db()->update('shop_settings')
             ->values([ 
-                      'bankName' => $settings->getBankName(),
-                      'bankOwner' => $settings->getBankOwner(),
-                      'bankIBAN' => $settings->getBankIBAN(),
-                      'bankBIC' => $settings->getBankBIC()
+                      'bankName' => $settingBank->getBankName(),
+                      'bankOwner' => $settingBank->getBankOwner(),
+                      'bankIBAN' => $settingBank->getBankIBAN(),
+                      'bankBIC' => $settingBank->getBankBIC()
                     ])
             ->where(['id' => '1'])
             ->execute();
@@ -100,15 +100,15 @@ class Settings extends \Ilch\Mapper
      *
      * @param SettingsModel $settingDefault
      */
-    public function updateSettingDefault(SettingsModel $settings)
+    public function updateSettingDefault(SettingsModel $settingDefault)
     {
         $this->db()->update('shop_settings')
             ->values([
-                      'fixTax' => $settings->getFixTax(),
-                      'fixShippingCosts' => $settings->getFixShippingCosts(),
-                      'fixShippingTime' => $settings->getFixShippingTime(),
-                      'invoiceTextTop' => $settings->getInvoiceTextTop(),
-                      'invoiceTextBottom' => $settings->getInvoiceTextBottom()
+                      'fixTax' => $settingDefault->getFixTax(),
+                      'fixShippingCosts' => $settingDefault->getFixShippingCosts(),
+                      'fixShippingTime' => $settingDefault->getFixShippingTime(),
+                      'invoiceTextTop' => $settingDefault->getInvoiceTextTop(),
+                      'invoiceTextBottom' => $settingDefault->getInvoiceTextBottom()
                     ])
             ->where(['id' => '1'])
             ->execute();
@@ -119,11 +119,11 @@ class Settings extends \Ilch\Mapper
      *
      * @param SettingsModel $settingAGB
      */
-    public function updateSettingAGB(SettingsModel $settings)
+    public function updateSettingAGB(SettingsModel $settingAGB)
     {
         $this->db()->update('shop_settings')
             ->values([
-                      'agb' => $settings->getAGB()
+                      'agb' => $settingAGB->getAGB()
                     ])
             ->where(['id' => '1'])
             ->execute();

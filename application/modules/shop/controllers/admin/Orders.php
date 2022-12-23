@@ -12,7 +12,6 @@ use Modules\Shop\Mappers\Items as ItemsMapper;
 use Modules\Shop\Mappers\Orders as OrdersMapper;
 use Modules\Shop\Mappers\Settings as SettingsMapper;
 use Modules\Shop\Models\Orders as OrdersModel;
-use Ilch\Accesses;
 
 class Orders extends \Ilch\Controller\Admin
 {

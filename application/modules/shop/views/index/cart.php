@@ -6,14 +6,12 @@ $status = '';
 
 if(!empty($_SESSION["shopping_cart"])) {
     if (isset($_POST['action']) && $_POST['action'] == "remove") {
-        if(!empty($_SESSION["shopping_cart"])) {
-            foreach($_SESSION["shopping_cart"] as $key => $value) {
-                if($_POST["code"] == $key) {
-                    unset($_SESSION["shopping_cart"][$key]);
-                    $status = '<div id="infobox" class="alert alert-danger" role="alert">'.$this->getTrans('theProduct').' <b>'.$_POST['name'].'</b> '.$this->getTrans('removedFromCart').'</div>';
-                }
-                if(empty($_SESSION["shopping_cart"])) unset($_SESSION["shopping_cart"]);
-            }		
+        foreach($_SESSION["shopping_cart"] as $key => $value) {
+            if($_POST["code"] == $key) {
+                unset($_SESSION["shopping_cart"][$key]);
+                $status = '<div id="infobox" class="alert alert-danger" role="alert">'.$this->getTrans('theProduct').' <b>'.$_POST['name'].'</b> '.$this->getTrans('removedFromCart').'</div>';
+            }
+            if(empty($_SESSION["shopping_cart"])) unset($_SESSION["shopping_cart"]);
         }
     }
 

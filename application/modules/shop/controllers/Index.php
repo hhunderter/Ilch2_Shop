@@ -26,8 +26,7 @@ class Index extends \Ilch\Controller\Frontend
         $userMapper = new UserMapper();
 
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
-        $categories = $categoryMapper->getCategories();
-        
+
         $user = null;
         if ($this->getUser()) {
             $user = $userMapper->getUserById($this->getUser()->getId());
@@ -40,23 +39,20 @@ class Index extends \Ilch\Controller\Frontend
             }
         }
 
-        $adminAccess = null;
-        if ($this->getUser()) {
-            $adminAccess = $this->getUser()->isAdmin();
-        }
+        $categories = $categoryMapper->getCategoriesByAccess($readAccess);
 
         if ($this->getRequest()->getParam('catId')) {
             $category = $categoryMapper->getCategoryById($this->getRequest()->getParam('catId'));
-            
+
             if (!$category) {
                 $this->redirect(['action' => 'index']);
             }
-            
+
             $this->getLayout()->header()->css('static/css/style_front.css');
             $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index']);
 
-            if ($adminAccess === true || is_in_array($readAccess, explode(',', $category->getReadAccess()))) {
+            if (is_in_array($readAccess, explode(',', $category->getReadAccess()))) {
                 $this->getLayout()->header()->css('static/css/style_front.css');
                 $this->getLayout()->getHmenu()
                     ->add($category->getTitle(), ['action' => 'index', 'catId' => $category->getId()]);
@@ -66,34 +62,23 @@ class Index extends \Ilch\Controller\Frontend
 
             $shopItems = $itemsMapper->getShopItems(['cat_id' => $this->getRequest()->getParam('catId'), 'status' => 1]);
         } else {
-            $firstAllowedCategory = null;
-
-            foreach ($categories as $category) {
-                if ($adminAccess === true || is_in_array($readAccess, explode(',', $category->getReadAccess()))) {
-                    $firstAllowedCategory = $category;
-                    break;
-                }
-            }
-
-            if ($firstAllowedCategory !== null) {
+            if (!empty($categories)) {
                 $this->getLayout()->header()->css('static/css/style_front.css');
                 $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
-                    ->add($firstAllowedCategory->getTitle(), ['action' => 'index', 'catId' => $firstAllowedCategory->getId()]);
-                $shopItems = $itemsMapper->getShopItems(['cat_id' => $firstAllowedCategory->getId(), 'status' => 1]);
-                $this->getView()->set('firstCatId', $firstAllowedCategory->getId());
+                    ->add($categories[0]->getTitle(), ['action' => 'index', 'catId' => $categories[0]->getId()]);
+                $shopItems = $itemsMapper->getShopItems(['cat_id' => $categories[0]->getId(), 'status' => 1]);
+                $this->getView()->set('firstCatId', $categories[0]->getId());
             } else {
                 $this->getLayout()->header()->css('static/css/style_front.css');
                 $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuShops'), ['action' => 'index']);
                 $shopItems = $itemsMapper->getShopItems(['status' => 1]);
             }
         }
-        
-        $this->getView()->set('adminAccess', $adminAccess);
+
         $this->getView()->set('categories', $categories);
         $this->getView()->set('currency', $currency->getName());
         $this->getView()->set('itemsMapper', $itemsMapper);
-        $this->getView()->set('readAccess', $readAccess);
         $this->getView()->set('shopItems', $shopItems);
     }
 
@@ -235,16 +220,15 @@ class Index extends \Ilch\Controller\Frontend
         $currencyMapper = new CurrencyMapper();
         $itemsMapper = new ItemsMapper();
         $userMapper = new UserMapper();
-        
+
         $shopItem = $itemsMapper->getShopById($this->getRequest()->getParam('id'));
-        
+
         if (empty($shopItem) || $shopItem->getStatus() != 1) {
             $this->redirect(['action' => 'index']);
         }
-        
+
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
         $category = $categoryMapper->getCategoryById($shopItem->getCatId());
-        $adminAccess = null;
 
         $user = null;
         if ($this->getUser()) {
@@ -258,15 +242,11 @@ class Index extends \Ilch\Controller\Frontend
             }
         }
 
-        if ($this->getUser()) {
-            $adminAccess = $this->getUser()->isAdmin();
-        }
-        
         $this->getLayout()->header()->css('static/css/style_front.css');
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index']);
 
-        if ($adminAccess === true || is_in_array($readAccess, explode(',', $category->getReadAccess()))) {
+        if (is_in_array($readAccess, explode(',', $category->getReadAccess()))) {
             $this->getLayout()->header()->css('static/css/style_front.css');
             $this->getLayout()->getHmenu()
                 ->add($category->getTitle(), ['action' => 'index', 'catId' => $category->getId()])
@@ -278,5 +258,4 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('shopItem', $shopItem);
         $this->getView()->set('currency', $currency->getName());
     }
-
 }

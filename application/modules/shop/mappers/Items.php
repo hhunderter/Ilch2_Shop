@@ -87,7 +87,7 @@ class Items extends \Ilch\Mapper
     /**
      * Inserts or updates item model.
      *
-     * @param ItemsModel $shop
+     * @param ItemsModel $item
      */
     public function save(ItemsModel $item)
     {
@@ -125,11 +125,12 @@ class Items extends \Ilch\Mapper
                 ->execute();
         }
     }
-    
+
     /**
      * Update item stock model.
      *
-     * @param ItemsModel $shop
+     * @param $id
+     * @param $orderStock
      */
     public function updateStock($id, $orderStock)
     {

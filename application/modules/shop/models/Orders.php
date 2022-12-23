@@ -227,7 +227,7 @@ class Orders extends \Ilch\Model
     /**
      * Sets the postcode of the order.
      *
-     * @param string $street
+     * @param string $postcode
      * @return this
      */
     public function setPostcode($postcode)

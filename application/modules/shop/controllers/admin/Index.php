@@ -9,7 +9,6 @@ namespace Modules\Shop\Controllers\Admin;
 use Modules\Shop\Mappers\Category as CategoryMapper;
 use Modules\Shop\Mappers\Items as ItemsMapper;
 use Modules\Shop\Mappers\Orders as OrdersMapper;
-use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin
 {

@@ -11,8 +11,6 @@ use Modules\Shop\Models\Category as CategoryModel;
 use Modules\User\Mappers\Group as GroupMapper;
 use Modules\Shop\Mappers\Items as ItemsMapper;
 
-use Ilch\Validation;
-
 class Cats extends \Ilch\Controller\Admin
 {
     public function init()
