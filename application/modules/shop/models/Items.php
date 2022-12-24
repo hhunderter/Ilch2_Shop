@@ -6,19 +6,21 @@
 
 namespace Modules\Shop\Models;
 
-class Items extends \Ilch\Model
+use Ilch\Model;
+
+class Items extends Model
 {
     /**
      * The id of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $id;
 
     /**
      * The cat_id of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $catId;
 
@@ -46,7 +48,7 @@ class Items extends \Ilch\Model
      /**
      * The stock of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $stock;
 
@@ -60,7 +62,7 @@ class Items extends \Ilch\Model
      /**
      * The cordon of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $cordon;
 
@@ -88,7 +90,7 @@ class Items extends \Ilch\Model
      /**
      * The tax of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $tax;
 
@@ -102,7 +104,7 @@ class Items extends \Ilch\Model
      /**
      * The shippingTime of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $shippingTime;
 
@@ -158,7 +160,7 @@ class Items extends \Ilch\Model
     /**
      * Gets the id of the item.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -168,8 +170,8 @@ class Items extends \Ilch\Model
     /**
      * Sets the id of the item.
      *
-     * @param integer $id
-     * @return this
+     * @param int $id
+     * @return $this
      */
     public function setId($id)
     {
@@ -181,7 +183,7 @@ class Items extends \Ilch\Model
     /**
      * Gets the catId of the item.
      *
-     * @return integer
+     * @return int
      */
     public function getCatId()
     {
@@ -191,8 +193,8 @@ class Items extends \Ilch\Model
     /**
      * Sets the catId of the item.
      *
-     * @param integer $catId
-     * @return this
+     * @param int $catId
+     * @return $this
      */
     public function setCatId($catId)
     {
@@ -215,7 +217,7 @@ class Items extends \Ilch\Model
      * Sets the name of the item.
      *
      * @param string $name
-     * @return this
+     * @return $this
      */
     public function setName($name)
     {
@@ -238,7 +240,7 @@ class Items extends \Ilch\Model
      * Sets the itemnumber of the item.
      *
      * @param string $itemnumber
-     * @return this
+     * @return $this
      */
     public function setItemnumber($itemnumber)
     {
@@ -261,7 +263,7 @@ class Items extends \Ilch\Model
      * Sets the code of the item.
      *
      * @param string $code
-     * @return this
+     * @return $this
      */
     public function setCode($code)
     {
@@ -273,7 +275,7 @@ class Items extends \Ilch\Model
     /**
      * Gets the stock of the item.
      *
-     * @return integer
+     * @return int
      */
     public function getStock()
     {
@@ -283,8 +285,8 @@ class Items extends \Ilch\Model
     /**
      * Sets the stock of the item.
      *
-     * @param integer $stock
-     * @return this
+     * @param int $stock
+     * @return $this
      */
     public function setStock($stock)
     {
@@ -307,7 +309,7 @@ class Items extends \Ilch\Model
      * Sets the unitName of the item.
      *
      * @param string $unitName
-     * @return this
+     * @return $this
      */
     public function setUnitName($unitName)
     {
@@ -329,8 +331,8 @@ class Items extends \Ilch\Model
     /**
      * Sets the cordon of the item.
      *
-     * @param integer $cordon
-     * @return this
+     * @param int $cordon
+     * @return $this
      */
     public function setCordon($cordon)
     {
@@ -353,7 +355,7 @@ class Items extends \Ilch\Model
      * Sets the cordonText of the item.
      *
      * @param string $cordonText
-     * @return this
+     * @return $this
      */
     public function setCordonText($cordonText)
     {
@@ -376,7 +378,7 @@ class Items extends \Ilch\Model
      * Sets the cordonColor of the item.
      *
      * @param string $cordonColor
-     * @return this
+     * @return $this
      */
     public function setCordonColor($cordonColor)
     {
@@ -399,7 +401,7 @@ class Items extends \Ilch\Model
      * Sets the price of the item.
      *
      * @param string $price
-     * @return this
+     * @return $this
      */
     public function setPrice($price)
     {
@@ -411,7 +413,7 @@ class Items extends \Ilch\Model
     /**
      * Gets the tax of the item.
      *
-     * @return integer
+     * @return int
      */
     public function getTax()
     {
@@ -421,8 +423,8 @@ class Items extends \Ilch\Model
     /**
      * Sets the tax of the item.
      *
-     * @param integer $tax
-     * @return this
+     * @param int $tax
+     * @return $this
      */
     public function setTax($tax)
     {
@@ -445,7 +447,7 @@ class Items extends \Ilch\Model
      * Sets the shippingCosts of the item.
      *
      * @param string $shippingCosts
-     * @return this
+     * @return $this
      */
     public function setShippingCosts($shippingCosts)
     {
@@ -457,7 +459,7 @@ class Items extends \Ilch\Model
     /**
      * Gets the shippingTime of the item.
      *
-     * @return integer
+     * @return int
      */
     public function getShippingTime()
     {
@@ -468,7 +470,7 @@ class Items extends \Ilch\Model
      * Sets the shippingTime of the item.
      *
      * @param string $shippingTime
-     * @return this
+     * @return $this
      */
     public function setShippingTime($shippingTime)
     {
@@ -491,7 +493,7 @@ class Items extends \Ilch\Model
      * Sets the preview image of the item.
      *
      * @param string $image
-     * @return this
+     * @return $this
      */
     public function setImage($image)
     {
@@ -514,7 +516,7 @@ class Items extends \Ilch\Model
      * Sets the image1 of the item.
      *
      * @param string $image1
-     * @return this
+     * @return $this
      */
     public function setImage1($image1)
     {
@@ -537,7 +539,7 @@ class Items extends \Ilch\Model
      * Sets the image2 of the item.
      *
      * @param string $image2
-     * @return this
+     * @return $this
      */
     public function setImage2($image2)
     {
@@ -560,7 +562,7 @@ class Items extends \Ilch\Model
      * Sets the image3 of the item.
      *
      * @param string $image3
-     * @return this
+     * @return $this
      */
     public function setImage3($image3)
     {
@@ -583,7 +585,7 @@ class Items extends \Ilch\Model
      * Sets the short info of the item.
      *
      * @param string $info
-     * @return this
+     * @return $this
      */  
     public function setInfo($info)
     {
@@ -606,7 +608,7 @@ class Items extends \Ilch\Model
      * Sets the description of the item.
      *
      * @param string $desc
-     * @return this
+     * @return $this
      */ 
     public function setDesc($desc)
     {
@@ -618,7 +620,7 @@ class Items extends \Ilch\Model
     /**
      * Gets the status of the item.
      *
-     * @return integer
+     * @return int
      */
     public function getStatus()
     {
@@ -628,8 +630,8 @@ class Items extends \Ilch\Model
     /**
      * Sets the description of the item.
      *
-     * @param integer $status
-     * @return this
+     * @param int $status
+     * @return $this
      */ 
     public function setStatus($status)
     {

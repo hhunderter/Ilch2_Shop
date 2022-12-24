@@ -6,7 +6,9 @@
 
 namespace Modules\Shop\Controllers\Admin;
 
-class Note extends \Ilch\Controller\Admin
+use Ilch\Controller\Admin;
+
+class Note extends Admin
 {
     public function init()
     {

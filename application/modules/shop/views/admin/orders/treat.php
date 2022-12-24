@@ -19,13 +19,13 @@ $settingsMapper = $this->get('settingsMapper');
             <b><?=$this->getTrans('newBIG') ?></b>
             &emsp;|&emsp;<?=$orderTime ?>&emsp;|&emsp;<?=$this->getTrans('infoOrderOpen') ?>
         </div>
-    <?php } else if ($order->getStatus() == 1) { ?>
+    <?php } elseif ($order->getStatus() == 1) { ?>
         <div class="alert alert-warning">
             <i class="fa fa-pencil-square" aria-hidden="true"></i>&nbsp;
             <b><?=$this->getTrans('processingBIG') ?></b>
             &emsp;|&emsp;<?=$orderTime ?>&emsp;|&emsp;<?=$this->getTrans('infoOrderProcessing') ?>
         </div>
-    <?php } else if ($order->getStatus() == 2) { ?>
+    <?php } elseif ($order->getStatus() == 2) { ?>
         <div class="alert alert-info">
             <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;
             <b><?=$this->getTrans('canceledBIG') ?></b>
@@ -82,7 +82,7 @@ $settingsMapper = $this->get('settingsMapper');
                 $subtotal_price = 0;
                 $pdfOrderNr = 1;
                 foreach ($orderItems as $orderItem):
-                    $itemId = $orderItem["id"];
+                    $itemId = $orderItem['id'];
                     $itemImg = $itemsMapper->getShopById($itemId)->getImage();
                     $itemName = $itemsMapper->getShopById($itemId)->getName();
                     $itemNumber = $itemsMapper->getShopById($itemId)->getItemnumber();
@@ -93,8 +93,8 @@ $settingsMapper = $this->get('settingsMapper');
                     $itemShippingTime = $itemsMapper->getShopById($itemId)->getShippingTime();
                     $arrayShippingTime[] = $itemShippingTime;
                     $arrayTaxes[] = $itemTax;
-                    $arrayPrices[] = $itemPrice * $orderItem["quantity"];
-                    $arrayPricesWithoutTax[] = $itemPriceWithoutTax * $orderItem["quantity"];
+                    $arrayPrices[] = $itemPrice * $orderItem['quantity'];
+                    $arrayPricesWithoutTax[] = $itemPriceWithoutTax * $orderItem['quantity'];
                     $shopImgPath = '/application/modules/shop/static/img/';
                     if ($itemImg AND file_exists(ROOT_PATH.'/'.$itemImg)) {
                         $img = BASE_URL.'/'.$itemImg;
@@ -108,12 +108,12 @@ $settingsMapper = $this->get('settingsMapper');
                         number_format($itemPriceWithoutTax, 2, '.', '').' '.$currency,
                         $itemTax.' %',
                         number_format($itemPrice, 2, '.', '').' '.$currency,
-                        $orderItem["quantity"],
-                        number_format($itemPrice * $orderItem["quantity"], 2, '.', '').' '.$currency,
+                        $orderItem['quantity'],
+                        number_format($itemPrice * $orderItem['quantity'], 2, '.', '').' '.$currency,
                         utf8_decode($this->getTrans('itemNumberShort')).' '.$itemNumber);
                 ?>
                 <tr>
-                    <td><img src="<?=$img ?>" class="item_image"> </td>
+                    <td><img src="<?=$img ?>" class="item_image" alt="<?=$this->escape($itemName) ?>"> </td>
                     <td>
                         <b><?=$itemName; ?></b><br /><small><?=$itemNumber; ?></small>
                     </td>
@@ -126,13 +126,13 @@ $settingsMapper = $this->get('settingsMapper');
                         <b><?=number_format($itemPrice, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
                     </td>
                     <td class="text-center">
-                        <b><?=$orderItem["quantity"] ?></b>
+                        <b><?=$orderItem['quantity'] ?></b>
                     </td>
                     <td class="text-right">
-                        <b><?=number_format($itemPrice * $orderItem["quantity"], 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
+                        <b><?=number_format($itemPrice * $orderItem['quantity'], 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
                     </td>
                 </tr>
-                <?php $subtotal_price += round($itemPrice * $orderItem["quantity"], 2); ?>
+                <?php $subtotal_price += round($itemPrice * $orderItem['quantity'], 2); ?>
                 <?php endforeach; ?>
                 <tr>
                     <td colspan="7" class="text-right finished">
@@ -436,11 +436,11 @@ $settingsMapper = $this->get('settingsMapper');
             $pdf->shopLogo = ROOT_PATH.'/application/modules/shop/static/img/empty.jpg';
         }
         $pdf->nameDateInvoice = utf8_decode($this->getTrans('dateOfInvoice'));
-        $pdf->DateInvoice = $dateInvoice = date("d.m.Y", time());
+        $pdf->DateInvoice = $dateInvoice = date('d.m.Y', time());
         $pdf->nameDeliveryDate = utf8_decode($this->getTrans('expectedDelivery'));
               $maxDeliveryTime = max($arrayShippingTime);
               $sumDeliveryTime = time() + ($maxDeliveryTime * 24 * 60 * 60);
-        $pdf->DeliveryDate = utf8_decode($this->getTrans('approx')).' '.date("d.m.Y", $sumDeliveryTime);
+        $pdf->DeliveryDate = utf8_decode($this->getTrans('approx')).' '.date('d.m.Y', $sumDeliveryTime);
         $pdf->ReceiverPrename = utf8_decode($this->escape($order->getPrename()));
         $pdf->ReceiverLastname = utf8_decode($this->escape($order->getLastname()));
         $pdf->ReceiverStreet = utf8_decode($this->escape($order->getStreet()));

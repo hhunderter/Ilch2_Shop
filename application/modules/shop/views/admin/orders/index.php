@@ -53,17 +53,23 @@
                                     <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $order->getId()]) ?>" class="btn btn-sm alert-danger">
                                         <i class="fa fa-plus-square" aria-hidden="true"></i>&nbsp;<b><?=$this->getTrans('newBIG') ?></b>
                                     </a>
-                                <?php } else if ($order->getStatus() == 1) { ?>
-                                    <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $order->getId()]) ?>" class="btn btn-sm alert-warning">
-                                        <i class="fa fa-pencil-square" aria-hidden="true"></i>&nbsp;<b><?=$this->getTrans('processingBIG') ?></b>
+                                <?php } elseif ($order->getStatus() == 1) { ?>
+                                    <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $order->getId()]) ?>"
+                                       class="btn btn-sm alert-warning">
+                                        <i class="fa fa-pencil-square"
+                                           aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('processingBIG') ?></b>
                                     </a>
-                                <?php } else if ($order->getStatus() == 2) { ?>
-                                    <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $order->getId()]) ?>" class="btn btn-sm alert-info">
-                                        <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;<b><?=$this->getTrans('canceledBIG') ?></b>
+                                <?php } elseif ($order->getStatus() == 2) { ?>
+                                    <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $order->getId()]) ?>"
+                                       class="btn btn-sm alert-info">
+                                        <i class="fas fa-exclamation-triangle"
+                                           aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('canceledBIG') ?></b>
                                     </a>
                                 <?php } else { ?>
-                                    <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $order->getId()]) ?>" class="btn btn-sm alert-success">
-                                        <i class="fa fa-check-square" aria-hidden="true"></i>&nbsp;<b><?=$this->getTrans('completedBIG') ?></b>
+                                    <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $order->getId()]) ?>"
+                                       class="btn btn-sm alert-success">
+                                        <i class="fa fa-check-square"
+                                           aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('completedBIG') ?></b>
                                     </a>
                                 <?php } ?>
                             </td>
@@ -98,7 +104,7 @@
     </form>
     <script>
     $("table").on("click", "th.sort", function () {
-        var index = $(this).index(),
+        const index = $(this).index(),
             rows = [],
             thClass = $(this).hasClass("asc") ? "desc" : "asc";
         $("#sortTable th.sort").removeClass("asc desc");
@@ -107,7 +113,7 @@
             rows.push($(row).detach());
         });
         rows.sort(function (a, b) {
-            var aValue = $(a).find("td").eq(index).text(),
+            const aValue = $(a).find("td").eq(index).text(),
                 bValue = $(b).find("td").eq(index).text();
             return aValue > bValue ? 1 : (aValue < bValue ? -1 : 0);
         });
@@ -119,7 +125,7 @@
         });
     });
     $("#filterInput").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
+        const value = $(this).val().toLowerCase();
         $("#sortTable tr.filter").filter(function() {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });

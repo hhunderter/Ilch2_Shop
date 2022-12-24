@@ -63,12 +63,14 @@
     </form>
     <script>
         $(function() {
-            $('#sortable').sortable({
+            let sortableSelector = $('#sortable');
+
+            sortableSelector.sortable({
                 opacity: .75,
                 placeholder: 'placeholder',
                 helper: function(e, tr) {
-                    var $originals = tr.children();
-                    var $helper = tr.clone();
+                    const $originals = tr.children();
+                    const $helper = tr.clone();
                     $helper.children().each(function(index) {
                         $(this).width($originals.eq(index).width()+16);
                     });
@@ -78,15 +80,15 @@
                     $('.sortbtn').addClass('save_button');
                 }
             });
-            $('#sortable').disableSelection();
+            sortableSelector.disableSelection();
         });
         $('#catsIndexForm').submit (
             function() {
-                var items = $('#sortable tr');
-                var serverIDs = [items.length];
-                var index = 1;
+                const items = $('#sortable tr');
+                const serverIDs = [items.length];
+                let index = 1;
                 items.each(
-                    function(intIndex) {
+                    function() {
                         serverIDs[index] = $(this).attr('id');
                         index++;
                     });

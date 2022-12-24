@@ -7,7 +7,7 @@ $adminAccess = $this->get('adminAccess');
 $status = '';
 
 /* shopcart session */
-if (isset($_POST['code']) && $_POST['code']!="") {
+if (isset($_POST['code']) && $_POST['code']!= '') {
     $code = $_POST['code'];
     $itemid = $_POST['itemid']; 
     $shopItem = $itemsMapper->getShopById($itemid);
@@ -20,15 +20,15 @@ if (isset($_POST['code']) && $_POST['code']!="") {
         'quantity' => 1)
     );
     
-    if(empty($_SESSION["shopping_cart"])) {
-        $_SESSION["shopping_cart"] = $cartArray;
+    if(empty($_SESSION['shopping_cart'])) {
+        $_SESSION['shopping_cart'] = $cartArray;
         $status = '<div id="infobox" class="alert alert-success" role="alert">'.$this->getTrans('theProduct').' <b>'.$name.'</b> '.$this->getTrans('addToCart').'</div>';
     } else {
-        $array_keys = array_keys($_SESSION["shopping_cart"]);
+        $array_keys = array_keys($_SESSION['shopping_cart']);
         if(in_array($code,$array_keys)) {
             $status = '<div id="infobox" class="alert alert-danger" role="alert">'.$this->getTrans('theProduct').' <b>'.$name.'</b> '.$this->getTrans('alreadyInCart').'</div>';	
         } else {
-            $_SESSION["shopping_cart"] = array_merge($_SESSION["shopping_cart"],$cartArray);
+            $_SESSION['shopping_cart'] = array_merge($_SESSION['shopping_cart'],$cartArray);
             $status = '<div id="infobox" class="alert alert-success" role="alert">'.$this->getTrans('theProduct').' <b>'.$name.'</b> '.$this->getTrans('addToCart').'</div>';
         }
     }
@@ -36,8 +36,8 @@ if (isset($_POST['code']) && $_POST['code']!="") {
 
 /* show shopcart */
 $cart_badge = '';
-if(!empty($_SESSION["shopping_cart"])) {
-    $cart_count = count(array_keys($_SESSION["shopping_cart"]));
+if(!empty($_SESSION['shopping_cart'])) {
+    $cart_count = count(array_keys($_SESSION['shopping_cart']));
     $cart_badge = ($cart_count>0)?'<a class="activecart" href="'.$this->getUrl('shop/index/cart').'#shopAnker">'.$this->getTrans('menuCart').'<i class="fas fa-shopping-cart"><span class="badge">'.$cart_count.'</span></i></a>':'';
 } 
 ?>
@@ -167,13 +167,13 @@ $(document).ready(function () {
     /* hide item-list */
     $("ul#item-list").hide();
     /* highlight */
-    var highlight = function (string) {
+    const highlight = function (string) {
         $("ul#item-list span.match").each(function () {
-            var matchStart = $(this).text().toLowerCase().indexOf("" + string.toLowerCase() + "");
-            var matchEnd = matchStart + string.length - 1;
-            var beforeMatch = $(this).text().slice(0, matchStart);
-            var matchText = $(this).text().slice(matchStart, matchEnd + 1);
-            var afterMatch = $(this).text().slice(matchEnd + 1);
+            const matchStart = $(this).text().toLowerCase().indexOf("" + string.toLowerCase() + "");
+            const matchEnd = matchStart + string.length - 1;
+            const beforeMatch = $(this).text().slice(0, matchStart);
+            const matchText = $(this).text().slice(matchStart, matchEnd + 1);
+            const afterMatch = $(this).text().slice(matchEnd + 1);
             $(this).html(beforeMatch + "<em>" + matchText + "</em>" + afterMatch);
         });
     };

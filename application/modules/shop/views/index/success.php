@@ -1,6 +1,6 @@
 <?php
 /* delete session */
-unset($_SESSION["shopping_cart"]); ?>
+unset($_SESSION['shopping_cart']); ?>
 
 <h1>
     <?=$this->getTrans('menuOrdersSuccess') ?>

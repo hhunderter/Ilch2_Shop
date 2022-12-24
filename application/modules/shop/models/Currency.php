@@ -6,12 +6,14 @@
 
 namespace Modules\Shop\Models;
 
-class Currency extends \Ilch\Model
+use Ilch\Model;
+
+class Currency extends Model
 {
     /**
      * The id of the currency.
      *
-     * @var integer
+     * @var int
      */
     protected $id;
 
@@ -25,7 +27,7 @@ class Currency extends \Ilch\Model
     /**
      * Gets the id of the currency.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -45,7 +47,7 @@ class Currency extends \Ilch\Model
     /**
      * Sets the id of the currency.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function setId($id)
     {

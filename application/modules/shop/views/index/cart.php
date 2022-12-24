@@ -4,22 +4,22 @@ $itemsMapper = $this->get('itemsMapper');
 /* shopcart session */
 $status = '';
 
-if(!empty($_SESSION["shopping_cart"])) {
-    if (isset($_POST['action']) && $_POST['action'] == "remove") {
-        foreach($_SESSION["shopping_cart"] as $key => $value) {
-            if($_POST["code"] == $key) {
-                unset($_SESSION["shopping_cart"][$key]);
+if(!empty($_SESSION['shopping_cart'])) {
+    if (isset($_POST['action']) && $_POST['action'] == 'remove') {
+        foreach($_SESSION['shopping_cart'] as $key => $value) {
+            if($_POST['code'] == $key) {
+                unset($_SESSION['shopping_cart'][$key]);
                 $status = '<div id="infobox" class="alert alert-danger" role="alert">'.$this->getTrans('theProduct').' <b>'.$_POST['name'].'</b> '.$this->getTrans('removedFromCart').'</div>';
             }
-            if(empty($_SESSION["shopping_cart"])) unset($_SESSION["shopping_cart"]);
+            if(empty($_SESSION['shopping_cart'])) unset($_SESSION['shopping_cart']);
         }
     }
 
-    if (isset($_POST['action']) && $_POST['action'] == "change") {
-        foreach($_SESSION["shopping_cart"] as &$value) {
-            if($value['code'] === $_POST["code"]) {
-                $_POST["quantity"] = ($_POST["quantity"]<=0)?1:$_POST["quantity"];
-                $value['quantity'] = $_POST["quantity"];
+    if (isset($_POST['action']) && $_POST['action'] == 'change') {
+        foreach($_SESSION['shopping_cart'] as &$value) {
+            if($value['code'] === $_POST['code']) {
+                $_POST['quantity'] = ($_POST['quantity']<=0)?1:$_POST['quantity'];
+                $value['quantity'] = $_POST['quantity'];
                 break;
             }
         }
@@ -28,8 +28,8 @@ if(!empty($_SESSION["shopping_cart"])) {
 
 /* show shopcart */
 $cart_badge = '';
-if(!empty($_SESSION["shopping_cart"])) {
-    $cart_count = count(array_keys($_SESSION["shopping_cart"]));
+if(!empty($_SESSION['shopping_cart'])) {
+    $cart_count = count(array_keys($_SESSION['shopping_cart']));
     $cart_badge = ($cart_count>0)?'<a class="activecart" href="'.$this->getUrl('shop/index/cart').'#shopAnker">'.$this->getTrans('menuCart').'<i class="fas fa-shopping-cart"><span class="badge">'.$cart_count.'</span></i></a>':'';
 } 
 ?>
@@ -45,7 +45,7 @@ if(!empty($_SESSION["shopping_cart"])) {
 </div>
 <div class="table cart">
     <?php
-    if(isset($_SESSION["shopping_cart"])) {
+    if(isset($_SESSION['shopping_cart'])) {
         $subtotal_price = 0; ?>
         <table>
             <thead>
@@ -60,8 +60,8 @@ if(!empty($_SESSION["shopping_cart"])) {
             </thead>
             <tbody>
                 <?php	
-                foreach ($_SESSION["shopping_cart"] as $product) {
-                    $itemId = $product["id"];
+                foreach ($_SESSION['shopping_cart'] as $product) {
+                    $itemId = $product['id'];
                     $itemCode = $itemsMapper->getShopById($itemId)->getCode();
                     $itemName = $itemsMapper->getShopById($itemId)->getName();
                     $itemPrice = $itemsMapper->getShopById($itemId)->getPrice();
@@ -77,8 +77,8 @@ if(!empty($_SESSION["shopping_cart"])) {
                     } ?>
                 <tr>
                     <td data-label="<?=$this->getTrans('productImage') ?>">
-                        <a href="<?=$this->getUrl('shop/index/show/id/'.$product["id"]) ?>#shopAnker">
-                            <img src="<?=$img ?>" />
+                        <a href="<?=$this->getUrl('shop/index/show/id/'.$product['id']) ?>#shopAnker">
+                            <img src="<?=$img ?>" alt="<?=$this->escape($itemName) ?>"/>
                         </a>
                     </td>
                     <td data-label="<?=$this->getTrans('remove') ?>" class="text-center">
@@ -111,7 +111,7 @@ if(!empty($_SESSION["shopping_cart"])) {
                                     id="quantity"
                                     name="quantity"
                                     onchange="this.form.submit()"
-                                    value="<?=$product["quantity"] ?>"
+                                    value="<?=$product['quantity'] ?>"
                                     readonly>
                                 <span class="input-group-btn">
                                     <button class="btn btn-xs btn-default minus-btn" type="button" name="button"><i class="fa fa-minus"></i></button>
@@ -120,11 +120,11 @@ if(!empty($_SESSION["shopping_cart"])) {
                         </form>
                     </td>
                     <td data-label="<?=$this->getTrans('total') ?> (incl. <?=$this->getTrans('taxShort') ?>)" class="text-right">
-                        <b><?=number_format($itemPrice * $product["quantity"], 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
+                        <b><?=number_format($itemPrice * $product['quantity'], 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
                     </td>
                 </tr>
                 <?php
-                $subtotal_price += round($itemPrice * $product["quantity"], 2);
+                $subtotal_price += round($itemPrice * $product['quantity'], 2);
                 }
                 ?>
             </tbody>
@@ -171,17 +171,17 @@ $(document).ready(function () {
 });
 $('.minus-btn').on('click', function(e) {
     e.preventDefault();
-    var $this = $(this);
-    var $input = $this.closest('div').find('input[name="quantity"]');
-    var value = parseInt($input.val());
+    const $this = $(this);
+    const $input = $this.closest('div').find('input[name="quantity"]');
+    let value = parseInt($input.val());
     if (value > 2) {
         value = value - 1;
     } else {
         value = 1;
     }
     $input.val(value);
-    var form = $this.closest('form');
-    var url = form.attr('action');
+    const form = $this.closest('form');
+    const url = form.attr('action');
     $.ajax({
         type: "POST",
         url: url,
@@ -190,18 +190,18 @@ $('.minus-btn').on('click', function(e) {
 });
 $('.plus-btn').on('click', function(e) {
     e.preventDefault();
-    var $this = $(this);
-    var $input = $this.closest('div').find('input[name="quantity"]');
-    var value = parseInt($input.val());
-    var maxStock = $this.closest('div').find('input[name="maxStock"]').val();
+    const $this = $(this);
+    const $input = $this.closest('div').find('input[name="quantity"]');
+    let value = parseInt($input.val());
+    const maxStock = $this.closest('div').find('input[name="maxStock"]').val();
     if (value < maxStock) {
         value = value + 1;
     } else {
         value = maxStock;
     }
     $input.val(value);
-    var form = $this.closest('form');
-    var url = form.attr('action');
+    const form = $this.closest('form');
+    const url = form.attr('action');
     $.ajax({
         type: "POST",
         url: url,

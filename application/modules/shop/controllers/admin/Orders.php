@@ -6,6 +6,9 @@
 
 namespace Modules\Shop\Controllers\Admin;
 
+use Ilch\Controller\Admin;
+use Ilch\Date;
+use Ilch\Mail;
 use Modules\Admin\Mappers\Emails as EmailsMapper;
 use Modules\Shop\Mappers\Currency as CurrencyMapper;
 use Modules\Shop\Mappers\Items as ItemsMapper;
@@ -13,7 +16,7 @@ use Modules\Shop\Mappers\Orders as OrdersMapper;
 use Modules\Shop\Mappers\Settings as SettingsMapper;
 use Modules\Shop\Models\Orders as OrdersModel;
 
-class Orders extends \Ilch\Controller\Admin
+class Orders extends Admin
 {
     public function init()
     {
@@ -212,7 +215,7 @@ class Orders extends \Ilch\Controller\Admin
 
         // Send invoice to customer.
         $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
-        $date = new \Ilch\Date();
+        $date = new Date();
         $mailContent = $emailsMapper->getEmail('shop', 'send_invoice_mail', $this->getTranslator()->getLocale());
         $name = $this->getLayout()->escape($order->getLastname());
 
@@ -232,7 +235,7 @@ class Orders extends \Ilch\Controller\Admin
         ];
         $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
-        $mail = new \Ilch\Mail();
+        $mail = new Mail();
         $mail->setFromName($siteTitle)
             ->setFromEmail($this->getConfig()->get('standardMail'))
             ->setToName($name)
@@ -242,7 +245,7 @@ class Orders extends \Ilch\Controller\Admin
             ->addAttachment($pathInvoice, $publicFileNameInvoice)
             ->send();
 
-        $order->setDatetimeInvoiceSent(new \Ilch\Date('now', $this->getConfig()->get('timezone')));
+        $order->setDatetimeInvoiceSent(new Date('now', $this->getConfig()->get('timezone')));
         $orderMapper->save($order);
 
         $this->addMessage('sendInvoiceSuccess');

@@ -6,12 +6,14 @@
 
 namespace Modules\Shop\Models;
 
-class Orders extends \Ilch\Model
+use Ilch\Model;
+
+class Orders extends Model
 {
     /**
      * The id of the order.
      *
-     * @var integer
+     * @var int
      */
     protected $id;
 
@@ -95,14 +97,14 @@ class Orders extends \Ilch\Model
     /**
      * The status of the order.
      *
-     * @var integer
+     * @var int
      */
     protected $status;
 
     /**
      * Gets the id of the order.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -112,8 +114,8 @@ class Orders extends \Ilch\Model
     /**
      * Sets the id of the order.
      *
-     * @param integer $id
-     * @return this
+     * @param int $id
+     * @return $this
      */
     public function setId($id)
     {
@@ -136,7 +138,7 @@ class Orders extends \Ilch\Model
      * Sets the datetime of the order.
      *
      * @param string $datetime
-     * @return this
+     * @return $this
      */
     public function setDatetime($datetime)
     {
@@ -159,7 +161,7 @@ class Orders extends \Ilch\Model
      * Sets the prename of the order.
      *
      * @param string $prename
-     * @return this
+     * @return $this
      */
     public function setPrename($prename)
     {
@@ -182,7 +184,7 @@ class Orders extends \Ilch\Model
      * Sets the lastname of the order.
      *
      * @param string $lastname
-     * @return this
+     * @return $this
      */
     public function setLastname($lastname)
     {
@@ -205,7 +207,7 @@ class Orders extends \Ilch\Model
      * Sets the street of the order.
      *
      * @param string $street
-     * @return this
+     * @return $this
      */
     public function setStreet($street)
     {
@@ -228,7 +230,7 @@ class Orders extends \Ilch\Model
      * Sets the postcode of the order.
      *
      * @param string $postcode
-     * @return this
+     * @return $this
      */
     public function setPostcode($postcode)
     {
@@ -251,7 +253,7 @@ class Orders extends \Ilch\Model
      * Sets the city of the order.
      *
      * @param string $city
-     * @return this
+     * @return $this
      */
     public function setCity($city)
     {
@@ -274,7 +276,7 @@ class Orders extends \Ilch\Model
      * Sets the country of the order.
      *
      * @param string $country
-     * @return this
+     * @return $this
      */
     public function setCountry($country)
     {
@@ -297,7 +299,7 @@ class Orders extends \Ilch\Model
      * Sets the email of the order.
      *
      * @param string $email
-     * @return this
+     * @return $this
      */
     public function setEmail($email)
     {
@@ -320,7 +322,7 @@ class Orders extends \Ilch\Model
      * Sets the orderarray of the order.
      *
      * @param array $order
-     * @return this
+     * @return $this
      */
     public function setOrder($order)
     {
@@ -343,7 +345,7 @@ class Orders extends \Ilch\Model
      * Sets the filename of the invoice.
      *
      * @param string $invoicefilename
-     * @return this
+     * @return $this
      */
     public function setInvoiceFilename($invoicefilename)
     {
@@ -366,7 +368,7 @@ class Orders extends \Ilch\Model
      * Sets the datetime when the invoice was sent to the costumer.
      *
      * @param string $datetimeInvoiceSent
-     * @return this
+     * @return $this
      */
     public function setDatetimeInvoiceSent($datetimeInvoiceSent)
     {
@@ -378,7 +380,7 @@ class Orders extends \Ilch\Model
     /**
      * Gets the status of the order.
      *
-     * @return integer
+     * @return int
      */
     public function getStatus()
     {
@@ -388,8 +390,8 @@ class Orders extends \Ilch\Model
     /**
      * Sets the status of the order.
      *
-     * @param integer $status
-     * @return this
+     * @param int $status
+     * @return $this
      */
     public function setStatus($status)
     {

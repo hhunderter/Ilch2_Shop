@@ -3,7 +3,7 @@ $shopItem = $this->get('shopItem');
 $status = '';
 
 /* shopcart session */
-if (isset($_POST['code']) && $_POST['code'] != "") {
+if (isset($_POST['code']) && $_POST['code'] != '') {
     $code = $_POST['code'];
     $quantity = $_POST['quantity'];
     $id = $shopItem->getId();
@@ -19,15 +19,15 @@ if (isset($_POST['code']) && $_POST['code'] != "") {
         'quantity' => $quantity)
     );
     
-    if(empty($_SESSION["shopping_cart"])) {
-        $_SESSION["shopping_cart"] = $cartArray;
+    if(empty($_SESSION['shopping_cart'])) {
+        $_SESSION['shopping_cart'] = $cartArray;
         $status = '<div id="infobox" class="alert alert-success" role="alert">'.$this->getTrans('theProduct').' <b>'.$name.'</b> '.$this->getTrans('addToCart').'</div>';
     } else {
-        $array_keys = array_keys($_SESSION["shopping_cart"]);
+        $array_keys = array_keys($_SESSION['shopping_cart']);
         if(in_array($code,$array_keys)) {
             $status = '<div id="infobox" class="alert alert-danger" role="alert">'.$this->getTrans('theProduct').' <b>'.$name.'</b> '.$this->getTrans('alreadyInCart').'</div>';	
         } else {
-            $_SESSION["shopping_cart"] = array_merge($_SESSION["shopping_cart"],$cartArray);
+            $_SESSION['shopping_cart'] = array_merge($_SESSION['shopping_cart'],$cartArray);
             $status = '<div id="infobox" class="alert alert-success" role="alert">'.$this->getTrans('theProduct').' <b>'.$name.'</b> '.$this->getTrans('addToCart').'</div>';
         }
     }
@@ -35,8 +35,8 @@ if (isset($_POST['code']) && $_POST['code'] != "") {
 
 /* show shopcart */
 $cart_badge = '';
-if(!empty($_SESSION["shopping_cart"])) {
-    $cart_count = count(array_keys($_SESSION["shopping_cart"]));
+if(!empty($_SESSION['shopping_cart'])) {
+    $cart_count = count(array_keys($_SESSION['shopping_cart']));
     $cart_badge = ($cart_count>0)?'<a class="activecart" href="'.$this->getUrl('shop/index/cart').'#shopAnker">'.$this->getTrans('menuCart').'<i class="fas fa-shopping-cart"><span class="badge">'.$cart_count.'</span></i></a>':'';
 } 
 ?>
@@ -84,7 +84,7 @@ if ($shopItem->getImage() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage())) 
                                     </ol>
                                     <!-- Wrapper for slides -->
                                     <div class="carousel-inner" role="listbox">
-                                        <div class="item active"><img src="<?=$img ?>"></div>
+                                        <div class="item active"><img src="<?=$img ?>" alt="<?=$this->escape($shopItem->getName()) ?>"></div>
                                         <?php
                                         if ($shopItem->getImage1() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage1())) {
                                             echo '<div class="item"><img src="'.BASE_URL.'/'.$shopItem->getImage1().'"></div>';
@@ -119,12 +119,12 @@ if ($shopItem->getImage() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage())) 
                         </div>
                     <?php } ?>
                     
-                    <img id="productimage" class="productimage" src="<?=$img ?>" alt="image" data-toggle="modal" data-target="#myModal">
+                    <img id="productimage" class="productimage" src="<?=$img ?>" alt="<?=$this->escape($shopItem->getName()) ?>" data-toggle="modal" data-target="#myModal">
                 </td>
             </tr>
             <tr>
                 <td class="thumb text-center">
-                    <a href="javascript:void(0)" class="thumbimg"><img src="<?=$img ?>" class="selected"></a>
+                    <a href="javascript:void(0)" class="thumbimg"><img src="<?=$img ?>" class="selected" alt="<?=$this->escape($shopItem->getName()) ?>"></a>
                     <?php
                     if ($shopItem->getImage1() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage1())) {
                         echo '<a href="javascript:void(0)" class="thumbimg"><img src="'.BASE_URL.'/'.$shopItem->getImage1().'" class=""></a>';
@@ -236,9 +236,9 @@ $(document).ready(function () {
 });
 $('.minus-btn').on('click', function(e) {
     e.preventDefault();
-    var $this = $(this);
-    var $input = $this.closest('div').find('input');
-    var value = parseInt($input.val());
+    const $this = $(this);
+    const $input = $this.closest('div').find('input');
+    let value = parseInt($input.val());
     if (value > 2) {
         value = value - 1;
     } else {
@@ -248,10 +248,10 @@ $('.minus-btn').on('click', function(e) {
 });
 $('.plus-btn').on('click', function(e) {
     e.preventDefault();
-    var $this = $(this);
-    var $input = $this.closest('div').find('input');
-    var value = parseInt($input.val());
-    var maxStock = '<?=$shopItem->getStock() ?>';
+    const $this = $(this);
+    const $input = $this.closest('div').find('input');
+    let value = parseInt($input.val());
+    const maxStock = '<?=$shopItem->getStock() ?>';
     if (value < maxStock) {
         value = value + 1;
     } else {
@@ -260,9 +260,9 @@ $('.plus-btn').on('click', function(e) {
     $input.val(value);
 });
 $(".carousel").swipe({
-    swipe: function(event, direction, distance, duration, fingerCount, fingerData) {
-        if (direction == 'left') $(this).carousel('next');
-        if (direction == 'right') $(this).carousel('prev');
+    swipe: function(event, direction) {
+        if (direction === 'left') $(this).carousel('next');
+        if (direction === 'right') $(this).carousel('prev');
     },
     allowPageScroll:"vertical"
 });

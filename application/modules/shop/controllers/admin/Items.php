@@ -6,6 +6,7 @@
 
 namespace Modules\Shop\Controllers\Admin;
 
+use Ilch\Controller\Admin;
 use Modules\Shop\Mappers\Category as CategoryMapper;
 use Modules\Shop\Mappers\Currency as CurrencyMapper;
 use Modules\Shop\Mappers\Items as ItemsMapper;
@@ -14,7 +15,7 @@ use Modules\Shop\Mappers\Settings as SettingsMapper;
 use Modules\Shop\Models\Items as ItemsModel;
 use Ilch\Validation;
 
-class Items extends \Ilch\Controller\Admin
+class Items extends Admin
 {
     public function init()
     {
@@ -96,11 +97,12 @@ class Items extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('menuItems'), ['controller' => 'items', 'action' => 'index']);
 
         if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_shops')) {
+            $itemInUse = 0;
             foreach ($this->getRequest()->getPost('check_shops') as $itemId) {
                 $itemInUse = 0;
-                foreach ($ordersMapper->getOrders() as $key => $val) {
+                foreach ($ordersMapper->getOrders() as $val) {
                     $orderItems = json_decode(str_replace("'", '"', $val->getOrder()), true);
-                    foreach ($orderItems as $keyOrder => $valOrder) {
+                    foreach ($orderItems as $valOrder) {
                         if ($valOrder['id'] == $itemId) {
                             $itemInUse = 1;
                         }
@@ -207,9 +209,9 @@ class Items extends \Ilch\Controller\Admin
             $itemsMapper = new ItemsMapper();
             $ordersMapper = new OrdersMapper();
             $itemInUse = 0;
-            foreach ($ordersMapper->getOrders() as $key => $val) {
+            foreach ($ordersMapper->getOrders() as $val) {
                 $orderItems = json_decode(str_replace("'", '"', $val->getOrder()), true);
-                foreach ($orderItems as $keyOrder => $valOrder) {
+                foreach ($orderItems as $valOrder) {
                     if ($valOrder['id'] == $this->getRequest()->getParam('id')) {
                         $itemInUse = 1;
                     }

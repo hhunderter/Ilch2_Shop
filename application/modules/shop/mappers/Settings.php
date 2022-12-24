@@ -6,9 +6,10 @@
 
 namespace Modules\Shop\Mappers;
 
+use Ilch\Mapper;
 use Modules\Shop\Models\Settings as SettingsModel;
 
-class Settings extends \Ilch\Mapper
+class Settings extends Mapper
 {
     /**
      * Gets the settings.

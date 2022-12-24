@@ -1,7 +1,7 @@
 <?php $currency = $this->get('currency'); ?>
 
 <h1>
-    <?=($this->getRequest()->getParam("id")) ? $this->getTrans('edit') : $this->getTrans('add'); ?>
+    <?=($this->getRequest()->getParam('id')) ? $this->getTrans('edit') : $this->getTrans('add'); ?>
 </h1>
 
 <form class="form-horizontal" method="POST" action="">

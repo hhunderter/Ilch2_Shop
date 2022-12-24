@@ -6,15 +6,16 @@
 
 namespace Modules\Shop\Mappers;
 
+use Ilch\Mapper;
 use Modules\Shop\Models\Items as ItemsModel;
 
-class Items extends \Ilch\Mapper
+class Items extends Mapper
 {
     /**
      * Gets items.
      *
      * @param array $where
-     * @return ItemModel[]|[]
+     * @return ItemsModel[]|[]
      */
     public function getShopItems($where = [])
     {
@@ -63,8 +64,8 @@ class Items extends \Ilch\Mapper
     /**
      * Gets items by id.
      *
-     * @param integer $id
-     * @return ItemsModel|null
+     * @param int $id
+     * @return ItemsModel|false
      */
     public function getShopById($id)
     {
@@ -75,8 +76,8 @@ class Items extends \Ilch\Mapper
     /**
      * Gets items by catId.
      *
-     * @param integer $catId
-     * @return ItemsModel[]|[]
+     * @param int $catId
+     * @return ItemsModel[]|false
      */
     public function getShopItemsByCatId($catId)
     {
@@ -151,7 +152,7 @@ class Items extends \Ilch\Mapper
     /**
      * Deletes item with given id.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function delete($id)
     {

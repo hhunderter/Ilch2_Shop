@@ -6,12 +6,13 @@
 
 namespace Modules\Shop\Controllers\Admin;
 
+use Ilch\Controller\Admin;
 use Modules\Shop\Mappers\Currency as CurrencyMapper;
 use Modules\Shop\Mappers\Settings as SettingsMapper;
 use Modules\Shop\Models\Settings as SettingsModel;
 use Ilch\Validation;
 
-class Settings extends \Ilch\Controller\Admin
+class Settings extends Admin
 {
     public function init()
     {

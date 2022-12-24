@@ -7,7 +7,7 @@ h1 {
 }
 div#shopAnker {
     display: hidden;
-    height: 0px !important;
+    height: 0 !important;
     position: absolute;
     top: -80px;
 }
@@ -71,9 +71,9 @@ h1 a span.badge {
 a.thumbnail:hover {
     text-decoration: none;
     border: 1px solid #eea236 !important;
-    -webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.3);
-    -moz-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.3);
-    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0 0 4px 0 rgba(0,0,0,0.3);
+    -moz-box-shadow: 0 0 4px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.3);
 }
 .thumbnail img {
     max-height: 150px !important;
@@ -234,7 +234,7 @@ a.thumbnail:hover {
     .cart table.sum tr {
         border-bottom: none;
         display: block;
-        margin-bottom: 0px;
+        margin-bottom: 0;
     }
     .cart table td {
         border-bottom: 1px solid #ddd;
@@ -258,8 +258,8 @@ a.thumbnail:hover {
     top: 2px;
     width: 30px;
     height: 30px;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     cursor: pointer;
 }
 .order textarea.accepttext {
@@ -306,9 +306,9 @@ a.thumbnail:hover {
     top: 15px;
     left: -30px;
     width: 120px;
-    -webkit-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,0.75);
+    -moz-box-shadow: 0 1px 1px 0 rgba(0,0,0,0.75);
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.75);
 }
 .cordon-wrapper .cordon.green {
     color: #155724;

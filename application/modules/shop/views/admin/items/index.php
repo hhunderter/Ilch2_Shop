@@ -65,7 +65,7 @@
                                 echo '<a href="'.$this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]).'" class="btn btn-xs alert-danger" title="'.$this->getTrans('inactive').'"><i class="fas fa-eye-slash inactiv"></i></a>';
                             } ?>
                             </td>
-                            <td class="text-center"><a href="<?=$this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]) ?>"><img src="<?=$img ?>" class="item_image <?=($shopItem->getCordon()==1)?$shopItem->getCordonColor():''; ?>" /></a></td>
+                            <td class="text-center"><a href="<?=$this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]) ?>"><img src="<?=$img ?>" class="item_image <?=($shopItem->getCordon()==1)?$shopItem->getCordonColor():''; ?>" alt="<?=$this->escape($shopItem->getName()) ?>"/></a></td>
                             <td><?=$this->escape($shopItem->getName()) ?></td>
                             <td><?=$this->escape($shopItem->getItemnumber()) ?></td>
                             <td><?=$this->escape($shopCats->getTitle()) ?></td>
@@ -88,7 +88,7 @@
     </form>
     <script>
     $("table").on("click", "th.sort", function () {
-        var index = $(this).index(),
+        const index = $(this).index(),
             rows = [],
             thClass = $(this).hasClass("asc") ? "desc" : "asc";
         $("#sortTable th.sort").removeClass("asc desc");
@@ -97,7 +97,7 @@
             rows.push($(row).detach());
         });
         rows.sort(function (a, b) {
-            var aValue = $(a).find("td").eq(index).text(),
+            const aValue = $(a).find("td").eq(index).text(),
                 bValue = $(b).find("td").eq(index).text();
             return aValue > bValue ? 1 : (aValue < bValue ? -1 : 0);
         });
@@ -109,7 +109,7 @@
         });
     });
     $("#filterInput").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
+        const value = $(this).val().toLowerCase();
         $("#sortTable tr.filter").filter(function() {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });

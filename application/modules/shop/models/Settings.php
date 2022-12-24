@@ -6,12 +6,14 @@
 
 namespace Modules\Shop\Models;
 
-class Settings extends \Ilch\Model
+use Ilch\Model;
+
+class Settings extends Model
 {
     /**
      * The id of the settings.
      *
-     * @var integer
+     * @var int
      */
     protected $id;
     
@@ -137,7 +139,7 @@ class Settings extends \Ilch\Model
     /**
      * The fixTax of the settings.
      *
-     * @var integer
+     * @var int
      */
     protected $fixTax;
 
@@ -151,14 +153,14 @@ class Settings extends \Ilch\Model
     /**
      * The fixShippingTime of the settings.
      *
-     * @var integer
+     * @var int
      */
     protected $fixShippingTime;
 
     /**
      * Gets the id of the settings.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -168,7 +170,7 @@ class Settings extends \Ilch\Model
     /**
      * Sets the id of the settings.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function setId($id)
     {
@@ -518,7 +520,7 @@ class Settings extends \Ilch\Model
     /**
      * Gets the fixTax of the settings.
      *
-     * @return integer
+     * @return int
      */
     public function getFixTax()
     {
@@ -528,7 +530,7 @@ class Settings extends \Ilch\Model
     /**
      * Sets the fixTax of the settings.
      *
-     * @param integer $fixTax
+     * @param int $fixTax
      */
     public function setFixTax($fixTax)
     {
@@ -558,7 +560,7 @@ class Settings extends \Ilch\Model
     /**
      * Gets the fixShippingTime of the settings.
      *
-     * @return integer
+     * @return int
      */
     public function getFixShippingTime()
     {
@@ -568,7 +570,7 @@ class Settings extends \Ilch\Model
     /**
      * Sets the fixShippingTime of the settings.
      *
-     * @param integer $fixShippingTime
+     * @param int $fixShippingTime
      */
     public function setFixShippingTime($fixShippingTime)
     {

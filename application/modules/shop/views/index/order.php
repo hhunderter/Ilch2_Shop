@@ -3,8 +3,8 @@ $itemsMapper = $this->get('itemsMapper');
 
 /* show shopcart */
 $cart_badge = '';
-if(!empty($_SESSION["shopping_cart"])) {
-    $cart_count = count(array_keys($_SESSION["shopping_cart"]));
+if(!empty($_SESSION['shopping_cart'])) {
+    $cart_count = count(array_keys($_SESSION['shopping_cart']));
     $cart_badge = ($cart_count>0)?'<a class="activecart" href="'.$this->getUrl('shop/index/cart').'#shopAnker">'.$this->getTrans('menuCart').'<i class="fas fa-shopping-cart"><span class="badge">'.$cart_count.'</span></i></a>':'';
 } 
 ?>
@@ -15,7 +15,7 @@ if(!empty($_SESSION["shopping_cart"])) {
     <div id="shopAnker"></div>
 </h1>
 
-<?php if (isset($_SESSION["shopping_cart"])) {
+<?php if (isset($_SESSION['shopping_cart'])) {
     $total_price = 0; ?>
 
     <?php if ($this->getUser() !== null) { ?>
@@ -25,7 +25,7 @@ if(!empty($_SESSION["shopping_cart"])) {
 
         <form class="form-horizontal order" action="#shopAnker" method="POST">
             <?=$this->getTokenField() ?>
-            <?php $order = str_replace('"', "'", json_encode($_SESSION["shopping_cart"])); ?>
+            <?php $order = str_replace('"', "'", json_encode($_SESSION['shopping_cart'])); ?>
             <input type="hidden" name="order" value="<?=$order ?>" />
             
             <div class="row space20"></div>
@@ -180,8 +180,8 @@ if(!empty($_SESSION["shopping_cart"])) {
                     <tbody>
                         <?php
                         $subtotal_price = 0;
-                        foreach ($_SESSION["shopping_cart"] as $product) {
-                            $itemId = $product["id"];
+                        foreach ($_SESSION['shopping_cart'] as $product) {
+                            $itemId = $product['id'];
                             $itemImg = $itemsMapper->getShopById($itemId)->getImage();
                             $itemName = $itemsMapper->getShopById($itemId)->getName();
                             $itemNumber = $itemsMapper->getShopById($itemId)->getItemnumber();
@@ -190,8 +190,8 @@ if(!empty($_SESSION["shopping_cart"])) {
                             $itemPriceWithoutTax = round(($itemPrice / (100 + $itemTax)) * 100, 2);
                             $arrayShippingCosts[] = $itemsMapper->getShopById($itemId)->getShippingCosts();
                             $arrayTaxes[] = $itemTax;
-                            $arrayPrices[] = $itemPrice * $product["quantity"];
-                            $arrayPricesWithoutTax[] = $itemPriceWithoutTax * $product["quantity"];
+                            $arrayPrices[] = $itemPrice * $product['quantity'];
+                            $arrayPricesWithoutTax[] = $itemPriceWithoutTax * $product['quantity'];
                             $shopImgPath = '/application/modules/shop/static/img/';
                             if ($itemImg AND file_exists(ROOT_PATH.'/'.$itemImg)) {
                                 $img = BASE_URL.'/'.$itemImg;
@@ -201,7 +201,7 @@ if(!empty($_SESSION["shopping_cart"])) {
                         ?>
                         <tr>
                             <td data-label="<?=$this->getTrans('productImage') ?>">
-                                <img src="<?=$img ?>" />
+                                <img src="<?=$img ?>" alt="<?=$this->escape($itemName) ?>"/>
                             </td>
                             <td data-label="<?=$this->getTrans('productName') ?>">
                                 <b><?=$itemName; ?></b><br /><small><?=$itemNumber; ?></small>
@@ -214,14 +214,14 @@ if(!empty($_SESSION["shopping_cart"])) {
                                 <?=number_format($itemPrice, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?>
                             </td>
                             <td data-label="<?=$this->getTrans('entries') ?>" class="text-center">
-                                <b><?=$product["quantity"] ?></b>
+                                <b><?=$product['quantity'] ?></b>
                             </td>
                             <td data-label="<?=$this->getTrans('total') ?> (<?=$this->getTrans('withTax') ?>)" class="text-right">
-                                <b><?=number_format($itemPrice * $product["quantity"], 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
+                                <b><?=number_format($itemPrice * $product['quantity'], 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
                             </td>
                         </tr>
                         <?php
-                        $subtotal_price += round($itemPrice * $product["quantity"], 2);
+                        $subtotal_price += round($itemPrice * $product['quantity'], 2);
                         }
                         ?>
                     </tbody>

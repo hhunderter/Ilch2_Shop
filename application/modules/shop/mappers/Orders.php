@@ -6,9 +6,10 @@
 
 namespace Modules\Shop\Mappers;
 
+use Ilch\Mapper;
 use Modules\Shop\Models\Orders as OrdersModel;
 
-class Orders extends \Ilch\Mapper
+class Orders extends Mapper
 {
     /**
      * Gets orders.
@@ -55,7 +56,7 @@ class Orders extends \Ilch\Mapper
     /**
      * Gets order by id.
      *
-     * @param integer $id
+     * @param int $id
      * @return OrdersModel|null
      */
     public function getOrdersById($id)
@@ -114,7 +115,7 @@ class Orders extends \Ilch\Mapper
     /**
      * Deletes order with given id.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function delete($id)
     {

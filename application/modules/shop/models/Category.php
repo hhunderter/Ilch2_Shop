@@ -6,19 +6,21 @@
 
 namespace Modules\Shop\Models;
 
-class Category extends \Ilch\Model
+use Ilch\Model;
+
+class Category extends Model
 {
     /**
      * The id of the category.
      *
-     * @var integer
+     * @var int
      */
     private $id;
 
     /**
      * The pos of the category.
      *
-     * @var integer
+     * @var int
      */
     private $pos;
 
@@ -39,7 +41,7 @@ class Category extends \Ilch\Model
     /**
      * Gets the category id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -49,7 +51,7 @@ class Category extends \Ilch\Model
     /**
      * Sets the id of the category.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function setId($id)
     {
@@ -59,7 +61,7 @@ class Category extends \Ilch\Model
     /**
      * Gets the category pos.
      *
-     * @return integer
+     * @return int
      */
     public function getPos()
     {
@@ -69,7 +71,7 @@ class Category extends \Ilch\Model
     /**
      * Sets the pos of the category.
      *
-     * @param integer $pos
+     * @param int $pos
      */
     public function setPos($pos)
     {

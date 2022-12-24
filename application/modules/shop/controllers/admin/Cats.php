@@ -6,12 +6,13 @@
 
 namespace Modules\Shop\Controllers\Admin;
 
+use Ilch\Controller\Admin;
 use Modules\Shop\Mappers\Category as CategoryMapper;
 use Modules\Shop\Models\Category as CategoryModel;
 use Modules\User\Mappers\Group as GroupMapper;
 use Modules\Shop\Mappers\Items as ItemsMapper;
 
-class Cats extends \Ilch\Controller\Admin
+class Cats extends Admin
 {
     public function init()
     {
@@ -108,7 +109,7 @@ class Cats extends \Ilch\Controller\Admin
 
             $this->redirect(['action' => 'index']);
             
-        } else if ($this->getRequest()->getPost('save') && $this->getRequest()->getPost('positions')) {
+        } elseif ($this->getRequest()->getPost('save') && $this->getRequest()->getPost('positions')) {
             $postData = $this->getRequest()->getPost('positions');
             $positions = explode(',', $postData);
             foreach ($positions as $x => $xValue) {

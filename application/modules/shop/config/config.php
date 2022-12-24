@@ -6,7 +6,10 @@
 
 namespace Modules\Shop\Config;
 
-class Config extends \Ilch\Config\Install
+use Ilch\Config\Database;
+use Ilch\Config\Install;
+
+class Config extends Install
 {
     public $config = [
         'key' => 'shop',
@@ -31,7 +34,7 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
-        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig = new Database($this->db());
         $databaseConfig->set('shop_currency', '1');
     }
 

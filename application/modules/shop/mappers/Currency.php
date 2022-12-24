@@ -6,9 +6,11 @@
 
 namespace Modules\Shop\Mappers;
 
+use Ilch\Database\Mysql\Result;
+use Ilch\Mapper;
 use Modules\Shop\Models\Currency as CurrencyModel;
 
-class Currency extends \Ilch\Mapper
+class Currency extends Mapper
 {
     /**
      * Gets the currencies.
@@ -56,7 +58,7 @@ class Currency extends \Ilch\Mapper
      * Checks if a currency with a specific name exists.
      *
      * @param string $name
-     * @return boolean
+     * @return bool
      */
     public function currencyWithNameExists($name)
     {
@@ -87,8 +89,8 @@ class Currency extends \Ilch\Mapper
     /**
      * Deletes the currency by id.
      *
-     * @param integer $id
-     * @return \Ilch\Database\Mysql\Result|int
+     * @param int $id
+     * @return Result|int
      */
     public function deleteCurrencyById($id)
     {

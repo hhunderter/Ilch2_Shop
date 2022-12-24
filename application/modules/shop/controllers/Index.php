@@ -6,6 +6,9 @@
 
 namespace Modules\Shop\Controllers;
 
+use Ilch\Controller\Frontend;
+use Ilch\Date;
+use Ilch\Mail;
 use Modules\Admin\Mappers\Emails as EmailsMapper;
 use Modules\Shop\Mappers\Category as CategoryMapper;
 use Modules\Shop\Mappers\Currency as CurrencyMapper;
@@ -16,7 +19,7 @@ use Modules\Shop\Mappers\Settings as SettingsMapper;
 use Modules\User\Mappers\User as UserMapper;
 use Ilch\Validation;
 
-class Index extends \Ilch\Controller\Frontend
+class Index extends Frontend
 {
     public function indexAction()
     {
@@ -61,19 +64,17 @@ class Index extends \Ilch\Controller\Frontend
             }
 
             $shopItems = $itemsMapper->getShopItems(['cat_id' => $this->getRequest()->getParam('catId'), 'status' => 1]);
+        } elseif (!empty($categories)) {
+            $this->getLayout()->header()->css('static/css/style_front.css');
+            $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
+                ->add($categories[0]->getTitle(), ['action' => 'index', 'catId' => $categories[0]->getId()]);
+            $shopItems = $itemsMapper->getShopItems(['cat_id' => $categories[0]->getId(), 'status' => 1]);
+            $this->getView()->set('firstCatId', $categories[0]->getId());
         } else {
-            if (!empty($categories)) {
-                $this->getLayout()->header()->css('static/css/style_front.css');
-                $this->getLayout()->getHmenu()
-                    ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
-                    ->add($categories[0]->getTitle(), ['action' => 'index', 'catId' => $categories[0]->getId()]);
-                $shopItems = $itemsMapper->getShopItems(['cat_id' => $categories[0]->getId(), 'status' => 1]);
-                $this->getView()->set('firstCatId', $categories[0]->getId());
-            } else {
-                $this->getLayout()->header()->css('static/css/style_front.css');
-                $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuShops'), ['action' => 'index']);
-                $shopItems = $itemsMapper->getShopItems(['status' => 1]);
-            }
+            $this->getLayout()->header()->css('static/css/style_front.css');
+            $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuShops'), ['action' => 'index']);
+            $shopItems = $itemsMapper->getShopItems(['status' => 1]);
         }
 
         $this->getView()->set('categories', $categories);
@@ -114,9 +115,9 @@ class Index extends \Ilch\Controller\Frontend
         $emailsMapper = new EmailsMapper();
         $currencyMapper = new CurrencyMapper();
         $itemsMapper = new ItemsMapper();
-        $ordersMapper = new OrdersMapper;
+        $ordersMapper = new OrdersMapper();
         $settingsMapper = new SettingsMapper();
-        $ilchDate = new \Ilch\Date;
+        $ilchDate = new Date();
         $captchaNeeded = captchaNeeded();
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
 
@@ -157,12 +158,12 @@ class Index extends \Ilch\Controller\Frontend
                 $arrayOrder = $this->getRequest()->getPost('order');
                 $arrayOrder = json_decode(str_replace("'", '"', $arrayOrder), true);
                 foreach ($arrayOrder as $product) {
-                    $itemsMapper->updateStock($product["id"], $product["quantity"]);
+                    $itemsMapper->updateStock($product['id'], $product['quantity']);
                 }
 
                 // Send confirmation email.
                 $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
-                $date = new \Ilch\Date();
+                $date = new Date();
                 $mailContent = $emailsMapper->getEmail('shop', 'order_confirmed_mail', $this->getTranslator()->getLocale());
                 $name = $this->getLayout()->escape($model->getLastname());
 
@@ -182,7 +183,7 @@ class Index extends \Ilch\Controller\Frontend
                 ];
                 $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
-                $mail = new \Ilch\Mail();
+                $mail = new Mail();
                 $mail->setFromName($siteTitle)
                     ->setFromEmail($this->getConfig()->get('standardMail'))
                     ->setToName($name)

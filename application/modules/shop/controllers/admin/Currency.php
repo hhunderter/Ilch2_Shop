@@ -6,11 +6,12 @@
 
 namespace Modules\Shop\Controllers\Admin;
 
+use Ilch\Controller\Admin;
 use Modules\Shop\Mappers\Currency as CurrencyMapper;
 use Modules\Shop\Models\Currency as CurrencyModel;
 use Ilch\Validation;
 
-class Currency extends \Ilch\Controller\Admin
+class Currency extends Admin
 {
     public function init()
     {
@@ -118,20 +119,11 @@ class Currency extends \Ilch\Controller\Admin
                     ->add($this->getTranslator()->trans('add'), ['action' => 'treat', 'id' => 'treat']);
         }
 
-        $post = [
-            'id' => '',
-            'name' => ''
-        ];
-
         if ($this->getRequest()->isPost() && $this->getRequest()->isSecure()) {
             $post = [
                 'id' => $this->getRequest()->getPost('id'),
                 'name' => trim($this->getRequest()->getPost('name'))
             ];
-
-            if (!$this->getRequest()->getParam('id')) {
-                $idValidators = 'numeric|integer|min:1';
-            }
 
             $validation = Validation::create($post, [
                 'id' => 'required|numeric|integer|min:1',

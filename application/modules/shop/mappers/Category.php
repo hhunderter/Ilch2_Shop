@@ -6,9 +6,11 @@
 
 namespace Modules\Shop\Mappers;
 
+use Ilch\Database\Exception;
+use Ilch\Mapper;
 use Modules\Shop\Models\Category as CategoryModel;
 
-class Category extends \Ilch\Mapper
+class Category extends Mapper
 {
     /**
      * Gets categories.
@@ -129,7 +131,7 @@ class Category extends \Ilch\Mapper
      *
      * @param int $catId
      * @param string $readAccess example: "1,2,3"
-     * @throws \Ilch\Database\Exception
+     * @throws Exception
      */
     private function saveReadAccess(int $catId, string $readAccess)
     {
@@ -169,7 +171,7 @@ class Category extends \Ilch\Mapper
     /**
      * Deletes category with given id.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function delete($id)
     {

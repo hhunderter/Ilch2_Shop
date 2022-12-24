@@ -1,3 +1,7 @@
+<?php
+$shopImgPath = '/application/modules/shop/static/img/';
+?>
+
 <link href="<?=$this->getModuleUrl('static/css/shop_admin.css') ?>" rel="stylesheet">
 
 <h1>
@@ -163,13 +167,11 @@
                            placeholder="<?=($this->escape($this->get('settings')->getFixTax()) != '') ? $this->escape($this->get('settings')->getFixTax()) : '' ?>"
                            value="<?php if ($this->get('shopItem') != '') {
                                    echo $this->escape($this->get('shopItem')->getTax());
-                               } else {
-                                   if ($this->escape($this->originalInput('tax'))) {
-                                       echo $this->escape($this->originalInput('tax'));
-                                   } else {
-                                       echo $this->escape($this->get('settings')->getFixTax());
-                                   }
-                               } ?>" />
+                               } elseif ($this->escape($this->originalInput('tax'))) {
+                               echo $this->escape($this->originalInput('tax'));
+                           } else {
+                               echo $this->escape($this->get('settings')->getFixTax());
+                           } ?>" />
                     <span class="input-group-addon">
                         <b><?=$this->getTrans('percent') ?> (%)</b>
                     </span>
@@ -194,13 +196,11 @@
                            placeholder="<?=($this->escape($this->get('settings')->getFixShippingCosts()) != '') ? $this->escape($this->get('settings')->getFixShippingCosts()) : '' ?>"
                            value="<?php if ($this->get('shopItem') != '') {
                                    echo $this->escape($this->get('shopItem')->getShippingCosts());
-                               } else {
-                                   if ($this->escape($this->originalInput('shippingCosts'))) {
-                                       echo $this->escape($this->originalInput('shippingCosts'));
-                                   } else {
-                                       echo $this->escape($this->get('settings')->getFixShippingCosts());
-                                   }
-                               } ?>" />
+                               } elseif ($this->escape($this->originalInput('shippingCosts'))) {
+                               echo $this->escape($this->originalInput('shippingCosts'));
+                           } else {
+                               echo $this->escape($this->get('settings')->getFixShippingCosts());
+                           } ?>" />
                     <span class="input-group-addon">
                         <b><?=$this->escape($this->get('currency')) ?></b>
                     </span>
@@ -222,13 +222,11 @@
                            placeholder="<?=($this->escape($this->get('settings')->getFixShippingTime()) != '') ? $this->escape($this->get('settings')->getFixShippingTime()) : '' ?>"
                            value="<?php if ($this->get('shopItem') != '') {
                                    echo $this->escape($this->get('shopItem')->getShippingTime());
-                               } else {
-                                   if ($this->escape($this->originalInput('shippingTime'))) {
-                                       echo $this->escape($this->originalInput('shippingTime'));
-                                   } else {
-                                       echo $this->escape($this->get('settings')->getFixShippingTime());
-                                   }
-                               } ?>" />
+                               } elseif ($this->escape($this->originalInput('shippingTime'))) {
+                               echo $this->escape($this->originalInput('shippingTime'));
+                           } else {
+                               echo $this->escape($this->get('settings')->getFixShippingTime());
+                           } ?>" />
                     <span class="input-group-addon">
                         <b><?=$this->getTrans('days') ?></b>
                     </span>
@@ -243,7 +241,7 @@
             <div class="col-lg-5">
                 <div class="input-group">
                     <span class="input-group-addon">
-                        <?php $shopImgPath = '/application/modules/shop/static/img/';
+                        <?php
                         if ($this->get('shopItem') != '' && $this->get('shopItem')->getImage() && file_exists(ROOT_PATH.'/'.$this->get('shopItem')->getImage())) {
                             $img = BASE_URL.'/'.$this->get('shopItem')->getImage();
                         } else {
@@ -280,7 +278,7 @@
             <div class="col-lg-5">
                 <div class="input-group">
                     <span class="input-group-addon">
-                        <?php $shopImgPath = '/application/modules/shop/static/img/';
+                        <?php
                         if ($this->get('shopItem') != '' && $this->get('shopItem')->getImage1() && file_exists(ROOT_PATH.'/'.$this->get('shopItem')->getImage1())) {
                             $img1 = BASE_URL.'/'.$this->get('shopItem')->getImage1();
                         } else {
@@ -317,7 +315,7 @@
             <div class="col-lg-5">
                 <div class="input-group">
                     <span class="input-group-addon">
-                        <?php $shopImgPath = '/application/modules/shop/static/img/';
+                        <?php
                         if ($this->get('shopItem') != '' && $this->get('shopItem')->getImage2() && file_exists(ROOT_PATH.'/'.$this->get('shopItem')->getImage2())) {
                             $img2 = BASE_URL.'/'.$this->get('shopItem')->getImage2();
                         } else {
@@ -354,7 +352,7 @@
             <div class="col-lg-5">
                 <div class="input-group">
                     <span class="input-group-addon">
-                        <?php $shopImgPath = '/application/modules/shop/static/img/';
+                        <?php
                         if ($this->get('shopItem') != '' && $this->get('shopItem')->getImage3() && file_exists(ROOT_PATH.'/'.$this->get('shopItem')->getImage3())) {
                             $img3 = BASE_URL.'/'.$this->get('shopItem')->getImage3();
                         } else {
