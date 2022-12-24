@@ -204,7 +204,7 @@ if(!empty($_SESSION['shopping_cart'])) {
                                 <img src="<?=$img ?>" alt="<?=$this->escape($itemName) ?>"/>
                             </td>
                             <td data-label="<?=$this->getTrans('productName') ?>">
-                                <b><?=$itemName; ?></b><br /><small><?=$itemNumber; ?></small>
+                                <b><?=$this->escape($itemName); ?></b><br /><small><?=$this->escape($itemNumber); ?></small>
                             </td>
                             <td data-label="<?=$this->getTrans('singlePrice') ?> (<?=$this->getTrans('withoutTax') ?>)">
                                 <?=number_format($itemPriceWithoutTax, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?>

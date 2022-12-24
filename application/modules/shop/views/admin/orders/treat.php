@@ -115,7 +115,7 @@ $settingsMapper = $this->get('settingsMapper');
                 <tr>
                     <td><img src="<?=$img ?>" class="item_image" alt="<?=$this->escape($itemName) ?>"> </td>
                     <td>
-                        <b><?=$itemName; ?></b><br /><small><?=$itemNumber; ?></small>
+                        <b><?=$this->escape($itemName); ?></b><br /><small><?=$this->escape($itemNumber); ?></small>
                     </td>
                     <td><?=$itemShippingTime ?> <?=$this->getTrans('days') ?></td>
                     <td>

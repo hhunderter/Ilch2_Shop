@@ -24,7 +24,7 @@
             <select class="chosen-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
                 <?php foreach ($this->get('userGroupList') as $groupList): ?>
                     <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->get('groups'))) ? ' selected' : '' ?>>
-                        <?=$groupList->getName() ?>
+                        <?=$this->escape($groupList->getName()) ?>
                     </option>
                 <?php endforeach; ?>
             </select>

@@ -142,7 +142,7 @@ if(!empty($_SESSION['shopping_cart'])) {
                 <?php if ($shopItem->getStock() >= 1) { ?>
                     <form class="form" method="post" action="#shopAnker">
                         <?=$this->getTokenField() ?>
-                        <input type="hidden" name="code" value="<?=$shopItem->getCode() ?>" />
+                        <input type="hidden" name="code" value="<?=$this->escape($shopItem->getCode()) ?>" />
                         <input type="hidden" name="itemid" value="<?=$shopItem->getId() ?>" />
                         <button type="submit" class="btn btn-sm btn-warning">
                             <small><?=$this->getTrans('inToCart') ?> <i class="fas fa-shopping-cart"></i></small>

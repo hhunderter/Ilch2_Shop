@@ -84,14 +84,14 @@ if(!empty($_SESSION['shopping_cart'])) {
                     <td data-label="<?=$this->getTrans('remove') ?>" class="text-center">
                         <form method="post" action="#shopAnker">
                             <?=$this->getTokenField() ?>
-                            <input type="hidden" name="code" value="<?=$itemCode; ?>" />
-                            <input type="hidden" name="name" value="<?=$itemName; ?>" />
+                            <input type="hidden" name="code" value="<?=$this->escape($itemCode); ?>" />
+                            <input type="hidden" name="name" value="<?=$this->escape($itemName); ?>" />
                             <input type="hidden" name="action" value="remove" />
                             <button type="submit" class="btn btn-sm btn-default far fa-trash-alt remove"></button>
                         </form>
                     </td>
                     <td data-label="<?=$this->getTrans('productName') ?>">
-                        <b><?=$itemName; ?></b><br /><small><?=$itemNumber; ?></small>
+                        <b><?=$this->escape($itemName); ?></b><br /><small><?=$this->escape($itemNumber); ?></small>
                     </td>
                     <td data-label="<?=$this->getTrans('singlePrice') ?> (<?=$this->getTrans('withTax') ?>)">
                         <?=number_format($itemPrice, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?>
@@ -99,7 +99,7 @@ if(!empty($_SESSION['shopping_cart'])) {
                     <td data-label="<?=$this->getTrans('entries') ?>" class="text-center">
                         <form method="post" action="#shopAnker" class="quantity">
                             <?=$this->getTokenField() ?>
-                            <input type="hidden" name="code" value="<?=$itemCode; ?>" />
+                            <input type="hidden" name="code" value="<?=$this->escape($itemCode); ?>" />
                             <input type="hidden" name="action" value="change" />
                             <div class="input-group">
                                 <input type="hidden" name="maxStock" value="<?=$itemMaxStock; ?>" />
