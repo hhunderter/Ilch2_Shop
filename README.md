@@ -19,7 +19,6 @@ _Small Shop Module for CMS Ilch 2_
 **Todo:**
 - Größen- / Farbangaben
 - PayPal / Bezahlmethoden einbinden
-- Kaufbestätigung (E-Mail, PDF…)
  
 **Erledigte Hinweise:**
 - Direkter Aufruf des Produktes mit Klick auf Bild
@@ -32,6 +31,7 @@ _Small Shop Module for CMS Ilch 2_
 - Verhinderung der Preismanipulation bei der POST-Übergabe
 - Einheitenangabe
 - Abweichende Lieferadresse
+- Kaufbestätigung (E-Mail, PDF…)
  
 **Frontend**
 - Navigation

@@ -199,4 +199,6 @@ return [
     'withTax' => 'VAT included',
     'withoutTax' => 'without VAT',
     'yellow' => 'Yellow',
+    'confirmTransferBackToStock' => 'Do you want to transfer the item back to the stock?',
+    'confirmRemoveFromStock' => 'Do you want to remove the item from the stock?',
 ];

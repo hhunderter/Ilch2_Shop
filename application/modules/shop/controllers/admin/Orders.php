@@ -124,9 +124,11 @@ class Orders extends Admin
             ->add($this->getTranslator()->trans('manage'), ['action' => 'treat', 'id' => 'treat']);
 
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
+        $order = null;
 
         if ($this->getRequest()->getParam('id')) {
-            $this->getView()->set('order', $ordersMapper->getOrdersById($this->getRequest()->getParam('id')));
+            $order = $ordersMapper->getOrdersById($this->getRequest()->getParam('id'));
+            $this->getView()->set('order', $order);
             $this->getView()->set('currency', $currency->getName());
             $this->getView()->set('itemsMapper', $itemsMapper);
             $this->getView()->set('ordersMapper', $ordersMapper);
@@ -140,6 +142,18 @@ class Orders extends Admin
                 $model->setId($this->getRequest()->getPost('id'));
                 $model->setStatus($this->getRequest()->getPost('status'));
                 $ordersMapper->updateStatus($model);
+                $items = json_decode(str_replace("'", '"', $order->getOrder()), true);
+
+                if ($this->getRequest()->getPost('status') == 2 && $this->getRequest()->getPost('confirmTransferBackToStock') === 'true') {
+                    foreach ($items as $item) {
+                        $itemsMapper->addStock($item['id'], $item['quantity']);
+                    }
+                } elseif ($this->getRequest()->getPost('status') != 2 && $this->getRequest()->getPost('confirmRemoveFromStock') === 'true') {
+                    foreach ($items as $item) {
+                        $itemsMapper->removeStock($item['id'], $item['quantity']);
+                    }
+                }
+
                 $this->redirect(['action' => 'treat', 'id' => $this->getRequest()->getPost('id')]);
             }
 

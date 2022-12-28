@@ -199,4 +199,6 @@ return [
     'withTax' => 'inkl. USt.',
     'withoutTax' => 'ohne USt.',
     'yellow' => 'Gelb',
+    'confirmTransferBackToStock' => 'Möchten Sie die Artikel zurück in den Warenbestand buchen?',
+    'confirmRemoveFromStock' => 'Möchten Sie die Artikel vom Warenbestand abbuchen?',
 ];

@@ -185,6 +185,8 @@ $settingsMapper = $this->get('settingsMapper');
     <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <input type="hidden" name="id" value="<?=$order->getId() ?>" />
+    <input type="hidden" name="confirmTransferBackToStock" value="false" />
+    <input type="hidden" name="confirmRemoveFromStock" value="false" />
         <table class="table table-striped">
             <tr>
                 <th><?=$this->getTrans('adjustStatus') ?></th>
@@ -528,3 +530,17 @@ $settingsMapper = $this->get('settingsMapper');
         <i class="fas fa-backward"></i> <?=$this->getTrans('back') ?>
     </a>
 <?php endif; ?>
+
+<script>
+    let currentStatus = <?=($this->get('order') != '') ? $this->get('order')->getStatus() : null ?>;
+
+    $("button[name='status'][value=2]").click(function() {
+        $("input[name='confirmTransferBackToStock']").val(confirm('<?=$this->getTrans('confirmTransferBackToStock') ?>'));
+    });
+
+    $("button[name='status'][value!=2]").click(function() {
+        if (currentStatus === 2) {
+            $("input[name='confirmRemoveFromStock']").val(confirm('<?=$this->getTrans('confirmRemoveFromStock') ?>'));
+        }
+    });
+</script>

@@ -128,12 +128,27 @@ class Items extends Mapper
     }
 
     /**
-     * Update item stock model.
+     * Update item stock. Sets the stock to a specific quantity.
      *
-     * @param $id
-     * @param $orderStock
+     * @param int $id
+     * @param int $newStock
      */
-    public function updateStock($id, $orderStock)
+    public function updateStock(int $id, int $newStock)
+    {
+        $this->db()->update('shop_items')
+            ->values(['stock' => $newStock])
+            ->where(['id' => $id])
+            ->execute();
+    }
+
+    /**
+     * Add stock. Increases the stock by a specific quantity.
+     *
+     * @param int $id
+     * @param int $quantity
+     * @return void
+     */
+    public function addStock(int $id, int $quantity)
     {
         $dbStock = $this->db()->select('stock')
             ->from('shop_items')
@@ -141,12 +156,29 @@ class Items extends Mapper
             ->execute()
             ->fetchCell();
 
-        $newStock = $dbStock - $orderStock;
-        
-        $this->db()->update('shop_items')
-            ->values(['stock' => $newStock])
+        $newStock = $dbStock + $quantity;
+
+        $this->updateStock($id, $newStock);
+    }
+
+    /**
+     * Remove stock. Decreases the stock by a specific quantity.
+     *
+     * @param int $id
+     * @param int $quantity
+     * @return void
+     */
+    public function removeStock(int $id, int $quantity)
+    {
+        $dbStock = $this->db()->select('stock')
+            ->from('shop_items')
             ->where(['id' => $id])
-            ->execute();
+            ->execute()
+            ->fetchCell();
+
+        $newStock = $dbStock - $quantity;
+
+        $this->updateStock($id, $newStock);
     }
 
     /**

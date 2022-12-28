@@ -154,11 +154,11 @@ class Index extends Frontend
                 $model->setEmail($this->getRequest()->getPost('email'));
                 $model->setOrder($this->getRequest()->getPost('order'));
                 $ordersMapper->save($model);
-                
+
                 $arrayOrder = $this->getRequest()->getPost('order');
                 $arrayOrder = json_decode(str_replace("'", '"', $arrayOrder), true);
                 foreach ($arrayOrder as $product) {
-                    $itemsMapper->updateStock($product['id'], $product['quantity']);
+                    $itemsMapper->removeStock($product['id'], $product['quantity']);
                 }
 
                 // Send confirmation email.
