@@ -57,7 +57,15 @@ class Config extends Install
 
     public function getInstallSql()
     {
-        return 'CREATE TABLE IF NOT EXISTS `[prefix]_shop_access` (
+
+        return 'CREATE TABLE IF NOT EXISTS `[prefix]_shop_cats` (
+                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+                    `pos` INT(11) NOT NULL,
+                    `title` VARCHAR(100) NOT NULL,
+                    PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_shop_access` (
                     `cat_id` INT(11) NOT NULL,
                     `group_id` INT(11) NOT NULL,
                     PRIMARY KEY (`cat_id`, `group_id`) USING BTREE,
@@ -65,13 +73,6 @@ class Config extends Install
                     CONSTRAINT `FK_[prefix]_shop_access_[prefix]_shop_cats` FOREIGN KEY (`cat_id`) REFERENCES `[prefix]_shop_cats` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
                     CONSTRAINT `FK_[prefix]_shop_access_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-                CREATE TABLE IF NOT EXISTS `[prefix]_shop_cats` (
-                    `id` INT(11) NOT NULL AUTO_INCREMENT,
-                    `pos` INT(11) NOT NULL,
-                    `title` VARCHAR(100) NOT NULL,
-                    PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_shop_currencies` (
                     `id` INT(14) NOT NULL AUTO_INCREMENT,
