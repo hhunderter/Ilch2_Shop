@@ -25,6 +25,11 @@
                 <i class="fas fa-gavel"></i> <b><?=$this->getTrans('menuSettingAGB') ?></b>
             </a>
         </li>
+        <li>
+            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'payment']) ?>">
+                <i class="fas fa-money-bill"></i> <?=$this->getTrans('menuSettingPayment') ?>
+            </a>
+        </li>
     </ul>
     <br />
     <div class="form-group <?=$this->validation()->hasError('settingsAGB') ? 'has-error' : '' ?>">

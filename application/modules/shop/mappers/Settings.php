@@ -50,6 +50,7 @@ class Settings extends Mapper
         $model->setFixTax($serverRow['fixTax']);
         $model->setFixShippingCosts($serverRow['fixShippingCosts']);
         $model->setFixShippingTime($serverRow['fixShippingTime']);
+        $model->setClientID($serverRow['paymentClientID']);
 
         return $model;
     }
@@ -130,4 +131,19 @@ class Settings extends Mapper
             ->execute();
     }
 
+    /**
+     *
+     *
+     * @param SettingsModel $settingPayment
+     * @return void
+     */
+    public function updateSettingPayment(SettingsModel $settingPayment)
+    {
+        $this->db()->update('shop_settings')
+            ->values([
+                'paymentClientID' => $settingPayment->getClientID()
+            ])
+            ->where(['id' => '1'])
+            ->execute();
+    }
 }

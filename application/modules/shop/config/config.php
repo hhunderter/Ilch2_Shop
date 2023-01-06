@@ -57,7 +57,6 @@ class Config extends Install
 
     public function getInstallSql()
     {
-
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_shop_cats` (
                     `id` INT(11) NOT NULL AUTO_INCREMENT,
                     `pos` INT(11) NOT NULL,
@@ -144,6 +143,7 @@ class Config extends Install
                     `fixShippingTime` INT(11) NOT NULL,
                     `invoiceTextTop` MEDIUMTEXT NOT NULL,
                     `invoiceTextBottom` MEDIUMTEXT NOT NULL,
+                    `paymentClientID` VARCHAR(250) NOT NULL,
                     PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
@@ -261,6 +261,7 @@ class Config extends Install
 
                 $this->db()->query('ALTER TABLE `[prefix]_shop_orders` ADD COLUMN `invoicefilename` VARCHAR(250) NOT NULL AFTER `order`;');
                 $this->db()->query('ALTER TABLE `[prefix]_shop_orders` ADD COLUMN `datetimeInvoiceSent` DATETIME NOT NULL AFTER `invoicefilename`;');
+                $this->db()->query('ALTER TABLE `[prefix]_shop_settings` ADD COLUMN `paymentClientID` VARCHAR(250) NOT NULL AFTER `invoiceTextBottom`;');
 
                 // Create new table for category read access.
                 $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_shop_access` (

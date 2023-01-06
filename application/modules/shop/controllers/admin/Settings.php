@@ -231,4 +231,19 @@ class Settings extends Admin
         $this->getView()->set('settings', $settingsMapper->getSettings());
     }
 
+    public function paymentAction()
+    {
+        $settingsMapper = new SettingsMapper();
+        $currencyMapper = new CurrencyMapper();
+
+        $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
+
+        $this->getLayout()->getAdminHmenu()
+            ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettingPayment'), ['action' => 'payment']);
+
+        $this->getView()->set('settings', $settingsMapper->getSettings());
+        $this->getView()->set('currency', $currency->getName());
+    }
 }

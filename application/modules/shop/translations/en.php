@@ -77,6 +77,7 @@ return [
     'infoDeleteOrder' => 'This order will be irrevocably deleted!',
     'infoFormOrder' => 'please provide the required shipping information to complete the purchase. This information will be deleted when the purchase is completed.',
     'infoLogin' => 'Please log in first or register on our site.',
+    'warningUnencryptedConnection' => 'It looks like you are serving this online shop unencrypted. It is strongly adviced to use HTTPS, because you will unavoidably transfer sensitive data.',
     'infoNewOrders' => 'There are new and unprocessed orders.',
     'infoNoOrder' => 'There are no orders.',
     'infoOrderCanceled' => 'The order has been canceled.',
@@ -201,4 +202,8 @@ return [
     'yellow' => 'Yellow',
     'confirmTransferBackToStock' => 'Do you want to transfer the item back to the stock?',
     'confirmRemoveFromStock' => 'Do you want to remove the item from the stock?',
+    'menuSettingPayment' => 'Method of payment',
+    'clientID' => 'Client ID',
+    'settingsPaypalAdvanced' => 'Enable Paypal Checkout Advanced?',
+    'menuPayment' => 'Method of payment',
 ];

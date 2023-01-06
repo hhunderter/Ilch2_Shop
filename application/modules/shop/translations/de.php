@@ -77,6 +77,7 @@ return [
     'infoDeleteOrder' => 'Diese Bestellung wird unwiderruflich gelöscht!',
     'infoFormOrder' => 'bitte geben Sie zur Kaufabwicklung die benötigten Versanddaten an. Diese Informationen werden mit Kaufabschluss wieder gelöscht.',
     'infoLogin' => 'Bitte loggen Sie sich erst ein oder registrieren Sie sich auf unserer Seite.',
+    'warningUnencryptedConnection' => 'Es scheint als würden Sie diesen Online-Shop unverschlüsselt betreiben. Da bei einem Online-Shop zwangsläufig vertrauenswürdige Daten übertragen werden, wird dringend empfohlen, dass Sie HTTPS nutzen.',
     'infoNewOrders' => 'Es gibt neue und unbearbeitete Bestellungen.',
     'infoNoOrder' => 'Es liegen keine Bestellungen vor.',
     'infoOrderCanceled' => 'Die Bestellung wurde storniert.',
@@ -201,4 +202,8 @@ return [
     'yellow' => 'Gelb',
     'confirmTransferBackToStock' => 'Möchten Sie die Artikel zurück in den Warenbestand buchen?',
     'confirmRemoveFromStock' => 'Möchten Sie die Artikel vom Warenbestand abbuchen?',
+    'menuSettingPayment' => 'Bezahlmethoden',
+    'clientID' => 'Client ID',
+    'settingsPaypalAdvanced' => 'Aktiviere Paypal Checkout Advanced?',
+    'menuPayment' => 'Bezahlmethoden',
 ];

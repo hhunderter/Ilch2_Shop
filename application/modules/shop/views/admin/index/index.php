@@ -8,13 +8,20 @@ $countNewOrders = count($this->get('orders')->getOrders(['status'=>'0']));
 $countWorkOrders = count($this->get('orders')->getOrders(['status'=>'1']));
 $countCancelOrders = count($this->get('orders')->getOrders(['status'=>'2']));
 $countDoneOrders = count($this->get('orders')->getOrders(['status'=>'3']));
+?>
 
-if ($countNewOrders > 0) { ?>
+<?php if (str_starts_with($this->getURL(), 'http')) : ?>
+    <div class="alert alert-danger">
+        <b><?=$this->getTrans('warningUnencryptedConnection') ?></b>
+    </div>
+<?php endif; ?>
+
+<?php if ($countNewOrders > 0) : ?>
     <div class="alert alert-danger">
         <i class="fa fa-plus-square" aria-hidden="true"></i>
         <b> &nbsp; <?=$this->getTrans('infoNewOrders') ?></b>
     </div>
-<?php } ?>
+<?php endif; ?>
 
 <div class="row">
     <div class="col-sm-12 col-md-6">

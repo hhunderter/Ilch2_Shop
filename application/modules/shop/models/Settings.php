@@ -158,6 +158,13 @@ class Settings extends Model
     protected $fixShippingTime;
 
     /**
+     * The paypal client id of the settings.
+     *
+     * @var string
+     */
+    protected $clientID;
+
+    /**
      * Gets the id of the settings.
      *
      * @return int
@@ -577,4 +584,19 @@ class Settings extends Model
         $this->fixShippingTime = (int)$fixShippingTime;
     }
 
+    /**
+     * @return string
+     */
+    public function getClientID(): string
+    {
+        return $this->clientID;
+    }
+
+    /**
+     * @param string $clientID
+     */
+    public function setClientID(string $clientID): void
+    {
+        $this->clientID = $clientID;
+    }
 }
