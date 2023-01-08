@@ -587,7 +587,7 @@ class Settings extends Model
     /**
      * @return string
      */
-    public function getClientID(): string
+    public function getClientID(): ?string
     {
         return $this->clientID;
     }

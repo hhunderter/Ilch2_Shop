@@ -43,6 +43,8 @@ return [
     'country' => 'Country',
     'createPDF' => 'CREATE A PDF',
     'currency' => 'Currency',
+    'currencyCode' => 'Code (ISO 4217)',
+    'currencyCodeInfo' => 'These are three letter acronyms. ISO 4217 is a standard published by the International Organization for Standardization (ISO) that defines alpha codes and numeric codes for the representation of currencies and provides information about the relationships between individual currencies and their minor units.',
     'currencyInUse' => 'This currency is currently in use and therefore cannot be deleted.',
     'currentlySoldOut' => 'Currently sold out',
     'date' => 'Date',
@@ -204,6 +206,7 @@ return [
     'confirmRemoveFromStock' => 'Do you want to remove the item from the stock?',
     'menuSettingPayment' => 'Method of payment',
     'clientID' => 'Client ID',
+    'clientIDInfo' => 'A newly created PayPal Business account is automatically in a sandbox mode. In this mode you can test purchases without having real transactions. If you confirmed your settings you can switch to the live mode. In this mode everything is real.',
     'settingsPaypalAdvanced' => 'Enable Paypal Checkout Advanced?',
     'menuPayment' => 'Method of payment',
 ];

@@ -43,6 +43,8 @@ return [
     'country' => 'Land',
     'createPDF' => 'PDF ERSTELLEN',
     'currency' => 'Währung',
+    'currencyCode' => 'Code (ISO 4217)',
+    'currencyCodeInfo' => 'Die Abkürzungen umfassen jeweils drei Buchstaben. ISO 4217 ist die von der Internationalen Organisation für Normung publizierte Norm für Währungs-Kurzzeichen, die im internationalen Zahlungsverkehr zur eindeutigen Identifizierung benutzt werden sollen.',
     'currencyInUse' => 'Diese Währung wird zurzeit verwendet und kann daher nicht gelöscht werden.',
     'currentlySoldOut' => 'Aktuell ausverkauft',
     'date' => 'Datum',
@@ -204,6 +206,7 @@ return [
     'confirmRemoveFromStock' => 'Möchten Sie die Artikel vom Warenbestand abbuchen?',
     'menuSettingPayment' => 'Bezahlmethoden',
     'clientID' => 'Client ID',
+    'clientIDInfo' => 'Ein neu erstellter PayPal Händleraccount ist automatisch im Sandbox-Modus. In diesem Modus können z.B. Testkäufe durchgeführt werden. Sind Sie sich mit den Einstellungen sicher, wechseln Sie in den Live-Modus. Ab dann sind alle Einkäufe real.',
     'settingsPaypalAdvanced' => 'Aktiviere Paypal Checkout Advanced?',
     'menuPayment' => 'Bezahlmethoden',
 ];

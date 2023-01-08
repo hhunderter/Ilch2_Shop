@@ -37,12 +37,17 @@
             <?=$this->getTrans('clientID') ?>:
         </label>
         <div class="col-lg-3">
-            <input type="text"
-                   class="form-control"
-                   id="clientID"
-                   name="clientID"
-                   placeholder="<?=$this->getTrans('clientID') ?>"
-                   value="<?=($this->escape($this->get('settings')->getClientID()) != '') ? $this->escape($this->get('settings')->getClientID()) : $this->escape($this->originalInput('clientID')) ?>" />
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <span class="fas fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('clientIDInfo') ?>"></span>
+                </span>
+                <input type="text"
+                       class="form-control"
+                       id="clientID"
+                       name="clientID"
+                       placeholder="<?=$this->getTrans('clientID') ?>"
+                       value="<?=($this->escape($this->get('settings')->getClientID()) != '') ? $this->escape($this->get('settings')->getClientID()) : $this->escape($this->originalInput('clientID')) ?>" />
+            </div>
         </div>
     </div>
     <div class="form-group">
@@ -61,3 +66,13 @@
     </div>
     <?=$this->getSaveBar('saveButton') ?>
 </form>
+
+<script>
+    $(function () {
+        $('[data-toggle="event-popover"]').popover({
+            container: 'body',
+            trigger: 'hover',
+            placement: 'top',
+        });
+    });
+</script>

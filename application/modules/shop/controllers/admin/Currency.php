@@ -122,32 +122,42 @@ class Currency extends Admin
         if ($this->getRequest()->isPost() && $this->getRequest()->isSecure()) {
             $post = [
                 'id' => $this->getRequest()->getPost('id'),
-                'name' => trim($this->getRequest()->getPost('name'))
+                'name' => trim($this->getRequest()->getPost('name')),
+                'code' => trim($this->getRequest()->getPost('code'))
             ];
 
-            $validation = Validation::create($post, [
-                'id' => 'required|numeric|integer|min:1',
-                'name' => 'required'
-            ]);
+            $rules = [
+                'name' => 'required',
+                'code' => 'required|size:3'
+            ];
+
+            if ($this->getRequest()->getParam('id')) {
+                $rules['id'] = 'required|numeric|integer|min:1';
+            }
+            $validation = Validation::create($post, $rules);
 
             if ($validation->isValid()) {
-                if ($currencyMapper->currencyWithNameExists($post['name'])) {
-                    $this->addMessage('alreadyExisting', 'danger');
-                } else {
-                    $currencyModel = new CurrencyModel();
+                $currencyModel = new CurrencyModel();
+                if (!empty($post['id'])) {
                     $currencyModel->setId($post['id']);
-                    $currencyModel->setName($post['name']);
-                    
-                    $currencyMapper->save($currencyModel);
-                    $this->addMessage('saveSuccess');
-                    $this->redirect(['action' => 'index']);
                 }
+                $currencyModel->setName($post['name']);
+                $currencyModel->setCode($post['code']);
+
+                $currencyMapper->save($currencyModel);
+                $this->addMessage('saveSuccess');
+                $this->redirect(['action' => 'index']);
             } else {
                 $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             }
         }
 
-        $currency = $currencyMapper->getCurrencyById($id);
+        if ($this->getRequest()->getParam('id')) {
+            $currency = $currencyMapper->getCurrencyById($id);
+        } else {
+            $currency = [];
+        }
+
         if (count($currency) > 0) {
             $currency = $currency[0];
         } else {

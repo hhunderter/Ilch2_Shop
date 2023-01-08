@@ -7,7 +7,7 @@
 </h1>
 
 <!-- Replace "test" with your own sandbox Business account app client ID -->
-<script src="https://www.paypal.com/sdk/js?client-id=<?=$this->get('settings')->getClientID() ?>&currency=<?=$this->get('currency')->getName() ?>"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=<?=$this->get('settings')->getClientID() ?>&currency=<?=$this->get('currency')->getCode() ?>"></script>
 <!-- Set up a container element for the button -->
 <div id="paypal-button-container"></div>
 <script>

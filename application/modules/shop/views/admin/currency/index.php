@@ -10,6 +10,7 @@
             <col class="icon_width">
             <col class="icon_width">
             <col>
+            <col>
         </colgroup>
         <thead>
             <tr>
@@ -17,6 +18,7 @@
                 <th></th>
                 <th></th>
                 <th><?=$this->getTrans('currency') ?></th>
+                <th><?=$this->getTrans('currencyCode') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +29,7 @@
                         <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $currency->getId()]) ?></td>
                         <td> <?=$this->getDeleteIcon(['action' => 'delete', 'id' => $currency->getId()]) ?></td>
                         <td><?=$this->escape($currency->getName()) ?></td>
+                        <td><?=$this->escape($currency->getCode()) ?></td>
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>
