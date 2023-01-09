@@ -77,7 +77,7 @@ return [
     'inactive' => 'inactive',
     'infoBuyer' => 'Buyer Information',
     'infoDeleteOrder' => 'This order will be irrevocably deleted!',
-    'infoFormOrder' => 'please provide the required shipping information to complete the purchase. This information will be deleted when the purchase is completed.',
+    'infoFormOrder' => 'please provide the required shipping information to complete the purchase.',
     'infoLogin' => 'Please log in first or register on our site.',
     'warningUnencryptedConnection' => 'It looks like you are serving this online shop unencrypted. It is strongly adviced to use HTTPS, because you will unavoidably transfer sensitive data.',
     'infoNewOrders' => 'There are new and unprocessed orders.',
@@ -209,4 +209,5 @@ return [
     'clientIDInfo' => 'A newly created PayPal Business account is automatically in a sandbox mode. In this mode you can test purchases without having real transactions. If you confirmed your settings you can switch to the live mode. In this mode everything is real.',
     'settingsPaypalAdvanced' => 'Enable Paypal Checkout Advanced?',
     'menuPayment' => 'Method of payment',
+    'paymentInvoiceLink' => 'Pay invoice',
 ];

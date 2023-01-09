@@ -1,5 +1,10 @@
 <?php
     $clientID = ($this->get('settings')->getClientID()) ? null : $this->get('settings')->getClientID();
+    $order = $this->get('order');
+    $body = json_encode([
+        'selector' => $this->get('order')->getSelector(),
+        'order' => $this->get('order')->getOrder(),
+    ]);
 ?>
 
 <h1>
@@ -16,6 +21,7 @@
         createOrder: (data, actions) => {
             return fetch("/api/orders", {
                 method: "post",
+                body: <?=$body ?>
                 // use the "body" param to optionally pass additional order information
                 // like product ids or amount
             })

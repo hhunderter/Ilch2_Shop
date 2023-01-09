@@ -222,6 +222,11 @@ class Orders extends Admin
 
         $id = $this->getRequest()->getParam('id');
         $order = $orderMapper->getOrdersById($id);
+
+        // Generate selector and confirm code for the payment link.
+        $order->setSelector(bin2hex(random_bytes(9)));
+        $order->setConfirmCode(bin2hex(random_bytes(32)));
+
         $shopInvoicePath = '/application/modules/shop/static/invoice/';
         $pathInvoice = ROOT_PATH.$shopInvoicePath.$order->getInvoiceFilename().'.pdf';
         $path_parts = pathinfo($pathInvoice);
@@ -245,6 +250,7 @@ class Orders extends Admin
             '{shopname}' => $this->getLayout()->escape($settingsMapper->getSettings()->getShopName()),
             '{date}' => $date->format('l, d. F Y', true),
             '{name}' => $name,
+            '{paymentLink}' => '<a href="'.BASE_URL.'/index.php/shop/payment/index/selector/'.$order->getSelector().'/code/'.$order->getConfirmCode().'">'.$this->getTranslator()->trans('paymentInvoiceLink').'</a>',
             '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
         ];
         $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);

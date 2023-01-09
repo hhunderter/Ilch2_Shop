@@ -17,7 +17,7 @@ class Orders extends Mapper
      * @param array $where
      * @return OrdersModel[]|[]
      */
-    public function getOrders($where = [])
+    public function getOrders(array $where = [])
     {
         $ordersArray = $this->db()->select('*')
             ->from('shop_orders')
@@ -45,6 +45,8 @@ class Orders extends Mapper
             $orderModel->setOrder($orderRow['order']);
             $orderModel->setInvoiceFilename($orderRow['invoicefilename']);
             $orderModel->setDatetimeInvoiceSent($orderRow['datetimeInvoiceSent']);
+            $orderModel->setSelector($orderRow['selector']);
+            $orderModel->setConfirmCode($orderRow['confirmCode']);
             $orderModel->setStatus($orderRow['status']);
 
             $orders[] = $orderModel;
@@ -59,9 +61,21 @@ class Orders extends Mapper
      * @param int $id
      * @return OrdersModel|null
      */
-    public function getOrdersById($id)
+    public function getOrdersById(int $id)
     {
         $order = $this->getOrders(['id' => $id]);
+        return reset($order);
+    }
+
+    /**
+     * Gets order by selector.
+     *
+     * @param string $selector
+     * @return false|OrdersModel
+     */
+    public function getOrderBySelector(string $selector)
+    {
+        $order = $this->getOrders(['selector' => $selector]);
         return reset($order);
     }
 
@@ -84,6 +98,8 @@ class Orders extends Mapper
             'order' => $order->getOrder(),
             'invoicefilename' => $order->getInvoiceFilename(),
             'datetimeInvoiceSent' => $order->getDatetimeInvoiceSent(),
+            'selector' => $order->getSelector(),
+            'confirmCode' => $order->getConfirmCode(),
             'status' => $order->getStatus(),
         ];
 
@@ -117,7 +133,7 @@ class Orders extends Mapper
      *
      * @param int $id
      */
-    public function delete($id)
+    public function delete(int $id)
     {
         $this->db()->delete('shop_orders')
             ->where(['id' => $id])

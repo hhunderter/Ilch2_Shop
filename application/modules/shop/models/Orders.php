@@ -95,6 +95,20 @@ class Orders extends Model
     protected $datetimeInvoiceSent;
 
     /**
+     * A 18 char long selector.
+     *
+     * @var string
+     */
+    protected $selector;
+
+    /**
+     * A 64 char long confirmCode.
+     *
+     * @var string
+     */
+    protected $confirmCode;
+
+    /**
      * The status of the order.
      *
      * @var int
@@ -374,6 +388,50 @@ class Orders extends Model
     {
         $this->datetimeInvoiceSent = (string)$datetimeInvoiceSent;
 
+        return $this;
+    }
+
+    /**
+     * Get the 18 char long selector.
+     *
+     * @return string
+     */
+    public function getSelector(): ?string
+    {
+        return $this->selector;
+    }
+
+    /**
+     * Set the 18 char long selector.
+     *
+     * @param string $selector
+     * @return Orders
+     */
+    public function setSelector(string $selector): Orders
+    {
+        $this->selector = $selector;
+        return $this;
+    }
+
+    /**
+     * Get the 64 char long confirm code.
+     *
+     * @return string
+     */
+    public function getConfirmCode(): ?string
+    {
+        return $this->confirmCode;
+    }
+
+    /**
+     * Set the 64 char long confirm code.
+     *
+     * @param string $confirmCode
+     * @return Orders
+     */
+    public function setConfirmCode(string $confirmCode): Orders
+    {
+        $this->confirmCode = $confirmCode;
         return $this;
     }
 

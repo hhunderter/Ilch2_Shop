@@ -77,7 +77,7 @@ return [
     'inactive' => 'inaktiv',
     'infoBuyer' => 'Informationen zum Käufer',
     'infoDeleteOrder' => 'Diese Bestellung wird unwiderruflich gelöscht!',
-    'infoFormOrder' => 'bitte geben Sie zur Kaufabwicklung die benötigten Versanddaten an. Diese Informationen werden mit Kaufabschluss wieder gelöscht.',
+    'infoFormOrder' => 'bitte geben Sie zur Kaufabwicklung die benötigten Versanddaten an.',
     'infoLogin' => 'Bitte loggen Sie sich erst ein oder registrieren Sie sich auf unserer Seite.',
     'warningUnencryptedConnection' => 'Es scheint als würden Sie diesen Online-Shop unverschlüsselt betreiben. Da bei einem Online-Shop zwangsläufig vertrauenswürdige Daten übertragen werden, wird dringend empfohlen, dass Sie HTTPS nutzen.',
     'infoNewOrders' => 'Es gibt neue und unbearbeitete Bestellungen.',
@@ -209,4 +209,5 @@ return [
     'clientIDInfo' => 'Ein neu erstellter PayPal Händleraccount ist automatisch im Sandbox-Modus. In diesem Modus können z.B. Testkäufe durchgeführt werden. Sind Sie sich mit den Einstellungen sicher, wechseln Sie in den Live-Modus. Ab dann sind alle Einkäufe real.',
     'settingsPaypalAdvanced' => 'Aktiviere Paypal Checkout Advanced?',
     'menuPayment' => 'Bezahlmethoden',
+    'paymentInvoiceLink' => 'Rechnung bezahlen',
 ];

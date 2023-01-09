@@ -101,6 +101,8 @@ class Config extends Install
                     `image3` VARCHAR(250) NOT NULL,
                     `info` MEDIUMTEXT NOT NULL,
                     `desc` MEDIUMTEXT NOT NULL,
+                    `selector` char(18),
+                    `confirmCode` char(64),
                     `status` INT(1) NULL DEFAULT 0,
                     PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
@@ -164,12 +166,16 @@ class Config extends Install
                     ("shop", "send_invoice_mail", "Ihre Rechnung", "<p>Sehr geehrte(r) Herr oder Frau <b>{name}</b>,</p>
                         <p>&nbsp;</p>
                         <p>hiermit erhalten Sie die Rechnung für Ihre Bestellung auf <i>{shopname}</i>. Die Rechnung befindet sich im Anhang dieser E-Mail.</p>
+                        <p>Sie können den folgenden Link nutzen um die Rechnung direkt bequem zu bezahlen:</p>
+                        <p>{paymentLink}</p>
                         <p>&nbsp;</p>
                         <p>Mit freundlichen Gr&uuml;&szlig;en</p>
                         <p>Administrator</p>", "de_DE"),
                     ("shop", "send_invoice_mail", "Your invoice", "<p>Dear Sir or Madam <b>{name}</b>,</p>
                         <p>&nbsp;</p>
                         <p>hereby you receive the invoice for your order at <i>{shopname}</i>. The invoice is in the attachment of this e-mail.</p>
+                        <p>You can use the following link to comfortably pay the invoice:</p>
+                        <p>{paymentLink}</p>
                         <p>&nbsp;</p>
                         <p>Best regards</p>
                         <p>Administrator</p>", "en_EN");
@@ -246,6 +252,7 @@ class Config extends Install
     {
         switch ($installedVersion) {
             case "1.0.0":
+                // Add email templates to the emails table.
                 $this->db()->query('INSERT INTO `[prefix]_emails` (`moduleKey`, `type`, `desc`, `text`, `locale`) VALUES
                     ("shop", "order_confirmed_mail", "Bestellung eingegangen", "<p>Sehr geehrte(r) Herr oder Frau <b>{name}</b>,</p>
                         <p>&nbsp;</p>
@@ -258,10 +265,29 @@ class Config extends Install
                         <p>your order at <i>{shopname}</i> has been received.
                         <p>&nbsp;</p>
                         <p>Best regards</p>
+                        <p>Administrator</p>", "en_EN"),
+                    ("shop", "send_invoice_mail", "Ihre Rechnung", "<p>Sehr geehrte(r) Herr oder Frau <b>{name}</b>,</p>
+                        <p>&nbsp;</p>
+                        <p>hiermit erhalten Sie die Rechnung für Ihre Bestellung auf <i>{shopname}</i>. Die Rechnung befindet sich im Anhang dieser E-Mail.</p>
+                        <p>Sie können den folgenden Link nutzen um die Rechnung direkt bequem zu bezahlen:</p>
+                        <p>{paymentLink}</p>
+                        <p>&nbsp;</p>
+                        <p>Mit freundlichen Gr&uuml;&szlig;en</p>
+                        <p>Administrator</p>", "de_DE"),
+                    ("shop", "send_invoice_mail", "Your invoice", "<p>Dear Sir or Madam <b>{name}</b>,</p>
+                        <p>&nbsp;</p>
+                        <p>hereby you receive the invoice for your order at <i>{shopname}</i>. The invoice is in the attachment of this e-mail.</p>
+                        <p>You can use the following link to comfortably pay the invoice:</p>
+                        <p>{paymentLink}</p>
+                        <p>&nbsp;</p>
+                        <p>Best regards</p>
                         <p>Administrator</p>", "en_EN");');
 
+                // Add new columns to various tables.
                 $this->db()->query('ALTER TABLE `[prefix]_shop_orders` ADD COLUMN `invoicefilename` VARCHAR(250) NOT NULL AFTER `order`;');
                 $this->db()->query('ALTER TABLE `[prefix]_shop_orders` ADD COLUMN `datetimeInvoiceSent` DATETIME NOT NULL AFTER `invoicefilename`;');
+                $this->db()->query('ALTER TABLE `[prefix]_shop_orders` ADD COLUMN `selector` char(18) AFTER `datetimeInvoiceSent`;');
+                $this->db()->query('ALTER TABLE `[prefix]_shop_orders` ADD COLUMN `confirmCode` char(64) AFTER `selector`;');
                 $this->db()->query('ALTER TABLE `[prefix]_shop_settings` ADD COLUMN `paymentClientID` VARCHAR(250) NOT NULL AFTER `invoiceTextBottom` DEFAULT "test";');
                 $this->db()->query('ALTER TABLE `[prefix]_shop_currencies` ADD COLUMN `code` CHAR(3) NOT NULL AFTER `name`;');
 
