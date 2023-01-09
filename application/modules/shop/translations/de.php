@@ -210,4 +210,5 @@ return [
     'settingsPaypalAdvanced' => 'Aktiviere Paypal Checkout Advanced?',
     'menuPayment' => 'Bezahlmethoden',
     'paymentInvoiceLink' => 'Rechnung bezahlen',
+    'invalidPaymentLink' => 'Ungültiger Link zum Bezahlen einer Rechnung.',
 ];

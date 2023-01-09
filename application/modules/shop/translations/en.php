@@ -210,4 +210,5 @@ return [
     'settingsPaypalAdvanced' => 'Enable Paypal Checkout Advanced?',
     'menuPayment' => 'Method of payment',
     'paymentInvoiceLink' => 'Pay invoice',
+    'invalidPaymentLink' => 'Invalid link for paying an invoice.',
 ];

@@ -24,7 +24,18 @@ class Payment extends Frontend
             ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuPayment'), ['controller' => 'payment', 'action' => 'index']);
 
-        $this->getView()->set('order', $ordersMapper->getOrderBySelector($this->getRequest()->getParam('selector')));
+        $order = [];
+
+        if (!empty($this->getRequest()->getParam('selector')) && !empty($this->getRequest()->getParam('code'))) {
+            $order = $ordersMapper->getOrderBySelector($this->getRequest()->getParam('selector'));
+        }
+
+        if (empty($order) || !hash_equals($order->getConfirmCode(), $this->getRequest()->getParam('code'))) {
+            $this->addMessage('invalidPaymentLink', 'danger');
+            $this->redirect(['controller' => 'index', 'action' => 'index']);
+        }
+
+        $this->getView()->set('order', $order);
         $this->getView()->set('settings', $settingsMapper->getSettings());
         $this->getView()->set('currency', $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0]);
     }

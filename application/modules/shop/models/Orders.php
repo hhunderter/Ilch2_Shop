@@ -74,9 +74,9 @@ class Orders extends Model
     protected $email;
 
     /**
-     * The orderarray of the order.
+     * The json string of the order.
      *
-     * @var array
+     * @var string
      */
     protected $order;
 
@@ -120,7 +120,7 @@ class Orders extends Model
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -131,9 +131,9 @@ class Orders extends Model
      * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Orders
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -143,7 +143,7 @@ class Orders extends Model
      *
      * @return string
      */
-    public function getDatetime()
+    public function getDatetime(): string
     {
         return $this->datetime;
     }
@@ -154,9 +154,9 @@ class Orders extends Model
      * @param string $datetime
      * @return $this
      */
-    public function setDatetime($datetime)
+    public function setDatetime(string $datetime): Orders
     {
-        $this->datetime = (string)$datetime;
+        $this->datetime = $datetime;
 
         return $this;
     }
@@ -166,7 +166,7 @@ class Orders extends Model
      *
      * @return string
      */
-    public function getPrename()
+    public function getPrename(): string
     {
         return $this->prename;
     }
@@ -177,9 +177,9 @@ class Orders extends Model
      * @param string $prename
      * @return $this
      */
-    public function setPrename($prename)
+    public function setPrename(string $prename): Orders
     {
-        $this->prename = (string)$prename;
+        $this->prename = $prename;
 
         return $this;
     }
@@ -189,7 +189,7 @@ class Orders extends Model
      *
      * @return string
      */
-    public function getLastname()
+    public function getLastname(): string
     {
         return $this->lastname;
     }
@@ -200,9 +200,9 @@ class Orders extends Model
      * @param string $lastname
      * @return $this
      */
-    public function setLastname($lastname)
+    public function setLastname(string $lastname): Orders
     {
-        $this->lastname = (string)$lastname;
+        $this->lastname = $lastname;
 
         return $this;
     }
@@ -212,7 +212,7 @@ class Orders extends Model
      *
      * @return string
      */
-    public function getStreet()
+    public function getStreet(): string
     {
         return $this->street;
     }
@@ -223,9 +223,9 @@ class Orders extends Model
      * @param string $street
      * @return $this
      */
-    public function setStreet($street)
+    public function setStreet(string $street): Orders
     {
-        $this->street = (string)$street;
+        $this->street = $street;
 
         return $this;
     }
@@ -235,7 +235,7 @@ class Orders extends Model
      *
      * @return string
      */
-    public function getPostcode()
+    public function getPostcode(): string
     {
         return $this->postcode;
     }
@@ -246,9 +246,9 @@ class Orders extends Model
      * @param string $postcode
      * @return $this
      */
-    public function setPostcode($postcode)
+    public function setPostcode(string $postcode): Orders
     {
-        $this->postcode = (string)$postcode;
+        $this->postcode = $postcode;
 
         return $this;
     }
@@ -258,7 +258,7 @@ class Orders extends Model
      *
      * @return string
      */
-    public function getCity()
+    public function getCity(): string
     {
         return $this->city;
     }
@@ -269,9 +269,9 @@ class Orders extends Model
      * @param string $city
      * @return $this
      */
-    public function setCity($city)
+    public function setCity(string $city): Orders
     {
-        $this->city = (string)$city;
+        $this->city = $city;
 
         return $this;
     }
@@ -281,7 +281,7 @@ class Orders extends Model
      *
      * @return string
      */
-    public function getCountry()
+    public function getCountry(): string
     {
         return $this->country;
     }
@@ -292,9 +292,9 @@ class Orders extends Model
      * @param string $country
      * @return $this
      */
-    public function setCountry($country)
+    public function setCountry(string $country): Orders
     {
-        $this->country = (string)$country;
+        $this->country = $country;
 
         return $this;
     }
@@ -304,7 +304,7 @@ class Orders extends Model
      *
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -315,32 +315,32 @@ class Orders extends Model
      * @param string $email
      * @return $this
      */
-    public function setEmail($email)
+    public function setEmail(string $email): Orders
     {
-        $this->email = (string)$email;
+        $this->email = $email;
 
         return $this;
     }
 
     /**
-     * Gets the orderarray of the order.
+     * Gets the order/shopping cart of the order as json string.
      *
-     * @return array
+     * @return string
      */
-    public function getOrder()
+    public function getOrder(): string
     {
         return $this->order;
     }
 
     /**
-     * Sets the orderarray of the order.
+     * Sets the order/shopping cart of the order as json string.
      *
-     * @param array $order
+     * @param string $order
      * @return $this
      */
-    public function setOrder($order)
+    public function setOrder(string $order): Orders
     {
-        $this->order = (string)$order;
+        $this->order = $order;
 
         return $this;
     }
@@ -350,7 +350,7 @@ class Orders extends Model
      *
      * @return string
      */
-    public function getInvoiceFilename()
+    public function getInvoiceFilename(): string
     {
         return $this->invoicefilename;
     }
@@ -361,9 +361,9 @@ class Orders extends Model
      * @param string $invoicefilename
      * @return $this
      */
-    public function setInvoiceFilename($invoicefilename)
+    public function setInvoiceFilename(string $invoicefilename): Orders
     {
-        $this->invoicefilename = (string)$invoicefilename;
+        $this->invoicefilename = $invoicefilename;
 
         return $this;
     }
@@ -373,7 +373,7 @@ class Orders extends Model
      *
      * @return string
      */
-    public function getDatetimeInvoiceSent()
+    public function getDatetimeInvoiceSent(): string
     {
         return $this->datetimeInvoiceSent;
     }
@@ -384,9 +384,9 @@ class Orders extends Model
      * @param string $datetimeInvoiceSent
      * @return $this
      */
-    public function setDatetimeInvoiceSent($datetimeInvoiceSent)
+    public function setDatetimeInvoiceSent(string $datetimeInvoiceSent): Orders
     {
-        $this->datetimeInvoiceSent = (string)$datetimeInvoiceSent;
+        $this->datetimeInvoiceSent = $datetimeInvoiceSent;
 
         return $this;
     }
@@ -405,7 +405,7 @@ class Orders extends Model
      * Set the 18 char long selector.
      *
      * @param string $selector
-     * @return Orders
+     * @return $this
      */
     public function setSelector(string $selector): Orders
     {
@@ -440,7 +440,7 @@ class Orders extends Model
      *
      * @return int
      */
-    public function getStatus()
+    public function getStatus(): int
     {
         return $this->status;
     }
@@ -451,9 +451,9 @@ class Orders extends Model
      * @param int $status
      * @return $this
      */
-    public function setStatus($status)
+    public function setStatus(int $status): Orders
     {
-        $this->status = (int)$status;
+        $this->status = $status;
 
         return $this;
     }

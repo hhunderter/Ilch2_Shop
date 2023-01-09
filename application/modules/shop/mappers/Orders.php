@@ -17,7 +17,7 @@ class Orders extends Mapper
      * @param array $where
      * @return OrdersModel[]|[]
      */
-    public function getOrders(array $where = [])
+    public function getOrders(array $where = []): array
     {
         $ordersArray = $this->db()->select('*')
             ->from('shop_orders')
@@ -45,8 +45,8 @@ class Orders extends Mapper
             $orderModel->setOrder($orderRow['order']);
             $orderModel->setInvoiceFilename($orderRow['invoicefilename']);
             $orderModel->setDatetimeInvoiceSent($orderRow['datetimeInvoiceSent']);
-            $orderModel->setSelector($orderRow['selector']);
-            $orderModel->setConfirmCode($orderRow['confirmCode']);
+            $orderModel->setSelector($orderRow['selector'] ?? '');
+            $orderModel->setConfirmCode($orderRow['confirmCode'] ?? '');
             $orderModel->setStatus($orderRow['status']);
 
             $orders[] = $orderModel;
@@ -59,9 +59,9 @@ class Orders extends Mapper
      * Gets order by id.
      *
      * @param int $id
-     * @return OrdersModel|null
+     * @return false|OrdersModel
      */
-    public function getOrdersById(int $id)
+    public function getOrderById(int $id)
     {
         $order = $this->getOrders(['id' => $id]);
         return reset($order);

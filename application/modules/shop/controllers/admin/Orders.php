@@ -35,15 +35,9 @@ class Orders extends Admin
             ],
             [
                 'name' => 'menuOrders',
-                'active' => false,
+                'active' => true,
                 'icon' => 'fas fa-cart-arrow-down',
-                'url' => $this->getLayout()->getUrl(['controller' => 'orders', 'action' => 'index']),
-                [
-                    'name' => 'manage',
-                    'active' => false,
-                    'icon' => 'fa fa-plus-circle',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'orders', 'action' => 'treat'])
-                ]
+                'url' => $this->getLayout()->getUrl(['controller' => 'orders', 'action' => 'index'])
             ],
             [
                 'name' => 'menuCats',
@@ -71,12 +65,6 @@ class Orders extends Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() === 'treat') {
-            $items[2][0]['active'] = true;
-        } else {
-            $items[2]['active'] = true;
-        }
-
         $this->getLayout()->addMenu
         (
             'menuOrders',
@@ -95,7 +83,7 @@ class Orders extends Admin
         if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_orders')) {
             $orderInUse = 0;
             foreach ($this->getRequest()->getPost('check_orders') as $orderId) {
-                if ($ordersMapper->getOrdersById($orderId)->getStatus() == 0 || $ordersMapper->getOrdersById($orderId)->getStatus() == 1) {
+                if ($ordersMapper->getOrderById($orderId)->getStatus() == 0 || $ordersMapper->getOrderById($orderId)->getStatus() == 1) {
                     $orderInUse++;
                     continue;
                 }
@@ -127,7 +115,7 @@ class Orders extends Admin
         $order = null;
 
         if ($this->getRequest()->getParam('id')) {
-            $order = $ordersMapper->getOrdersById($this->getRequest()->getParam('id'));
+            $order = $ordersMapper->getOrderById($this->getRequest()->getParam('id'));
             $this->getView()->set('order', $order);
             $this->getView()->set('currency', $currency->getName());
             $this->getView()->set('itemsMapper', $itemsMapper);
@@ -158,7 +146,7 @@ class Orders extends Admin
             }
 
             if ($this->getRequest()->getPost('delete') == 1) {
-                if ($ordersMapper->getOrdersById($this->getRequest()->getParam('id'))->getStatus() == 0 || $ordersMapper->getOrdersById($this->getRequest()->getParam('id'))->getStatus() == 1) {
+                if ($ordersMapper->getOrderById($this->getRequest()->getParam('id'))->getStatus() == 0 || $ordersMapper->getOrderById($this->getRequest()->getParam('id'))->getStatus() == 1) {
                     $this->addMessage('orderInUse', 'danger');
                 } else {
                     $ordersMapper->delete($this->getRequest()->getParam('id'));
@@ -182,7 +170,7 @@ class Orders extends Admin
 
         if (!empty($id)) {
             $ordersMapper = new OrdersMapper();
-            $order = $ordersMapper->getOrdersById($id);
+            $order = $ordersMapper->getOrderById($id);
 
             if ($order !== null) {
                 $fullPath = $shopInvoicePath.$order->getInvoiceFilename().'.pdf';
@@ -221,7 +209,7 @@ class Orders extends Admin
         $settingsMapper = new SettingsMapper();
 
         $id = $this->getRequest()->getParam('id');
-        $order = $orderMapper->getOrdersById($id);
+        $order = $orderMapper->getOrderById($id);
 
         // Generate selector and confirm code for the payment link.
         $order->setSelector(bin2hex(random_bytes(9)));
@@ -276,7 +264,7 @@ class Orders extends Admin
     {
         if ($this->getRequest()->isSecure()) {
             $ordersMapper = new OrdersMapper();
-            if ($ordersMapper->getOrdersById($this->getRequest()->getParam('id'))->getStatus() == 0 || $ordersMapper->getOrdersById($this->getRequest()->getParam('id'))->getStatus() == 1) {
+            if ($ordersMapper->getOrderById($this->getRequest()->getParam('id'))->getStatus() == 0 || $ordersMapper->getOrderById($this->getRequest()->getParam('id'))->getStatus() == 1) {
                 $this->addMessage('orderInUse', 'danger');
             } else {
                 $ordersMapper->delete($this->getRequest()->getParam('id'));
