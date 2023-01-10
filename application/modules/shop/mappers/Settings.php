@@ -16,7 +16,7 @@ class Settings extends Mapper
      *
      * @return SettingsModel
      */
-    public function getSettings()
+    public function getSettings(): ?SettingsModel
     {
         $serverRow = $this->db()->select('*')
             ->from('shop_settings')

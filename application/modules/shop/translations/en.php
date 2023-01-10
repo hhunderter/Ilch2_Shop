@@ -210,5 +210,7 @@ return [
     'settingsPaypalAdvanced' => 'Enable Paypal Checkout Advanced?',
     'menuPayment' => 'Method of payment',
     'paymentInvoiceLink' => 'Pay invoice',
+    'paymentPanelHeading' => 'Your Invoice "%s" from %s for the order on %s.',
     'invalidPaymentLink' => 'Invalid link for paying an invoice.',
+    'paypalNotConfigured' => 'The PayPal payment method is not yet configured. A payment with PayPal is therefore not possible.',
 ];

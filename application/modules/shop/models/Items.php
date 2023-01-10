@@ -153,7 +153,7 @@ class Items extends Model
      /**
      * The status of the item.
      *
-     * @var string
+     * @var int
      */
     protected $status;
     
@@ -162,7 +162,7 @@ class Items extends Model
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -173,9 +173,9 @@ class Items extends Model
      * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Items
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -185,7 +185,7 @@ class Items extends Model
      *
      * @return int
      */
-    public function getCatId()
+    public function getCatId(): int
     {
         return $this->catId;
     }
@@ -196,9 +196,9 @@ class Items extends Model
      * @param int $catId
      * @return $this
      */
-    public function setCatId($catId)
+    public function setCatId(int $catId): Items
     {
-        $this->catId = (int)$catId;
+        $this->catId = $catId;
 
         return $this;
     }
@@ -208,7 +208,7 @@ class Items extends Model
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -219,9 +219,9 @@ class Items extends Model
      * @param string $name
      * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): Items
     {
-        $this->name = (string)$name;
+        $this->name = $name;
 
         return $this;
     }
@@ -231,7 +231,7 @@ class Items extends Model
      *
      * @return string
      */
-    public function getItemnumber()
+    public function getItemnumber(): string
     {
         return $this->itemnumber;
     }
@@ -242,9 +242,9 @@ class Items extends Model
      * @param string $itemnumber
      * @return $this
      */
-    public function setItemnumber($itemnumber)
+    public function setItemnumber(string $itemnumber): Items
     {
-        $this->itemnumber = (string)$itemnumber;
+        $this->itemnumber = $itemnumber;
 
         return $this;
     }
@@ -254,7 +254,7 @@ class Items extends Model
      *
      * @return string
      */
-    public function getCode()
+    public function getCode(): string
     {
         return $this->code;
     }
@@ -265,9 +265,9 @@ class Items extends Model
      * @param string $code
      * @return $this
      */
-    public function setCode($code)
+    public function setCode(string $code): Items
     {
-        $this->code = (string)$code;
+        $this->code = $code;
 
         return $this;
     }
@@ -277,7 +277,7 @@ class Items extends Model
      *
      * @return int
      */
-    public function getStock()
+    public function getStock(): int
     {
         return $this->stock;
     }
@@ -288,9 +288,9 @@ class Items extends Model
      * @param int $stock
      * @return $this
      */
-    public function setStock($stock)
+    public function setStock(int $stock): Items
     {
-        $this->stock = (int)$stock;
+        $this->stock = $stock;
 
         return $this;
     }
@@ -300,7 +300,7 @@ class Items extends Model
      *
      * @return string
      */
-    public function getUnitName()
+    public function getUnitName(): string
     {
         return $this->unitName;
     }
@@ -311,9 +311,9 @@ class Items extends Model
      * @param string $unitName
      * @return $this
      */
-    public function setUnitName($unitName)
+    public function setUnitName(string $unitName): Items
     {
-        $this->unitName = (string)$unitName;
+        $this->unitName = $unitName;
 
         return $this;
     }
@@ -321,9 +321,9 @@ class Items extends Model
     /**
      * Gets the cordon of the item.
      *
-     * @return string
+     * @return int
      */
-    public function getCordon()
+    public function getCordon(): int
     {
         return $this->cordon;
     }
@@ -334,9 +334,9 @@ class Items extends Model
      * @param int $cordon
      * @return $this
      */
-    public function setCordon($cordon)
+    public function setCordon(int $cordon): Items
     {
-        $this->cordon = (int)$cordon;
+        $this->cordon = $cordon;
 
         return $this;
     }
@@ -346,7 +346,7 @@ class Items extends Model
      *
      * @return string
      */
-    public function getCordonText()
+    public function getCordonText(): string
     {
         return $this->cordonText;
     }
@@ -357,9 +357,9 @@ class Items extends Model
      * @param string $cordonText
      * @return $this
      */
-    public function setCordonText($cordonText)
+    public function setCordonText(string $cordonText): Items
     {
-        $this->cordonText = (string)$cordonText;
+        $this->cordonText = $cordonText;
 
         return $this;
     }
@@ -369,7 +369,7 @@ class Items extends Model
      *
      * @return string
      */
-    public function getCordonColor()
+    public function getCordonColor(): string
     {
         return $this->cordonColor;
     }
@@ -380,9 +380,9 @@ class Items extends Model
      * @param string $cordonColor
      * @return $this
      */
-    public function setCordonColor($cordonColor)
+    public function setCordonColor(string $cordonColor): Items
     {
-        $this->cordonColor = (string)$cordonColor;
+        $this->cordonColor = $cordonColor;
 
         return $this;
     }
@@ -392,7 +392,7 @@ class Items extends Model
      *
      * @return string
      */
-    public function getPrice()
+    public function getPrice(): string
     {
         return $this->price;
     }
@@ -403,9 +403,9 @@ class Items extends Model
      * @param string $price
      * @return $this
      */
-    public function setPrice($price)
+    public function setPrice(string $price): Items
     {
-        $this->price = (string)$price;
+        $this->price = $price;
 
         return $this;
     }
@@ -415,7 +415,7 @@ class Items extends Model
      *
      * @return int
      */
-    public function getTax()
+    public function getTax(): int
     {
         return $this->tax;
     }
@@ -426,9 +426,9 @@ class Items extends Model
      * @param int $tax
      * @return $this
      */
-    public function setTax($tax)
+    public function setTax(int $tax): Items
     {
-        $this->tax = (string)$tax;
+        $this->tax = $tax;
 
         return $this;
     }
@@ -438,7 +438,7 @@ class Items extends Model
      *
      * @return string
      */
-    public function getShippingCosts()
+    public function getShippingCosts(): string
     {
         return $this->shippingCosts;
     }
@@ -449,9 +449,9 @@ class Items extends Model
      * @param string $shippingCosts
      * @return $this
      */
-    public function setShippingCosts($shippingCosts)
+    public function setShippingCosts(string $shippingCosts): Items
     {
-        $this->shippingCosts = (string)$shippingCosts;
+        $this->shippingCosts = $shippingCosts;
 
         return $this;
     }
@@ -461,7 +461,7 @@ class Items extends Model
      *
      * @return int
      */
-    public function getShippingTime()
+    public function getShippingTime(): int
     {
         return $this->shippingTime;
     }
@@ -472,7 +472,7 @@ class Items extends Model
      * @param string $shippingTime
      * @return $this
      */
-    public function setShippingTime($shippingTime)
+    public function setShippingTime(string $shippingTime): Items
     {
         $this->shippingTime = (int)$shippingTime;
 
@@ -484,7 +484,7 @@ class Items extends Model
      *
      * @return string
      */
-    public function getImage()
+    public function getImage(): string
     {
         return $this->image;
     }
@@ -495,9 +495,9 @@ class Items extends Model
      * @param string $image
      * @return $this
      */
-    public function setImage($image)
+    public function setImage(string $image): Items
     {
-        $this->image = (string)$image;
+        $this->image = $image;
 
         return $this;
     }
@@ -507,7 +507,7 @@ class Items extends Model
      *
      * @return string
      */
-    public function getImage1()
+    public function getImage1(): string
     {
         return $this->image1;
     }
@@ -518,9 +518,9 @@ class Items extends Model
      * @param string $image1
      * @return $this
      */
-    public function setImage1($image1)
+    public function setImage1(string $image1): Items
     {
-        $this->image1 = (string)$image1;
+        $this->image1 = $image1;
 
         return $this;
     }
@@ -530,7 +530,7 @@ class Items extends Model
      *
      * @return string
      */
-    public function getImage2()
+    public function getImage2(): string
     {
         return $this->image2;
     }
@@ -541,9 +541,9 @@ class Items extends Model
      * @param string $image2
      * @return $this
      */
-    public function setImage2($image2)
+    public function setImage2(string $image2): Items
     {
-        $this->image2 = (string)$image2;
+        $this->image2 = $image2;
 
         return $this;
     }
@@ -553,7 +553,7 @@ class Items extends Model
      *
      * @return string
      */
-    public function getImage3()
+    public function getImage3(): string
     {
         return $this->image3;
     }
@@ -564,9 +564,9 @@ class Items extends Model
      * @param string $image3
      * @return $this
      */
-    public function setImage3($image3)
+    public function setImage3(string $image3): Items
     {
-        $this->image3 = (string)$image3;
+        $this->image3 = $image3;
 
         return $this;
     }
@@ -576,7 +576,7 @@ class Items extends Model
      *
      * @return string
      */
-    public function getInfo()
+    public function getInfo(): string
     {
         return $this->info;
     }
@@ -587,9 +587,9 @@ class Items extends Model
      * @param string $info
      * @return $this
      */  
-    public function setInfo($info)
+    public function setInfo(string $info): Items
     {
-        $this->info = (string)$info;
+        $this->info = $info;
 
         return $this;
     }  
@@ -599,7 +599,7 @@ class Items extends Model
      *
      * @return string
      */
-    public function getDesc()
+    public function getDesc(): string
     {
         return $this->desc;
     }
@@ -610,9 +610,9 @@ class Items extends Model
      * @param string $desc
      * @return $this
      */ 
-    public function setDesc($desc)
+    public function setDesc(string $desc): Items
     {
-        $this->desc = (string)$desc;
+        $this->desc = $desc;
 
         return $this;
     }    
@@ -622,7 +622,7 @@ class Items extends Model
      *
      * @return int
      */
-    public function getStatus()
+    public function getStatus(): int
     {
         return $this->status;
     }
@@ -633,9 +633,9 @@ class Items extends Model
      * @param int $status
      * @return $this
      */ 
-    public function setStatus($status)
+    public function setStatus(int $status): Items
     {
-        $this->status = (int)$status;
+        $this->status = $status;
 
         return $this;
     } 

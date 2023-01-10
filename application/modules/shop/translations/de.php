@@ -210,5 +210,7 @@ return [
     'settingsPaypalAdvanced' => 'Aktiviere Paypal Checkout Advanced?',
     'menuPayment' => 'Bezahlmethoden',
     'paymentInvoiceLink' => 'Rechnung bezahlen',
+    'paymentPanelHeading' => 'Ihre Rechnung "%s" vom %s zur Bestellung vom %s.',
     'invalidPaymentLink' => 'Ungültiger Link zum Bezahlen einer Rechnung.',
+    'paypalNotConfigured' => 'Die PayPal-Bezahlmethode wurde noch nicht eingerichtet. Eine Bezahlung per PayPal ist daher nicht möglich.'
 ];

@@ -17,7 +17,7 @@ class Items extends Mapper
      * @param array $where
      * @return ItemsModel[]|[]
      */
-    public function getShopItems($where = [])
+    public function getShopItems(array $where = []): array
     {
         $itemsArray = $this->db()->select('*')
             ->from('shop_items')
@@ -67,7 +67,7 @@ class Items extends Mapper
      * @param int $id
      * @return ItemsModel|false
      */
-    public function getShopById($id)
+    public function getShopById(int $id)
     {
         $shopItem = $this->getShopItems(['id' => $id]);
         return reset($shopItem);
@@ -77,9 +77,9 @@ class Items extends Mapper
      * Gets items by catId.
      *
      * @param int $catId
-     * @return ItemsModel[]|false
+     * @return false|ItemsModel[]
      */
-    public function getShopItemsByCatId($catId)
+    public function getShopItemsByCatId(int $catId)
     {
         $shops = $this->getShopItems(['cat_id' => $catId]);
         return reset($shops);
@@ -186,7 +186,7 @@ class Items extends Mapper
      *
      * @param int $id
      */
-    public function delete($id)
+    public function delete(int $id)
     {
         $this->db()->delete('shop_items')
             ->where(['id' => $id])
