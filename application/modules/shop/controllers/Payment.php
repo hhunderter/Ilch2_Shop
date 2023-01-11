@@ -49,19 +49,4 @@ class Payment extends Frontend
         $this->getView()->set('settings', $settings);
         $this->getView()->set('currency', $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0]);
     }
-
-    /**
-     * Action for Paypal Checkout Advanced
-     *
-     * @return void
-     */
-    public function advancedAction()
-    {
-        $this->getLayout()->header()->css('static/css/style_front.css');
-        $this->getLayout()->getHmenu()
-            ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
-            ->add($this->getTranslator()->trans('menuPaymentAdvanced'), ['controller' => 'payment', 'action' => 'advanced']);
-
-        $this->getView()->set('shopItems', '');
-    }
 }

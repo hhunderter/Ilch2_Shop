@@ -46,21 +46,8 @@
                        id="clientID"
                        name="clientID"
                        placeholder="<?=$this->getTrans('clientID') ?>"
-                       value="<?=($this->escape($this->get('settings')->getClientID()) != '') ? $this->escape($this->get('settings')->getClientID()) : $this->escape($this->originalInput('clientID')) ?>" />
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-lg-2 control-label">
-            <?=$this->getTrans('settingsPaypalAdvanced') ?>:
-        </div>
-        <div class="col-lg-4">
-            <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="paypalAdvanced-on" name="paypalAdvanced" value="1" <?=($this->get('paypalAdvanced') == '1') ? 'checked="checked"' : '' ?> />
-                <label for="paypalAdvanced-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="paypalAdvanced-off" name="paypalAdvanced" value="0" <?=($this->get('paypalAdvanced') != '1') ? 'checked="checked"' : '' ?> />
-                <label for="paypalAdvanced-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
-                <span class="flipswitch-selection"></span>
+                       value="<?=($this->escape($this->get('settings')->getClientID()) != '') ? $this->escape($this->get('settings')->getClientID()) : $this->escape($this->originalInput('clientID')) ?>"
+                       required />
             </div>
         </div>
     </div>
