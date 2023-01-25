@@ -55,20 +55,20 @@ if(!empty($_SESSION['shopping_cart'])) {
                     <th scope="col" width="25%"><?=$this->getTrans('productName') ?><br /><small><?=$this->getTrans('itemNumber') ?></small></th>
                     <th scope="col" width="20%"><?=$this->getTrans('singlePrice') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
                     <th scope="col" width="18%" class="text-center"><?=$this->getTrans('entries') ?><br />&nbsp;</th>
-                    <th scope="col" width="20%" class="text-right"><?=$this->getTrans('total') ?><br /><small>incl. <?=$this->getTrans('taxShort') ?></small></th>
+                    <th scope="col" width="20%" class="text-right"><?=$this->getTrans('total') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
                 </tr>
             </thead>
             <tbody>
                 <?php	
                 foreach ($_SESSION['shopping_cart'] as $product) {
                     $itemId = $product['id'];
-                    $itemCode = $itemsMapper->getShopById($itemId)->getCode();
-                    $itemName = $itemsMapper->getShopById($itemId)->getName();
-                    $itemPrice = $itemsMapper->getShopById($itemId)->getPrice();
-                    $itemNumber = $itemsMapper->getShopById($itemId)->getItemnumber();
-                    $itemImg = $itemsMapper->getShopById($itemId)->getImage();
-                    $itemMaxStock = $itemsMapper->getShopById($itemId)->getStock();
-                    $arrayShippingCosts[] = $itemsMapper->getShopById($itemId)->getShippingCosts();
+                    $itemCode = $itemsMapper->getShopItemById($itemId)->getCode();
+                    $itemName = $itemsMapper->getShopItemById($itemId)->getName();
+                    $itemPrice = $itemsMapper->getShopItemById($itemId)->getPrice();
+                    $itemNumber = $itemsMapper->getShopItemById($itemId)->getItemnumber();
+                    $itemImg = $itemsMapper->getShopItemById($itemId)->getImage();
+                    $itemMaxStock = $itemsMapper->getShopItemById($itemId)->getStock();
+                    $arrayShippingCosts[] = $itemsMapper->getShopItemById($itemId)->getShippingCosts();
                     $shopImgPath = '/application/modules/shop/static/img/';
                     if ($itemImg AND file_exists(ROOT_PATH.'/'.$itemImg)) {
                         $img = BASE_URL.'/'.$itemImg;
@@ -104,7 +104,7 @@ if(!empty($_SESSION['shopping_cart'])) {
                             <div class="input-group">
                                 <input type="hidden" name="maxStock" value="<?=$itemMaxStock; ?>" />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-xs btn-default plus-btn" type="button" name="button"><i class="fa fa-plus"></i></button>
+                                    <button class="btn btn-xs btn-default plus-btn" type="button" name="button"><i class="fas fa-plus"></i></button>
                                 </span>
                                 <input class="form-control item-quantity input-sm"
                                     type="text"
@@ -114,12 +114,12 @@ if(!empty($_SESSION['shopping_cart'])) {
                                     value="<?=$product['quantity'] ?>"
                                     readonly>
                                 <span class="input-group-btn">
-                                    <button class="btn btn-xs btn-default minus-btn" type="button" name="button"><i class="fa fa-minus"></i></button>
+                                    <button class="btn btn-xs btn-default minus-btn" type="button" name="button"><i class="fas fa-minus"></i></button>
                                 </span>
                             </div>
                         </form>
                     </td>
-                    <td data-label="<?=$this->getTrans('total') ?> (incl. <?=$this->getTrans('taxShort') ?>)" class="text-right">
+                    <td data-label="<?=$this->getTrans('total') ?> (<?=$this->getTrans('withTax') ?>)" class="text-right">
                         <b><?=number_format($itemPrice * $product['quantity'], 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
                     </td>
                 </tr>

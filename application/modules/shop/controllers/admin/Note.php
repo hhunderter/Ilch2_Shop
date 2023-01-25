@@ -26,6 +26,12 @@ class Note extends Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'items', 'action' => 'index'])
             ],
             [
+                'name' => 'menuCostumers',
+                'active' => false,
+                'icon' => 'fas fa-users',
+                'url' => $this->getLayout()->getUrl(['controller' => 'costumers', 'action' => 'index'])
+            ],
+            [
                 'name' => 'menuOrders',
                 'active' => false,
                 'icon' => 'fas fa-cart-arrow-down',
@@ -46,18 +52,16 @@ class Note extends Admin
             [
                 'name' => 'menuSettings',
                 'active' => false,
-                'icon' => 'fa fa-cogs',
+                'icon' => 'fas fa-cogs',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ],
             [
                 'name' => 'menuNote',
-                'active' => false,
+                'active' => true,
                 'icon' => 'fas fa-info-circle',
                 'url' => $this->getLayout()->getUrl(['controller' => 'note', 'action' => 'index'])
             ]
         ];
-
-        $items[6]['active'] = true;
 
         $this->getLayout()->addMenu
         (

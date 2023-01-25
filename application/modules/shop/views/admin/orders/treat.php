@@ -9,33 +9,33 @@ $settingsMapper = $this->get('settingsMapper');
     <?php 
     $order = $this->get('order');
     $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $this->escape($order->getDatetime()));
-    $orderTime = date_format($myDateTime, 'd.m.Y \u\m H:i \U\h\r');
-    $orderDate = date_format($myDateTime, 'd.m.Y');
+    $orderTime = date_format($myDateTime, ' H:i ');
+    $orderDate = date_format($myDateTime, 'd.m.Y ');
     $invoiceNr = date_format($myDateTime, 'ymd').'-'.$order->getId();
     ?>
     <?php if ($order->getStatus() == 0) { ?>
         <div class="alert alert-danger">
-            <i class="fa fa-plus-square" aria-hidden="true"></i>&nbsp;
+            <i class="fas fa-plus-square" aria-hidden="true"></i>&nbsp;
             <b><?=$this->getTrans('newBIG') ?></b>
-            &emsp;|&emsp;<?=$orderTime ?>&emsp;|&emsp;<?=$this->getTrans('infoOrderOpen') ?>
+            &emsp;|&emsp;<?=$orderDate . $this->getTrans('dateTimeAt') . $orderTime .$this->getTrans('dateTimeoClock') ?>&emsp;|&emsp;<?=$this->getTrans('infoOrderOpen') ?>
         </div>
     <?php } elseif ($order->getStatus() == 1) { ?>
         <div class="alert alert-warning">
-            <i class="fa fa-pencil-square" aria-hidden="true"></i>&nbsp;
+            <i class="fas fa-pencil-square" aria-hidden="true"></i>&nbsp;
             <b><?=$this->getTrans('processingBIG') ?></b>
-            &emsp;|&emsp;<?=$orderTime ?>&emsp;|&emsp;<?=$this->getTrans('infoOrderProcessing') ?>
+            &emsp;|&emsp;<?=$orderDate . $this->getTrans('dateTimeAt') . $orderTime .$this->getTrans('dateTimeoClock') ?>&emsp;|&emsp;<?=$this->getTrans('infoOrderProcessing') ?>
         </div>
     <?php } elseif ($order->getStatus() == 2) { ?>
         <div class="alert alert-info">
             <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;
             <b><?=$this->getTrans('canceledBIG') ?></b>
-            &emsp;|&emsp;<?=$orderTime ?>&emsp;|&emsp;<?=$this->getTrans('infoOrderCanceled') ?>
+            &emsp;|&emsp;<?=$orderDate . $this->getTrans('dateTimeAt') . $orderTime .$this->getTrans('dateTimeoClock') ?>>&emsp;|&emsp;<?=$this->getTrans('infoOrderCanceled') ?>
         </div>
     <?php } else { ?>
         <div class="alert alert-success">
-            <i class="fa fa-check-square" aria-hidden="true"></i>&nbsp;
+            <i class="fas fa-check-square" aria-hidden="true"></i>&nbsp;
             <b><?=$this->getTrans('completedBIG') ?></b>
-            &emsp;|&emsp;<?=$orderTime ?>&emsp;|&emsp;<?=$this->getTrans('infoOrderFinished') ?>
+            &emsp;|&emsp;<?=$orderDate . $this->getTrans('dateTimeAt') . $orderTime .$this->getTrans('dateTimeoClock') ?>&emsp;|&emsp;<?=$this->getTrans('infoOrderFinished') ?>
         </div>
     <?php } ?>
     <h4><?=$this->getTrans('infoBuyer') ?></h4>
@@ -48,11 +48,15 @@ $settingsMapper = $this->get('settingsMapper');
             <tbody>
                 <tr>
                     <th><?=$this->getTrans('name') ?></th>
-                    <td><?=$this->escape($order->getPrename()) ?> <?=$this->escape($order->getLastname()) ?></td>
+                    <td><?=$this->escape($order->getInvoiceAddress()->getPrename()) ?> <?=$this->escape($order->getInvoiceAddress()->getLastname()) ?></td>
                 </tr>
                 <tr>
-                    <th><?=$this->getTrans('address') ?></th>
-                    <td><?=$this->escape($order->getStreet()) ?>, <?=$this->escape($order->getPostcode()) ?> <?=$this->escape($order->getCity()) ?>, <?=$this->escape($order->getCountry()) ?></td>
+                    <th><?=$this->getTrans('deliveryAddress') ?></th>
+                    <td><?=$this->escape($order->getInvoiceAddress()->getStreet()) ?>, <?=$this->escape($order->getInvoiceAddress()->getPostcode()) ?> <?=$this->escape($order->getInvoiceAddress()->getCity()) ?>, <?=$this->escape($order->getInvoiceAddress()->getCountry()) ?></td>
+                </tr>
+                <tr>
+                    <th><?=$this->getTrans('invoiceAddress') ?></th>
+                    <td><?=$this->escape($order->getDeliveryAddress()->getStreet()) ?>, <?=$this->escape($order->getDeliveryAddress()->getPostcode()) ?> <?=$this->escape($order->getDeliveryAddress()->getCity()) ?>, <?=$this->escape($order->getDeliveryAddress()->getCountry()) ?></td>
                 </tr>
                 <tr>
                     <th><?=$this->getTrans('emailAdress') ?></th>
@@ -73,7 +77,7 @@ $settingsMapper = $this->get('settingsMapper');
                     <th><?=$this->getTrans('taxShort') ?><br />&nbsp;</th>
                     <th><?=$this->getTrans('singlePrice') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
                     <th class="text-center"><?=$this->getTrans('entries') ?><br />&nbsp;</th>
-                    <th class="text-right"><?=$this->getTrans('total') ?><br /><small>incl. <?=$this->getTrans('taxShort') ?></small></th>
+                    <th class="text-right"><?=$this->getTrans('total') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
                 </tr>
             </thead>
             <tbody>
@@ -83,14 +87,14 @@ $settingsMapper = $this->get('settingsMapper');
                 $pdfOrderNr = 1;
                 foreach ($orderItems as $orderItem):
                     $itemId = $orderItem['id'];
-                    $itemImg = $itemsMapper->getShopById($itemId)->getImage();
-                    $itemName = $itemsMapper->getShopById($itemId)->getName();
-                    $itemNumber = $itemsMapper->getShopById($itemId)->getItemnumber();
-                    $itemPrice = $itemsMapper->getShopById($itemId)->getPrice();
-                    $itemTax = $itemsMapper->getShopById($itemId)->getTax();
+                    $itemImg = $itemsMapper->getShopItemById($itemId)->getImage();
+                    $itemName = $itemsMapper->getShopItemById($itemId)->getName();
+                    $itemNumber = $itemsMapper->getShopItemById($itemId)->getItemnumber();
+                    $itemPrice = $itemsMapper->getShopItemById($itemId)->getPrice();
+                    $itemTax = $itemsMapper->getShopItemById($itemId)->getTax();
                     $itemPriceWithoutTax = round(($itemPrice / (100 + $itemTax)) * 100, 2);
-                    $arrayShippingCosts[] = $itemsMapper->getShopById($itemId)->getShippingCosts();
-                    $itemShippingTime = $itemsMapper->getShopById($itemId)->getShippingTime();
+                    $arrayShippingCosts[] = $itemsMapper->getShopItemById($itemId)->getShippingCosts();
+                    $itemShippingTime = $itemsMapper->getShopItemById($itemId)->getShippingTime();
                     $arrayShippingTime[] = $itemShippingTime;
                     $arrayTaxes[] = $itemTax;
                     $arrayPrices[] = $itemPrice * $orderItem['quantity'];
@@ -195,16 +199,16 @@ $settingsMapper = $this->get('settingsMapper');
                 <td>
                     <div class="btn-group btn-group-sm">
                         <button type="submit" name="status" value="0" class="btn btn-sm alert-danger">
-                            <i class="fa fa-plus-square" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('openBIG') ?>
+                            <i class="fas fa-plus-square" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('openBIG') ?>
                         </button>
                         <button type="submit" name="status" value="1" class="btn btn-sm alert-warning">
-                            <i class="fa fa-pencil-square" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('processingBIG') ?>
+                            <i class="fas fa-pencil-square" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('processingBIG') ?>
                         </button>
                         <button type="submit" name="status" value="2" class="btn btn-sm alert-info">
-                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('canceledBIG') ?>
+                            <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('canceledBIG') ?>
                         </button>
                         <button type="submit" name="status" value="3" class="btn btn-sm alert-success">
-                            <i class="fa fa-check-square" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('completedBIG') ?>
+                            <i class="fas fa-check-square" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('completedBIG') ?>
                         </button>
                     </div>
                 </td>
@@ -259,7 +263,7 @@ $settingsMapper = $this->get('settingsMapper');
                         <button type="submit" name="delete" value="1" class="btn btn-sm alert-default delete_button">
                             <i class="far fa-trash-alt" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('deleteBIG') ?>
                         </button>
-                        <span class="btn btn-sm alert-default">
+                        <span class="btn btn-sm alert-default" style="pointer-events: none">
                             <i class="fas fa-info"></i> <?=$this->getTrans('infoDeleteOrder') ?>
                         </span>
                     </div>

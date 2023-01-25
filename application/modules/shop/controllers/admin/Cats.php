@@ -30,6 +30,12 @@ class Cats extends Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'items', 'action' => 'index'])
             ],
             [
+                'name' => 'menuCostumers',
+                'active' => false,
+                'icon' => 'fas fa-users',
+                'url' => $this->getLayout()->getUrl(['controller' => 'costumers', 'action' => 'index'])
+            ],
+            [
                 'name' => 'menuOrders',
                 'active' => false,
                 'icon' => 'fas fa-cart-arrow-down',
@@ -43,7 +49,7 @@ class Cats extends Admin
                 [
                     'name' => 'add',
                     'active' => false,
-                    'icon' => 'fa fa-plus-circle',
+                    'icon' => 'fas fa-plus-circle',
                     'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'treat'])
                 ]
             ],
@@ -56,7 +62,7 @@ class Cats extends Admin
             [
                 'name' => 'menuSettings',
                 'active' => false,
-                'icon' => 'fa fa-cogs',
+                'icon' => 'fas fa-cogs',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ],
             [
@@ -68,9 +74,9 @@ class Cats extends Admin
         ];
 
         if ($this->getRequest()->getActionName() === 'treat') {
-            $items[3][0]['active'] = true;
+            $items[4][0]['active'] = true;
         } else {
-            $items[3]['active'] = true;
+            $items[4]['active'] = true;
         }
 
         $this->getLayout()->addMenu
@@ -196,5 +202,4 @@ class Cats extends Admin
         
         $this->redirect(['action' => 'index']);
     }
-
 }

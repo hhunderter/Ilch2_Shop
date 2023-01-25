@@ -18,7 +18,7 @@ $countDoneOrders = count($this->get('orders')->getOrders(['status'=>'3']));
 
 <?php if ($countNewOrders > 0) : ?>
     <div class="alert alert-danger">
-        <i class="fa fa-plus-square" aria-hidden="true"></i>
+        <i class="fas fa-plus-square" aria-hidden="true"></i>
         <b> &nbsp; <?=$this->getTrans('infoNewOrders') ?></b>
     </div>
 <?php endif; ?>

@@ -256,10 +256,10 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            placeholder="<?=$this->getTrans('choosePic') ?>"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getImage()) : $this->escape($this->originalInput('image')) ?>" />
                     <span class="input-group-addon">
-                        <span class="fa fa-times"></span>
+                        <span class="fas fa-times"></span>
                     </span>
                     <span class="input-group-addon">
-                        <a id="media_image" href="javascript:media_image()"><i class="fa fa-picture-o"></i></a>
+                        <a id="media_image" href="javascript:media_image()"><i class="fas fa-picture-o"></i></a>
                         <script>
                             <?=$this->getMedia()
                                 ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_image/'))
@@ -293,10 +293,10 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            placeholder="<?=$this->getTrans('choosePic') ?>"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getImage1()) : $this->escape($this->originalInput('image1')) ?>" />
                     <span class="input-group-addon">
-                        <span class="fa fa-times"></span>
+                        <span class="fas fa-times"></span>
                     </span>
                     <span class="input-group-addon">
-                        <a id="media_image1" href="javascript:media_image1()"><i class="fa fa-picture-o"></i></a>
+                        <a id="media_image1" href="javascript:media_image1()"><i class="fas fa-picture-o"></i></a>
                         <script>
                             <?=$this->getMedia()
                                 ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_image1/'))
@@ -330,10 +330,10 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            placeholder="<?=$this->getTrans('choosePic') ?>"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getImage2()) : $this->escape($this->originalInput('image2')) ?>" />
                     <span class="input-group-addon">
-                        <span class="fa fa-times"></span>
+                        <span class="fas fa-times"></span>
                     </span>
                     <span class="input-group-addon">
-                        <a id="media_image2" href="javascript:media_image2()"><i class="fa fa-picture-o"></i></a>
+                        <a id="media_image2" href="javascript:media_image2()"><i class="fas fa-picture-o"></i></a>
                         <script>
                             <?=$this->getMedia()
                                 ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_image2/'))
@@ -367,10 +367,10 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            placeholder="<?=$this->getTrans('choosePic') ?>"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getImage3()) : $this->escape($this->originalInput('image3')) ?>" />
                     <span class="input-group-addon">
-                        <span class="fa fa-times"></span>
+                        <span class="fas fa-times"></span>
                     </span>
                     <span class="input-group-addon">
-                        <a id="media_image3" href="javascript:media_image3()"><i class="fa fa-picture-o"></i></a>
+                        <a id="media_image3" href="javascript:media_image3()"><i class="fas fa-picture-o"></i></a>
                         <script>
                             <?=$this->getMedia()
                                 ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_image3/'))

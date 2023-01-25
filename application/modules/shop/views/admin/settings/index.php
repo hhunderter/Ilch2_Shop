@@ -107,10 +107,10 @@
                        placeholder="<?=$this->getTrans('choosePic') ?>"
                        value="<?=($this->escape($this->get('settings')->getShopLogo()) != '') ? $this->escape($this->get('settings')->getShopLogo()) : $this->escape($this->originalInput('shopLogo')) ?>" />
                 <span class="input-group-addon">
-                    <span class="fa fa-times"></span>
+                    <span class="fas fa-times"></span>
                 </span>
                 <span class="input-group-addon">
-                    <a id="media_shopLogo" href="javascript:media_shopLogo()"><i class="fa fa-picture-o"></i></a>
+                    <a id="media_shopLogo" href="javascript:media_shopLogo()"><i class="fas fa-picture-o"></i></a>
                     <script>
                         <?=$this->getMedia()
                             ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_shopLogo/'))

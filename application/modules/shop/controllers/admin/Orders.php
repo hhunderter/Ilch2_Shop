@@ -14,7 +14,7 @@ use Modules\Shop\Mappers\Currency as CurrencyMapper;
 use Modules\Shop\Mappers\Items as ItemsMapper;
 use Modules\Shop\Mappers\Orders as OrdersMapper;
 use Modules\Shop\Mappers\Settings as SettingsMapper;
-use Modules\Shop\Models\Orders as OrdersModel;
+use Modules\Shop\Models\Order as OrdersModel;
 
 class Orders extends Admin
 {
@@ -32,6 +32,12 @@ class Orders extends Admin
                 'active' => false,
                 'icon' => 'fas fa-tshirt',
                 'url' => $this->getLayout()->getUrl(['controller' => 'items', 'action' => 'index'])
+            ],
+            [
+                'name' => 'menuCostumers',
+                'active' => false,
+                'icon' => 'fas fa-users',
+                'url' => $this->getLayout()->getUrl(['controller' => 'costumers', 'action' => 'index'])
             ],
             [
                 'name' => 'menuOrders',
@@ -54,7 +60,7 @@ class Orders extends Admin
             [
                 'name' => 'menuSettings',
                 'active' => false,
-                'icon' => 'fa fa-cogs',
+                'icon' => 'fas fa-cogs',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ],
             [
@@ -125,11 +131,10 @@ class Orders extends Admin
 
         if ($this->getRequest()->isPost()) {
             $model = new OrdersModel();
+            $stockSufficient = true;
 
             if ($this->getRequest()->getPost('status') != '') {
-                $model->setId($this->getRequest()->getPost('id'));
-                $model->setStatus($this->getRequest()->getPost('status'));
-                $ordersMapper->updateStatus($model);
+
                 $items = json_decode(str_replace("'", '"', $order->getOrder()), true);
 
                 if ($this->getRequest()->getPost('status') == 2 && $this->getRequest()->getPost('confirmTransferBackToStock') === 'true') {
@@ -138,8 +143,21 @@ class Orders extends Admin
                     }
                 } elseif ($this->getRequest()->getPost('status') != 2 && $this->getRequest()->getPost('confirmRemoveFromStock') === 'true') {
                     foreach ($items as $item) {
-                        $itemsMapper->removeStock($item['id'], $item['quantity']);
+                        $currentStock = $itemsMapper->getShopItemById($item['id']);
+
+                        if ($currentStock->getStock() >= $item['quantity']) {
+                            $itemsMapper->removeStock($item['id'], $item['quantity']);
+                        } else {
+                            $stockSufficient = false;
+                            $this->addMessage('currentStockInsufficient', 'danger');
+                        }
                     }
+                }
+
+                if ($stockSufficient) {
+                    $model->setId($this->getRequest()->getPost('id'));
+                    $model->setStatus($this->getRequest()->getPost('status'));
+                    $ordersMapper->updateStatus($model);
                 }
 
                 $this->redirect(['action' => 'treat', 'id' => $this->getRequest()->getPost('id')]);

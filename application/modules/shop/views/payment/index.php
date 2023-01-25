@@ -2,10 +2,16 @@
 <?php
     $itemsMapper = $this->get('itemsMapper');
     $order = $this->get('order');
-    $body = json_encode([
-        'selector' => $this->get('order')->getSelector(),
-        'order' => $this->get('order')->getOrder(),
-    ]);
+$purchaseUnits = [];
+//    $purchaseUnits = [
+//        'amount' => [
+//            'value' => '',
+//            'currency_code' => '',
+//            'breakdown' => ['item_total' => ['value' => '', 'currency_code' => '']]
+//        ],
+//        'invoice_id' => '',
+//        'items' => []
+//    ];
 ?>
 
 <h1>
@@ -13,7 +19,7 @@
 </h1>
 
 <div class="panel panel-default">
-    <div class="panel-heading" id="orderHeading" data-toggle="collapse" data-target="#orderDetails"><?=$this->getTrans('paymentPanelHeading', substr($order->getInvoiceFilename(),0,strrpos($order->getInvoiceFilename(), '_')), $order->getDatetimeInvoiceSent(), $order->getDatetime()) ?><span class="pull-right clickable"><i class="fa fa-chevron-down"></i></span></div>
+    <div class="panel-heading" id="orderHeading" data-toggle="collapse" data-target="#orderDetails"><?=$this->getTrans('paymentPanelHeading', substr($order->getInvoiceFilename(),0,strrpos($order->getInvoiceFilename(), '_')), $order->getDatetimeInvoiceSent(), $order->getDatetime()) ?><span class="pull-right clickable"><i class="fas fa-chevron-down"></i></span></div>
     <div class="panel-body collapse" id="orderDetails">
         <div class="table-responsive order">
             <table class="table table-striped">
@@ -36,14 +42,14 @@
                 $pdfOrderNr = 1;
                 foreach ($orderItems as $orderItem):
                     $itemId = $orderItem['id'];
-                    $itemImg = $itemsMapper->getShopById($itemId)->getImage();
-                    $itemName = $itemsMapper->getShopById($itemId)->getName();
-                    $itemNumber = $itemsMapper->getShopById($itemId)->getItemnumber();
-                    $itemPrice = $itemsMapper->getShopById($itemId)->getPrice();
-                    $itemTax = $itemsMapper->getShopById($itemId)->getTax();
+                    $itemImg = $itemsMapper->getShopItemById($itemId)->getImage();
+                    $itemName = $itemsMapper->getShopItemById($itemId)->getName();
+                    $itemNumber = $itemsMapper->getShopItemById($itemId)->getItemnumber();
+                    $itemPrice = $itemsMapper->getShopItemById($itemId)->getPrice();
+                    $itemTax = $itemsMapper->getShopItemById($itemId)->getTax();
                     $itemPriceWithoutTax = round(($itemPrice / (100 + $itemTax)) * 100, 2);
-                    $arrayShippingCosts[] = $itemsMapper->getShopById($itemId)->getShippingCosts();
-                    $itemShippingTime = $itemsMapper->getShopById($itemId)->getShippingTime();
+                    $arrayShippingCosts[] = $itemsMapper->getShopItemById($itemId)->getShippingCosts();
+                    $itemShippingTime = $itemsMapper->getShopItemById($itemId)->getShippingTime();
                     $arrayShippingTime[] = $itemShippingTime;
                     $arrayTaxes[] = $itemTax;
                     $arrayPrices[] = $itemPrice * $orderItem['quantity'];
@@ -85,7 +91,12 @@
                             <b><?=number_format($itemPrice * $orderItem['quantity'], 2, '.', '') ?> <?=$this->escape($this->get('currency')->getName()) ?></b>
                         </td>
                     </tr>
-                    <?php $subtotal_price += round($itemPrice * $orderItem['quantity'], 2); ?>
+                    <?php
+                    $subtotal_price += round($itemPrice * $orderItem['quantity'], 2);
+
+                    // FIll purchase_units array for PayPal.
+                    $purchaseUnits['items'][] = ['name' => $this->escape($itemName), 'unit_amount' => ['value' => $itemPrice, 'currency_code' => $this->escape($this->get('currency')->getCode())], 'quantity' => $orderItem['quantity'], 'sku' => $this->escape($itemNumber)];
+                    ?>
                 <?php endforeach; ?>
                 <tr>
                     <td colspan="7" class="text-right finished">
@@ -137,36 +148,40 @@
     </div>
 </div>
 
-<script src="https://www.paypal.com/sdk/js?client-id=<?=$this->get('settings')->getClientID() ?>&currency=<?=$this->get('currency')->getCode() ?>"></script>
+<?php
+// Create "purchase_units" for PayPal.
+$purchaseUnits['amount']['value'] = number_format($total_price, 2, '.', '');
+$purchaseUnits['amount']['currency_code'] = $this->escape($this->get('currency')->getCode());
+$purchaseUnits['amount']['breakdown']['item_total']['value'] = $purchaseUnits['amount']['value'];
+$purchaseUnits['amount']['breakdown']['item_total']['currency_code'] = $purchaseUnits['amount']['currency_code'];
+
+$purchaseUnits['invoice_id'] = substr($order->getInvoiceFilename(),0,strrpos($order->getInvoiceFilename(), '_'));
+?>
+
+<script src="https://www.paypal.com/sdk/js?client-id=<?=urlencode($this->get('settings')->getClientID()) ?>&currency=<?=urlencode($this->get('currency')->getCode()) ?>"></script>
 
 <div id="paypal-button-container"></div>
+
 <script>
     paypal.Buttons({
-        // Order is created on the server and the order id is returned
+        // Sets up the transaction when a payment button is clicked
         createOrder: (data, actions) => {
-            return fetch("/api/orders", {
-                method: "post",
-                body: <?=$body ?>
-            })
-                .then((response) => response.json())
-                .then((order) => order.id);
+            return actions.order.create({
+                purchase_units: [<?=json_encode($purchaseUnits) ?>]
+            });
         },
-        // Finalize the transaction on the server after payer approval
+        // Finalize the transaction after payer approval
         onApprove: (data, actions) => {
-            return fetch(`/api/orders/${data.orderID}/capture`, {
-                method: "post",
-            })
-                .then((response) => response.json())
-                .then((orderData) => {
-                    // Successful capture! For dev/demo purposes:
-                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-                    const transaction = orderData.purchase_units[0].payments.captures[0];
-                    alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
-                    // When ready to go live, remove the alert and show a success message within this page. For example:
-                    // const element = document.getElementById('paypal-button-container');
-                    // element.innerHTML = '<h3>Thank you for your payment!</h3>';
-                    // Or go to another URL:  actions.redirect('thank_you.html');
-                });
+            return actions.order.capture().then(function(orderData) {
+                // Successful capture! For dev/demo purposes:
+                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                const transaction = orderData.purchase_units[0].payments.captures[0];
+                alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+                // When ready to go live, remove the alert and show a success message within this page. For example:
+                // const element = document.getElementById('paypal-button-container');
+                // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                // Or go to another URL:  actions.redirect('thank_you.html');
+            });
         }
     }).render('#paypal-button-container');
 

@@ -30,6 +30,12 @@ class Settings extends Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'items', 'action' => 'index'])
             ],
             [
+                'name' => 'menuCostumers',
+                'active' => false,
+                'icon' => 'fas fa-users',
+                'url' => $this->getLayout()->getUrl(['controller' => 'costumers', 'action' => 'index'])
+            ],
+            [
                 'name' => 'menuOrders',
                 'active' => false,
                 'icon' => 'fas fa-cart-arrow-down',
@@ -49,8 +55,8 @@ class Settings extends Admin
             ],
             [
                 'name' => 'menuSettings',
-                'active' => false,
-                'icon' => 'fa fa-cogs',
+                'active' => true,
+                'icon' => 'fas fa-cogs',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ],
             [
@@ -60,8 +66,6 @@ class Settings extends Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'note', 'action' => 'index'])
             ]
         ];
-        
-        $items[5]['active'] = true;
 
         $this->getLayout()->addMenu
         (

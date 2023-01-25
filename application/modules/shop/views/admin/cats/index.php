@@ -4,7 +4,7 @@
 <h1>
     <?=$this->getTrans('menuCats') ?>
     <a class="badge" data-toggle="modal" data-target="#infoModal">
-        <i class="fa fa-info"></i>
+        <i class="fas fa-info"></i>
     </a>
 </h1>
 <?php if (!empty($this->get('cats'))): ?>

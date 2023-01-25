@@ -7,18 +7,19 @@
 namespace Modules\Shop\Controllers\Admin;
 
 use Ilch\Controller\Admin;
-use Modules\Shop\Mappers\Category as CategoryMapper;
-use Modules\Shop\Mappers\Items as ItemsMapper;
+use Modules\User\Mappers\User as UserMapper;
+use Modules\Shop\Mappers\Costumer as CostumerMapper;
+use Modules\Shop\Mappers\Address as AddressMapper;
 use Modules\Shop\Mappers\Orders as OrdersMapper;
 
-class Index extends Admin
+class Costumers extends Admin
 {
     public function init()
     {
         $items = [
             [
                 'name' => 'menuOverwiev',
-                'active' => true,
+                'active' => false,
                 'icon' => 'fas fa-store-alt',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
@@ -30,7 +31,7 @@ class Index extends Admin
             ],
             [
                 'name' => 'menuCostumers',
-                'active' => false,
+                'active' => true,
                 'icon' => 'fas fa-users',
                 'url' => $this->getLayout()->getUrl(['controller' => 'costumers', 'action' => 'index'])
             ],
@@ -68,30 +69,69 @@ class Index extends Admin
 
         $this->getLayout()->addMenu
         (
-            'menuShops',
+            'menuCostumers',
             $items
         );
     }
 
     public function indexAction()
     {
-        $categoryMapper = new CategoryMapper();
-        $itemsMapper = new ItemsMapper();
+        $costumerMapper = new CostumerMapper();
+
+        $this->getLayout()->getAdminHmenu()
+            ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuCostumers'), ['action' => 'index']);
+
+        if ($this->getRequest()->getPost('action') === 'delete') {
+            foreach ($this->getRequest()->getPost('check_costumers') as $costumerId) {
+                $costumerMapper->delete($costumerId);
+            }
+
+            $this->addMessage('deleteSuccess');
+            $this->redirect(['action' => 'index']);
+        }
+
+        $this->getView()->set('costumers', $costumerMapper->getCostumers());
+    }
+
+    public function showAction()
+    {
+        $costumerMapper = new CostumerMapper();
+        $userMapper = new UserMapper();
+        $addressMapper = new AddressMapper();
         $ordersMapper = new OrdersMapper();
 
         $this->getLayout()->getAdminHmenu()
-            ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index']);
-
-        $this->getView()->set('cats', $categoryMapper->getCategories());
-        $this->getView()->set('itemsMapper', $itemsMapper->getShopItems());
-        $this->getView()->set('orders', $ordersMapper);
-    }
-
-    public function noteAction()
-    {
-        $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
-            ->add($this->getTranslator()->trans('menuNote'), ['action' => 'note']);
+            ->add($this->getTranslator()->trans('menuCostumers'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuCostumer'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
+
+        $costumer = $costumerMapper->getCostumerById($this->getRequest()->getParam('id'));
+
+        if (!$costumer) {
+            $this->addMessage('costumerNotFound', 'danger');
+            $this->redirect(['action' => 'index']);
+        }
+
+        $user = $userMapper->getUserById($costumer->getUserId());
+
+        $this->getView()->set('costumer', $costumer);
+        $this->getView()->set('costumerUsername', (!empty($user) ? $user->getName() : ''));
+        $this->getView()->set('addresses', $addressMapper->getAddressesByCostumerId($this->getRequest()->getParam('id')));
+        $this->getView()->set('orders', $ordersMapper->getOrdersByCostumerId($this->getRequest()->getParam('id')));
     }
 
+    public function deleteAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $costumerMapper = new CostumerMapper();
+
+            $costumerMapper->delete($this->getRequest()->getParam('id'));
+            $this->addMessage('deleteSuccess');
+        } else {
+            $this->addMessage('deleteCostumerFailed', 'danger');
+        }
+
+        $this->redirect(['action' => 'index']);
+    }
 }

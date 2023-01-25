@@ -29,6 +29,12 @@ class Currency extends Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'items', 'action' => 'index'])
             ],
             [
+                'name' => 'menuCostumers',
+                'active' => false,
+                'icon' => 'fas fa-users',
+                'url' => $this->getLayout()->getUrl(['controller' => 'costumers', 'action' => 'index'])
+            ],
+            [
                 'name' => 'menuOrders',
                 'active' => false,
                 'icon' => 'fas fa-cart-arrow-down',
@@ -48,14 +54,14 @@ class Currency extends Admin
                 [
                     'name' => 'add',
                     'active' => false,
-                    'icon' => 'fa fa-plus-circle',
+                    'icon' => 'fas fa-plus-circle',
                     'url' => $this->getLayout()->getUrl(['controller' => 'currency', 'action' => 'treat'])
                 ]
             ],
             [
                 'name' => 'menuSettings',
                 'active' => false,
-                'icon' => 'fa fa-cogs',
+                'icon' => 'fas fa-cogs',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ],
             [
@@ -67,9 +73,9 @@ class Currency extends Admin
         ];
 
         if ($this->getRequest()->getActionName() == 'treat') {
-            $items[4][0]['active'] = true;
+            $items[5][0]['active'] = true;
         } else {
-            $items[4]['active'] = true;
+            $items[5]['active'] = true;
         }
 
         $this->getLayout()->addMenu

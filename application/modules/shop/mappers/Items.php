@@ -7,7 +7,7 @@
 namespace Modules\Shop\Mappers;
 
 use Ilch\Mapper;
-use Modules\Shop\Models\Items as ItemsModel;
+use Modules\Shop\Models\Item as ItemsModel;
 
 class Items extends Mapper
 {
@@ -62,35 +62,24 @@ class Items extends Mapper
     }
 
     /**
-     * Gets items by id.
+     * Gets item by id.
      *
      * @param int $id
      * @return ItemsModel|false
      */
-    public function getShopById(int $id)
+    public function getShopItemById(int $id)
     {
         $shopItem = $this->getShopItems(['id' => $id]);
         return reset($shopItem);
     }
 
     /**
-     * Gets items by catId.
-     *
-     * @param int $catId
-     * @return false|ItemsModel[]
-     */
-    public function getShopItemsByCatId(int $catId)
-    {
-        $shops = $this->getShopItems(['cat_id' => $catId]);
-        return reset($shops);
-    }
-
-    /**
      * Inserts or updates item model.
      *
      * @param ItemsModel $item
+     * @return int
      */
-    public function save(ItemsModel $item)
+    public function save(ItemsModel $item): int
     {
         $fields = [
             'code' => strtolower(preg_replace('/[^a-z0-9]/i', '', $item->getName())).'_'.time(),
@@ -120,8 +109,9 @@ class Items extends Mapper
                 ->values($fields)
                 ->where(['id' => $item->getId()])
                 ->execute();
+            return $item->getId();
         } else {
-            $this->db()->insert('shop_items')
+            return $this->db()->insert('shop_items')
                 ->values($fields)
                 ->execute();
         }

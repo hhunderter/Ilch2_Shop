@@ -177,7 +177,7 @@ if ($shopItem->getImage() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage())) 
                             <input type="hidden" name="code" value="<?=$shopItem->getCode() ?>" />
                                 <div class="input-group input-group-sm quantity">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-default plus-btn" type="button" name="button"><i class="fa fa-plus"></i></button>
+                                        <button class="btn btn-default plus-btn" type="button" name="button"><i class="fas fa-plus"></i></button>
                                     </span>
                                     <input class="form-control item-quantity"
                                         type="text"
@@ -186,7 +186,7 @@ if ($shopItem->getImage() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage())) 
                                         value="1"
                                         readonly>
                                     <span class="input-group-btn">
-                                        <button class="btn btn-default minus-btn" type="button" name="button"><i class="fa fa-minus"></i></button>
+                                        <button class="btn btn-default minus-btn" type="button" name="button"><i class="fas fa-minus"></i></button>
                                     </span>
                                 </div>
                                 <button type="submit" class="btn btn-sm btn-warning"><i class="fas fa-shopping-cart"></i> <?=$this->getTrans('inToCart') ?></button>

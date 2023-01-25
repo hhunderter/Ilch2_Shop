@@ -9,12 +9,14 @@ namespace Modules\Shop\Controllers;
 use Ilch\Controller\Frontend;
 use Ilch\Date;
 use Ilch\Mail;
+use Modules\Shop\Mappers\Address as AddressMapper;
 use Modules\Admin\Mappers\Emails as EmailsMapper;
 use Modules\Shop\Mappers\Category as CategoryMapper;
+use Modules\Shop\Mappers\Costumer as CostumerMapper;
 use Modules\Shop\Mappers\Currency as CurrencyMapper;
 use Modules\Shop\Mappers\Items as ItemsMapper;
 use Modules\Shop\Mappers\Orders as OrdersMapper;
-use Modules\Shop\Models\Orders as OrdersModel;
+use Modules\Shop\Models\Order as OrdersModel;
 use Modules\Shop\Mappers\Settings as SettingsMapper;
 use Modules\User\Mappers\User as UserMapper;
 use Ilch\Validation;
@@ -112,7 +114,9 @@ class Index extends Frontend
 
     public function orderAction()
     {
+        $addressMapper = new AddressMapper();
         $emailsMapper = new EmailsMapper();
+        $costumerMapper = new CostumerMapper();
         $currencyMapper = new CurrencyMapper();
         $itemsMapper = new ItemsMapper();
         $ordersMapper = new OrdersMapper();
@@ -120,6 +124,7 @@ class Index extends Frontend
         $ilchDate = new Date();
         $captchaNeeded = captchaNeeded();
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
+        $addresses = [];
 
         $this->getLayout()->header()->css('static/css/style_front.css');
         $this->getLayout()->getHmenu()
@@ -127,15 +132,37 @@ class Index extends Frontend
             ->add($this->getTranslator()->trans('menuCart'), ['action' => 'cart'])
             ->add($this->getTranslator()->trans('menuOrder'), ['action' => 'order']);
 
-            if ($this->getRequest()->getPost('saveOrder')) {
+        $costumer = $costumerMapper->getCostumerByUserId($this->getUser()->getId());
+
+        if (!empty($costumer)) {
+            $addresses = $addressMapper->getAddressesByCostumerId($costumer->getId());
+        }
+
+        if ($this->getRequest()->getPost('saveOrder')) {
             $validationRules = [
                 'prename' => 'required',
                 'lastname' => 'required',
                 'street' => 'required',
-                'postcode' => 'required|numeric',
+                'postcode' => 'required|numeric|integer',
                 'city' => 'required',
                 'acceptOrder' =>  'required'
             ];
+
+            if ($this->getRequest()->getPost('dropdownDeliveryAddress')) {
+                $validationRules = ['dropdownDeliveryAddress' => 'required|numeric'];
+            }
+
+            if ($this->getRequest()->getPost('differentInvoiceAddress')) {
+                if ($this->getRequest()->getPost('dropdownInvoiceAddress')) {
+                    $validationRules['dropdownInvoiceAddress'] = 'required|numeric';
+                } else {
+                    $validationRules['invoiceAddressPrename'] = 'required';
+                    $validationRules['invoiceAddressLastname'] = 'required';
+                    $validationRules['invoiceAddressStreet'] = 'required';
+                    $validationRules['invoiceAddressPostcode'] = 'required|numeric|integer';
+                    $validationRules['invoiceAddressCity'] = 'required';
+                }
+            }
 
             if ($captchaNeeded) {
                 $validationRules['captcha'] = 'captcha';
@@ -145,14 +172,75 @@ class Index extends Frontend
             if ($validation->isValid()) {
                 $model = new OrdersModel();
                 $model->setDatetime($ilchDate->toDb());
-                $model->setPrename($this->getRequest()->getPost('prename'));
-                $model->setLastname($this->getRequest()->getPost('lastname'));
-                $model->setStreet($this->getRequest()->getPost('street'));
-                $model->setPostcode($this->getRequest()->getPost('postcode'));
-                $model->setCity($this->getRequest()->getPost('city'));
-                $model->setCountry($this->getRequest()->getPost('country'));
+
+                if (!empty($costumer)) {
+                    $addresses = $addressMapper->getAddressesByCostumerId($costumer->getId());
+
+                    $model->setCostumerId($costumer->getId());
+                    $model->getDeliveryAddress()->setCostumerID($costumer->getId());
+                    $model->getInvoiceAddress()->setCostumerID($costumer->getId());
+                }
+
+                if ($this->getRequest()->getPost('dropdownDeliveryAddress')) {
+                    // Don't use possible user input. Get the address from the database.
+                    if (empty($costumer)) {
+                        // Pretends to select a known address of him, but isn't a costumer? Redirect with error message.
+                        $this->addMessage('unknownCostumer', 'danger');
+                        $this->redirect()
+                            ->to(['action' => 'order']);
+                    }
+                    $address = $addressMapper->getAddresses(['id' => $this->getRequest()->getPost('dropdownDeliveryAddress'), 'costumerId' => $costumer->getId()])[0];
+
+                    $model->getDeliveryAddress()->setId($address->getId());
+                    $model->getDeliveryAddress()->setPrename($address->getPrename());
+                    $model->getDeliveryAddress()->setLastname($address->getLastname());
+                    $model->getDeliveryAddress()->setStreet($address->getStreet());
+                    $model->getDeliveryAddress()->setPostcode($address->getPostcode());
+                    $model->getDeliveryAddress()->setCity($address->getCity());
+                    $model->getDeliveryAddress()->setCountry($address->getCountry());
+                } else {
+                    $model->getDeliveryAddress()->setPrename($this->getRequest()->getPost('prename'));
+                    $model->getDeliveryAddress()->setLastname($this->getRequest()->getPost('lastname'));
+                    $model->getDeliveryAddress()->setStreet($this->getRequest()->getPost('street'));
+                    $model->getDeliveryAddress()->setPostcode($this->getRequest()->getPost('postcode'));
+                    $model->getDeliveryAddress()->setCity($this->getRequest()->getPost('city'));
+                    $model->getDeliveryAddress()->setCountry($this->getRequest()->getPost('country'));
+                }
+
                 $model->setEmail($this->getRequest()->getPost('email'));
                 $model->setOrder($this->getRequest()->getPost('order'));
+
+                if ($this->getRequest()->getPost('differentInvoiceAddress')) {
+
+                    if ($this->getRequest()->getPost('dropdownInvoiceAddress')) {
+                        // Don't use possible user input. Get the address from the database.
+                        if (empty($costumer)) {
+                            // Pretends to select a known address of him, but isn't a costumer? Redirect with error message.
+                            $this->addMessage('unknownCostumer', 'danger');
+                            $this->redirect()
+                                ->to(['action' => 'order']);
+                        }
+                        $address = $addressMapper->getAddresses(['id' => $this->getRequest()->getPost('dropdownInvoiceAddress'), 'costumerId' => $costumer->getId()])[0];
+
+                        $model->getInvoiceAddress()->setId($address->getId());
+                        $model->getInvoiceAddress()->setPrename($address->getPrename());
+                        $model->getInvoiceAddress()->setLastname($address->getLastname());
+                        $model->getInvoiceAddress()->setStreet($address->getStreet());
+                        $model->getInvoiceAddress()->setPostcode($address->getPostcode());
+                        $model->getInvoiceAddress()->setCity($address->getCity());
+                        $model->getInvoiceAddress()->setCountry($address->getCountry());
+                    } else {
+                        $model->getInvoiceAddress()->setPrename($this->getRequest()->getPost('invoiceAddressPrename'));
+                        $model->getInvoiceAddress()->setLastname($this->getRequest()->getPost('invoiceAddressLastname'));
+                        $model->getInvoiceAddress()->setStreet($this->getRequest()->getPost('invoiceAddressStreet'));
+                        $model->getInvoiceAddress()->setPostcode($this->getRequest()->getPost('invoiceAddressPostcode'));
+                        $model->getInvoiceAddress()->setCity($this->getRequest()->getPost('invoiceAddressCity'));
+                        $model->getInvoiceAddress()->setCountry($this->getRequest()->getPost('invoiceAddressCountry'));
+                    }
+                } else {
+                    $model->setInvoiceAddress($model->getDeliveryAddress());
+                }
+
                 $ordersMapper->save($model);
 
                 $arrayOrder = $this->getRequest()->getPost('order');
@@ -165,7 +253,7 @@ class Index extends Frontend
                 $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
                 $date = new Date();
                 $mailContent = $emailsMapper->getEmail('shop', 'order_confirmed_mail', $this->getTranslator()->getLocale());
-                $name = $this->getLayout()->escape($model->getLastname());
+                $name = $this->getLayout()->escape($model->getDeliveryAddress()->getLastname());
 
                 $layout = $_SESSION['layout'] ?? '';
 
@@ -203,6 +291,7 @@ class Index extends Frontend
             }
         }
 
+        $this->getView()->set('addresses', $addresses);
         $this->getView()->set('captchaNeeded', $captchaNeeded);
         $this->getView()->set('currency', $currency->getName());
         $this->getView()->set('itemsMapper', $itemsMapper);
@@ -222,7 +311,7 @@ class Index extends Frontend
         $itemsMapper = new ItemsMapper();
         $userMapper = new UserMapper();
 
-        $shopItem = $itemsMapper->getShopById($this->getRequest()->getParam('id'));
+        $shopItem = $itemsMapper->getShopItemById($this->getRequest()->getParam('id'));
 
         if (empty($shopItem) || $shopItem->getStatus() != 1) {
             $this->redirect(['action' => 'index']);

@@ -12,7 +12,7 @@ use Modules\Shop\Mappers\Currency as CurrencyMapper;
 use Modules\Shop\Mappers\Items as ItemsMapper;
 use Modules\Shop\Mappers\Orders as OrdersMapper;
 use Modules\Shop\Mappers\Settings as SettingsMapper;
-use Modules\Shop\Models\Items as ItemsModel;
+use Modules\Shop\Models\Item as ItemsModel;
 use Ilch\Validation;
 
 class Items extends Admin
@@ -34,9 +34,15 @@ class Items extends Admin
                 [
                     'name' => 'add',
                     'active' => false,
-                    'icon' => 'fa fa-plus-circle',
+                    'icon' => 'fas fa-plus-circle',
                     'url' => $this->getLayout()->getUrl(['controller' => 'items', 'action' => 'treat'])
                 ]
+            ],
+            [
+                'name' => 'menuCostumers',
+                'active' => false,
+                'icon' => 'fas fa-users',
+                'url' => $this->getLayout()->getUrl(['controller' => 'costumers', 'action' => 'index'])
             ],
             [
                 'name' => 'menuOrders',
@@ -59,7 +65,7 @@ class Items extends Admin
             [
                 'name' => 'menuSettings',
                 'active' => false,
-                'icon' => 'fa fa-cogs',
+                'icon' => 'fas fa-cogs',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ],
             [
@@ -138,7 +144,7 @@ class Items extends Admin
                     ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('menuItems'), ['controller' => 'items', 'action' => 'index'])
                     ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
-            $this->getView()->set('shopItem', $itemsMapper->getShopById($this->getRequest()->getParam('id')));
+            $this->getView()->set('shopItem', $itemsMapper->getShopItemById($this->getRequest()->getParam('id')));
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])

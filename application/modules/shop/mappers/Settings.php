@@ -54,9 +54,9 @@ class Settings extends Mapper
 
         return $model;
     }
-    
+
     /**
-     * Insert or update settingShop.
+     * Update settingShop.
      *
      * @param SettingsModel $settingShop
      */
@@ -78,9 +78,9 @@ class Settings extends Mapper
             ->where(['id' => '1'])
             ->execute();
     }
-    
+
     /**
-     * Insert or update settingBank.
+     * Update settingBank.
      *
      * @param SettingsModel $settingBank
      */
@@ -96,9 +96,9 @@ class Settings extends Mapper
             ->where(['id' => '1'])
             ->execute();
     }
-    
+
     /**
-     * Insert or update settingDefault.
+     * Update settingDefault.
      *
      * @param SettingsModel $settingDefault
      */
@@ -117,7 +117,7 @@ class Settings extends Mapper
     }
 
     /**
-     * Insert or update settingAGB.
+     * Update settingAGB.
      *
      * @param SettingsModel $settingAGB
      */
@@ -132,7 +132,7 @@ class Settings extends Mapper
     }
 
     /**
-     *
+     * Update settings payment.
      *
      * @param SettingsModel $settingPayment
      * @return void
