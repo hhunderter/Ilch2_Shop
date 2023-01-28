@@ -27,7 +27,7 @@ class Config extends Install
                 'description' => 'A small shop can be created here.',
             ],
         ],
-        'ilchCore' => '2.1.44',
+        'ilchCore' => '2.1.48',
         'phpVersion' => '7.3'
     ];
 

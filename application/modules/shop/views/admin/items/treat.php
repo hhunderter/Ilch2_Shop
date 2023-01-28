@@ -259,7 +259,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                         <span class="fa-solid fa-times"></span>
                     </span>
                     <span class="input-group-addon">
-                        <a id="media_image" href="javascript:media_image()"><i class="fa-solid fa-image"></i></a>
+                        <a id="media_image" href="javascript:media_image()"><i class="fa-regular fa-image"></i></a>
                         <script>
                             <?=$this->getMedia()
                                 ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_image/'))
@@ -296,7 +296,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                         <span class="fa-solid fa-times"></span>
                     </span>
                     <span class="input-group-addon">
-                        <a id="media_image1" href="javascript:media_image1()"><i class="fa-solid fa-image"></i></a>
+                        <a id="media_image1" href="javascript:media_image1()"><i class="fa-regular fa-image"></i></a>
                         <script>
                             <?=$this->getMedia()
                                 ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_image1/'))
@@ -333,7 +333,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                         <span class="fa-solid fa-times"></span>
                     </span>
                     <span class="input-group-addon">
-                        <a id="media_image2" href="javascript:media_image2()"><i class="fa-solid fa-image"></i></a>
+                        <a id="media_image2" href="javascript:media_image2()"><i class="fa-regular fa-image"></i></a>
                         <script>
                             <?=$this->getMedia()
                                 ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_image2/'))
@@ -370,7 +370,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                         <span class="fa-solid fa-times"></span>
                     </span>
                     <span class="input-group-addon">
-                        <a id="media_image3" href="javascript:media_image3()"><i class="fa-solid fa-image"></i></a>
+                        <a id="media_image3" href="javascript:media_image3()"><i class="fa-regular fa-image"></i></a>
                         <script>
                             <?=$this->getMedia()
                                 ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_image3/'))

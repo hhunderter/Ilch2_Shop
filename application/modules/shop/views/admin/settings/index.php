@@ -110,7 +110,7 @@
                     <span class="fa-solid fa-times"></span>
                 </span>
                 <span class="input-group-addon">
-                    <a id="media_shopLogo" href="javascript:media_shopLogo()"><i class="fa-solid fa-image"></i></a>
+                    <a id="media_shopLogo" href="javascript:media_shopLogo()"><i class="fa-regular fa-image"></i></a>
                     <script>
                         <?=$this->getMedia()
                             ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_shopLogo/'))
