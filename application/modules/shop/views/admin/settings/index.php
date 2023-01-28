@@ -7,27 +7,27 @@
     <ul class="nav nav-tabs">
         <li class="active">
             <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'index']) ?>">
-                <i class="fas fa-store"></i> <b><?=$this->getTrans('menuSettingShop') ?></b>
+                <i class="fa-solid fa-store"></i> <b><?=$this->getTrans('menuSettingShop') ?></b>
             </a>
         </li>
         <li>
             <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'bank']) ?>">
-                <i class="fas fa-university"></i> <?=$this->getTrans('menuSettingBank') ?>
+                <i class="fa-solid fa-university"></i> <?=$this->getTrans('menuSettingBank') ?>
             </a>
         </li>
         <li>
             <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'default']) ?>">
-                <i class="fas fa-tools"></i> <?=$this->getTrans('menuSettingDefault') ?>
+                <i class="fa-solid fa-tools"></i> <?=$this->getTrans('menuSettingDefault') ?>
             </a>
         </li>
         <li>
             <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'agb']) ?>">
-                <i class="fas fa-gavel"></i> <?=$this->getTrans('menuSettingAGB') ?>
+                <i class="fa-solid fa-gavel"></i> <?=$this->getTrans('menuSettingAGB') ?>
             </a>
         </li>
         <li>
             <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'payment']) ?>">
-                <i class="fas fa-money-bill"></i> <?=$this->getTrans('menuSettingPayment') ?>
+                <i class="fa-solid fa-money-bill"></i> <?=$this->getTrans('menuSettingPayment') ?>
             </a>
         </li>
     </ul>
@@ -98,7 +98,7 @@
                     } else {
                         $img = BASE_URL.$shopImgPath.'ilchShop_logo.jpg';
                     } ?>
-                    <span class="fas fa-eye" data-toggle="event-image" data-img="<?=$img ?>"></span>
+                    <span class="fa-solid fa-eye" data-toggle="event-image" data-img="<?=$img ?>"></span>
                 </span>
                 <input type="text"
                        class="form-control"
@@ -107,10 +107,10 @@
                        placeholder="<?=$this->getTrans('choosePic') ?>"
                        value="<?=($this->escape($this->get('settings')->getShopLogo()) != '') ? $this->escape($this->get('settings')->getShopLogo()) : $this->escape($this->originalInput('shopLogo')) ?>" />
                 <span class="input-group-addon">
-                    <span class="fas fa-times"></span>
+                    <span class="fa-solid fa-times"></span>
                 </span>
                 <span class="input-group-addon">
-                    <a id="media_shopLogo" href="javascript:media_shopLogo()"><i class="fas fa-picture-o"></i></a>
+                    <a id="media_shopLogo" href="javascript:media_shopLogo()"><i class="fa-solid fa-image"></i></a>
                     <script>
                         <?=$this->getMedia()
                             ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_shopLogo/'))

@@ -4,7 +4,7 @@
 <h1>
     <?=$this->getTrans('menuCats') ?>
     <a class="badge" data-toggle="modal" data-target="#infoModal">
-        <i class="fas fa-info"></i>
+        <i class="fa-solid fa-info"></i>
     </a>
 </h1>
 <?php if (!empty($this->get('cats'))): ?>
@@ -39,7 +39,7 @@
                             <td><?=$this->getDeleteIcon(['action' => 'delcat', 'id' => $cat->getId()]) ?></td>
                             <td><?=$this->escape($cat->getTitle()) ?></td>
                             <td align="center"><?=$countItems ?></td>
-                            <td><i class="fas fa-arrows-alt-v"></i></td>
+                            <td><i class="fa-solid fa-arrows-alt-v"></i></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

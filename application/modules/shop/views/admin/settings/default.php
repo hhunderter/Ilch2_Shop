@@ -7,27 +7,27 @@
     <ul class="nav nav-tabs">
         <li>
             <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'index']) ?>">
-                <i class="fas fa-store"></i> <?=$this->getTrans('menuSettingShop') ?>
+                <i class="fa-solid fa-store"></i> <?=$this->getTrans('menuSettingShop') ?>
             </a>
         </li>
         <li>
             <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'bank']) ?>">
-                <i class="fas fa-university"></i> <?=$this->getTrans('menuSettingBank') ?>
+                <i class="fa-solid fa-university"></i> <?=$this->getTrans('menuSettingBank') ?>
             </a>
         </li>
         <li class="active">
             <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'default']) ?>">
-                <i class="fas fa-tools"></i> <b><?=$this->getTrans('menuSettingDefault') ?></b>
+                <i class="fa-solid fa-tools"></i> <b><?=$this->getTrans('menuSettingDefault') ?></b>
             </a>
         </li>
         <li>
             <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'agb']) ?>">
-                <i class="fas fa-gavel"></i> <?=$this->getTrans('menuSettingAGB') ?>
+                <i class="fa-solid fa-gavel"></i> <?=$this->getTrans('menuSettingAGB') ?>
             </a>
         </li>
         <li>
             <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'payment']) ?>">
-                <i class="fas fa-money-bill"></i> <?=$this->getTrans('menuSettingPayment') ?>
+                <i class="fa-solid fa-money-bill"></i> <?=$this->getTrans('menuSettingPayment') ?>
             </a>
         </li>
     </ul>
@@ -78,7 +78,7 @@
         <div class="col-lg-3">
             <div class="input-group">
                 <span class="input-group-addon">
-                    <span class="fas fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('priceInfo') ?>"></span>
+                    <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('priceInfo') ?>"></span>
                 </span>
                 <input type="text"
                        class="form-control text-right"
@@ -120,7 +120,7 @@
         <div class="col-lg-10">
             <div class="input-group">
                 <span class="input-group-addon">
-                    <span class="fas fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('infoInvoiceTextTop') ?>"></span>
+                    <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('infoInvoiceTextTop') ?>"></span>
                 </span>
                 <input type="text"
                        class="form-control"
@@ -137,7 +137,7 @@
         <div class="col-lg-10">
             <div class="input-group">
                 <span class="input-group-addon">
-                    <span class="fas fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('infoInvoiceTextBottom') ?>"></span>
+                    <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('infoInvoiceTextBottom') ?>"></span>
                 </span>
                 <input type="text"
                        class="form-control"

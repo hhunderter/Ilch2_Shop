@@ -125,6 +125,7 @@ class Index extends Frontend
         $captchaNeeded = captchaNeeded();
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
         $addresses = [];
+        $costumer = null;
 
         $this->getLayout()->header()->css('static/css/style_front.css');
         $this->getLayout()->getHmenu()
@@ -132,7 +133,9 @@ class Index extends Frontend
             ->add($this->getTranslator()->trans('menuCart'), ['action' => 'cart'])
             ->add($this->getTranslator()->trans('menuOrder'), ['action' => 'order']);
 
-        $costumer = $costumerMapper->getCostumerByUserId($this->getUser()->getId());
+        if (!empty($this->getUser())) {
+            $costumer = $costumerMapper->getCostumerByUserId($this->getUser()->getId());
+        }
 
         if (!empty($costumer)) {
             $addresses = $addressMapper->getAddressesByCostumerId($costumer->getId());

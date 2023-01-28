@@ -26,6 +26,11 @@ class Payment extends Frontend
             ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuPayment'), ['controller' => 'payment', 'action' => 'index']);
 
+        if (!$this->getUser()) {
+            $this->addMessage('loginrequired', 'danger');
+            $this->redirect(['module' => 'user', 'controller' => 'login', 'action' => 'index']);
+        }
+
         $order = [];
 
         if (!empty($this->getRequest()->getParam('selector')) && !empty($this->getRequest()->getParam('code'))) {

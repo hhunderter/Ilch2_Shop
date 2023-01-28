@@ -19,9 +19,9 @@ $shopImgPath = '/application/modules/shop/static/img/';
             <div class="col-lg-4">
                 <div class="flipswitch">
                     <input type="radio" class="flipswitch-input" id="status-on" name="status" value="1" <?php if ($this->get('shopItem') && $this->get('shopItem')->getStatus() == '1') { echo 'checked="checked"'; } ?> />
-                    <label for="status-on" class="flipswitch-label flipswitch-label-on"><i class="fas fa-eye"></i> <?=$this->getTrans('on') ?></label>
+                    <label for="status-on" class="flipswitch-label flipswitch-label-on"><i class="fa-solid fa-eye"></i> <?=$this->getTrans('on') ?></label>
                     <input type="radio" class="flipswitch-input" id="status-off" name="status" value="0" <?php if (empty($this->get('shopItem')) || $this->get('shopItem')->getStatus() != '1') { echo 'checked="checked"'; } ?> />
-                    <label for="status-off" class="flipswitch-label flipswitch-label-off"><i class="fas fa-eye-slash"></i> <?=$this->getTrans('off') ?></label>
+                    <label for="status-off" class="flipswitch-label flipswitch-label-off"><i class="fa-solid fa-eye-slash"></i> <?=$this->getTrans('off') ?></label>
                     <span class="flipswitch-selection"></span>
                 </div>
             </div>
@@ -137,7 +137,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             <div class="col-lg-5">
                 <div class="input-group">
                     <span class="input-group-addon">
-                        <span class="fas fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('priceInfo') ?>"></span>
+                        <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('priceInfo') ?>"></span>
                     </span>
                     <input type="text"
                            class="form-control text-right"
@@ -186,7 +186,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             <div class="col-lg-5">
                 <div class="input-group">
                     <span class="input-group-addon">
-                        <span class="fas fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('priceInfo') ?>"></span>
+                        <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('priceInfo') ?>"></span>
                     </span>
                     <input type="text"
                            class="form-control text-right"
@@ -247,7 +247,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                         } else {
                             $img = BASE_URL.$shopImgPath.'noimg.jpg';
                         } ?>
-                        <span class="fas fa-eye" data-toggle="event-image" data-img="<?=$img ?>"></span>
+                        <span class="fa-solid fa-eye" data-toggle="event-image" data-img="<?=$img ?>"></span>
                     </span>
                     <input type="text"
                            class="form-control"
@@ -256,10 +256,10 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            placeholder="<?=$this->getTrans('choosePic') ?>"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getImage()) : $this->escape($this->originalInput('image')) ?>" />
                     <span class="input-group-addon">
-                        <span class="fas fa-times"></span>
+                        <span class="fa-solid fa-times"></span>
                     </span>
                     <span class="input-group-addon">
-                        <a id="media_image" href="javascript:media_image()"><i class="fas fa-picture-o"></i></a>
+                        <a id="media_image" href="javascript:media_image()"><i class="fa-solid fa-image"></i></a>
                         <script>
                             <?=$this->getMedia()
                                 ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_image/'))
@@ -284,7 +284,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                         } else {
                             $img1 = BASE_URL.$shopImgPath.'noimg.jpg';
                         } ?>
-                        <span class="fas fa-eye" data-toggle="event-image" data-img="<?=$img1 ?>"></span>
+                        <span class="fa-solid fa-eye" data-toggle="event-image" data-img="<?=$img1 ?>"></span>
                     </span>
                     <input type="text"
                            class="form-control"
@@ -293,10 +293,10 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            placeholder="<?=$this->getTrans('choosePic') ?>"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getImage1()) : $this->escape($this->originalInput('image1')) ?>" />
                     <span class="input-group-addon">
-                        <span class="fas fa-times"></span>
+                        <span class="fa-solid fa-times"></span>
                     </span>
                     <span class="input-group-addon">
-                        <a id="media_image1" href="javascript:media_image1()"><i class="fas fa-picture-o"></i></a>
+                        <a id="media_image1" href="javascript:media_image1()"><i class="fa-solid fa-image"></i></a>
                         <script>
                             <?=$this->getMedia()
                                 ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_image1/'))
@@ -321,7 +321,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                         } else {
                             $img2 = BASE_URL.$shopImgPath.'noimg.jpg';
                         } ?>
-                        <span class="fas fa-eye" data-toggle="event-image" data-img="<?=$img2 ?>"></span>
+                        <span class="fa-solid fa-eye" data-toggle="event-image" data-img="<?=$img2 ?>"></span>
                     </span>
                     <input type="text"
                            class="form-control"
@@ -330,10 +330,10 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            placeholder="<?=$this->getTrans('choosePic') ?>"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getImage2()) : $this->escape($this->originalInput('image2')) ?>" />
                     <span class="input-group-addon">
-                        <span class="fas fa-times"></span>
+                        <span class="fa-solid fa-times"></span>
                     </span>
                     <span class="input-group-addon">
-                        <a id="media_image2" href="javascript:media_image2()"><i class="fas fa-picture-o"></i></a>
+                        <a id="media_image2" href="javascript:media_image2()"><i class="fa-solid fa-image"></i></a>
                         <script>
                             <?=$this->getMedia()
                                 ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_image2/'))
@@ -358,7 +358,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                         } else {
                             $img3 = BASE_URL.$shopImgPath.'noimg.jpg';
                         } ?>
-                        <span class="fas fa-eye" data-toggle="event-image" data-img="<?=$img3 ?>"></span>
+                        <span class="fa-solid fa-eye" data-toggle="event-image" data-img="<?=$img3 ?>"></span>
                     </span>
                     <input type="text"
                            class="form-control"
@@ -367,10 +367,10 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            placeholder="<?=$this->getTrans('choosePic') ?>"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getImage3()) : $this->escape($this->originalInput('image3')) ?>" />
                     <span class="input-group-addon">
-                        <span class="fas fa-times"></span>
+                        <span class="fa-solid fa-times"></span>
                     </span>
                     <span class="input-group-addon">
-                        <a id="media_image3" href="javascript:media_image3()"><i class="fas fa-picture-o"></i></a>
+                        <a id="media_image3" href="javascript:media_image3()"><i class="fa-solid fa-image"></i></a>
                         <script>
                             <?=$this->getMedia()
                                 ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_image3/'))

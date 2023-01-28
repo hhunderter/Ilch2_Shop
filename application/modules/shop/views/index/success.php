@@ -13,5 +13,5 @@ unset($_SESSION['shopping_cart']); ?>
 
 <div class="row space20"></div>
 <a href="<?=$this->getUrl('shop/index') ?>#shopAnker" class="btn btn-default">
-    <i class="fas fa-backward"></i> <?=$this->getTrans('back') ?>
+    <i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?>
 </a>

@@ -22,7 +22,7 @@
         <div class="col-lg-4">
             <div class="input-group">
                 <span class="input-group-addon">
-                    <span class="fas fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('currencyCodeInfo') ?>"></span>
+                    <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('currencyCodeInfo') ?>"></span>
                 </span>
                 <input type="text"
                        class="form-control"

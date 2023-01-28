@@ -224,6 +224,7 @@ return [
     'paymentInvoiceLink' => 'Rechnung bezahlen',
     'paymentPanelHeading' => 'Ihre Rechnung "%s" vom %s zur Bestellung vom %s.',
     'invalidPaymentLink' => 'Ungültiger Link zum Bezahlen einer Rechnung.',
+    'loginrequired' => 'Sie müssen angemeldet sein um den Link zum Bezahlen einer Rechnung nutzen zu können.',
     'paypalNotConfigured' => 'Die PayPal-Bezahlmethode wurde noch nicht eingerichtet. Eine Bezahlung per PayPal ist daher nicht möglich.',
     'warningDeletionOfCostumer' => 'Das Löschen eines Kunden löscht ebenfalls sämtliche dem Kunden zugeordnete Adressen und Bestellungen.',
     'costumerId' => 'Kundennummer',

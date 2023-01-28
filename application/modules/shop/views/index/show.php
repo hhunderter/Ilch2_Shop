@@ -37,7 +37,7 @@ if (isset($_POST['code']) && $_POST['code'] != '') {
 $cart_badge = '';
 if(!empty($_SESSION['shopping_cart'])) {
     $cart_count = count(array_keys($_SESSION['shopping_cart']));
-    $cart_badge = ($cart_count>0)?'<a class="activecart" href="'.$this->getUrl('shop/index/cart').'#shopAnker">'.$this->getTrans('menuCart').'<i class="fas fa-shopping-cart"><span class="badge">'.$cart_count.'</span></i></a>':'';
+    $cart_badge = ($cart_count>0)?'<a class="activecart" href="'.$this->getUrl('shop/index/cart').'#shopAnker">'.$this->getTrans('menuCart').'<i class="fa-solid fa-shopping-cart"><span class="badge">'.$cart_count.'</span></i></a>':'';
 } 
 ?>
 
@@ -107,7 +107,7 @@ if ($shopItem->getImage() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage())) 
                                     </a>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-times"></i> Close</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa-solid fa-times"></i> Close</button>
                                 </div>
                             </div>
                         </div>
@@ -177,7 +177,7 @@ if ($shopItem->getImage() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage())) 
                             <input type="hidden" name="code" value="<?=$shopItem->getCode() ?>" />
                                 <div class="input-group input-group-sm quantity">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-default plus-btn" type="button" name="button"><i class="fas fa-plus"></i></button>
+                                        <button class="btn btn-default plus-btn" type="button" name="button"><i class="fa-solid fa-plus"></i></button>
                                     </span>
                                     <input class="form-control item-quantity"
                                         type="text"
@@ -186,14 +186,14 @@ if ($shopItem->getImage() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage())) 
                                         value="1"
                                         readonly>
                                     <span class="input-group-btn">
-                                        <button class="btn btn-default minus-btn" type="button" name="button"><i class="fas fa-minus"></i></button>
+                                        <button class="btn btn-default minus-btn" type="button" name="button"><i class="fa-solid fa-minus"></i></button>
                                     </span>
                                 </div>
-                                <button type="submit" class="btn btn-sm btn-warning"><i class="fas fa-shopping-cart"></i> <?=$this->getTrans('inToCart') ?></button>
+                                <button type="submit" class="btn btn-sm btn-warning"><i class="fa-solid fa-shopping-cart"></i> <?=$this->getTrans('inToCart') ?></button>
                             </form>
                         <?php } else { ?>
                             <button class="btn btn-default">
-                                <i class="fas fa-store-slash"></i> <b><?=$this->getTrans('currentlySoldOut') ?></b>
+                                <i class="fa-solid fa-store-slash"></i> <b><?=$this->getTrans('currentlySoldOut') ?></b>
                             </button>
                         <?php } ?>
                     </td>
@@ -201,9 +201,9 @@ if ($shopItem->getImage() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage())) 
                 <tr>
                     <td colspan="2" class="text-center">
                         <div class="btn-group btn-group-sm">
-                            <a class="btn btn-default" href="<?=$this->getUrl('shop/index') ?>#shopAnker"><i class="fas fa-backward"></i> <?=$this->getTrans('back') ?></a>
-                            <a class="btn btn-default" href="<?=$this->getUrl('shop/index/agb') ?>#shopAnker"><i class="fas fa-gavel"></i> <?=$this->getTrans('menuAGB') ?></a>
-                            <a class="btn btn-default" href="<?=$this->getUrl('shop/index/cart') ?>#shopAnker"><i class="fas fa-shopping-basket"></i> <?=$this->getTrans('menuCart') ?></a>
+                            <a class="btn btn-default" href="<?=$this->getUrl('shop/index') ?>#shopAnker"><i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?></a>
+                            <a class="btn btn-default" href="<?=$this->getUrl('shop/index/agb') ?>#shopAnker"><i class="fa-solid fa-gavel"></i> <?=$this->getTrans('menuAGB') ?></a>
+                            <a class="btn btn-default" href="<?=$this->getUrl('shop/index/cart') ?>#shopAnker"><i class="fa-solid fa-shopping-basket"></i> <?=$this->getTrans('menuCart') ?></a>
                         </div>
                     </td>
                 </tr>

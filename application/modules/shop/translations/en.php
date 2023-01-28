@@ -224,6 +224,7 @@ return [
     'paymentInvoiceLink' => 'Pay invoice',
     'paymentPanelHeading' => 'Your Invoice "%s" from %s for the order on %s.',
     'invalidPaymentLink' => 'Invalid link for paying an invoice.',
+    'loginrequired' => 'You need to be logged in to use the link for paying an invoice.',
     'paypalNotConfigured' => 'The PayPal payment method is not yet configured. A payment with PayPal is therefore not possible.',
     'warningDeletionOfCostumer' => 'The deletion of a costumer deletes all associated addresses and orders of the costumer too.',
     'costumerId' => 'Costumer ID',

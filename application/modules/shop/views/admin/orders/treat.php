@@ -15,25 +15,25 @@ $settingsMapper = $this->get('settingsMapper');
     ?>
     <?php if ($order->getStatus() == 0) { ?>
         <div class="alert alert-danger">
-            <i class="fas fa-plus-square" aria-hidden="true"></i>&nbsp;
+            <i class="fa-solid fa-plus-square" aria-hidden="true"></i>&nbsp;
             <b><?=$this->getTrans('newBIG') ?></b>
             &emsp;|&emsp;<?=$orderDate . $this->getTrans('dateTimeAt') . $orderTime .$this->getTrans('dateTimeoClock') ?>&emsp;|&emsp;<?=$this->getTrans('infoOrderOpen') ?>
         </div>
     <?php } elseif ($order->getStatus() == 1) { ?>
         <div class="alert alert-warning">
-            <i class="fas fa-pencil-square" aria-hidden="true"></i>&nbsp;
+            <i class="fa-solid fa-pencil-square" aria-hidden="true"></i>&nbsp;
             <b><?=$this->getTrans('processingBIG') ?></b>
             &emsp;|&emsp;<?=$orderDate . $this->getTrans('dateTimeAt') . $orderTime .$this->getTrans('dateTimeoClock') ?>&emsp;|&emsp;<?=$this->getTrans('infoOrderProcessing') ?>
         </div>
     <?php } elseif ($order->getStatus() == 2) { ?>
         <div class="alert alert-info">
-            <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;
+            <i class="fa-solid fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;
             <b><?=$this->getTrans('canceledBIG') ?></b>
             &emsp;|&emsp;<?=$orderDate . $this->getTrans('dateTimeAt') . $orderTime .$this->getTrans('dateTimeoClock') ?>>&emsp;|&emsp;<?=$this->getTrans('infoOrderCanceled') ?>
         </div>
     <?php } else { ?>
         <div class="alert alert-success">
-            <i class="fas fa-check-square" aria-hidden="true"></i>&nbsp;
+            <i class="fa-solid fa-check-square" aria-hidden="true"></i>&nbsp;
             <b><?=$this->getTrans('completedBIG') ?></b>
             &emsp;|&emsp;<?=$orderDate . $this->getTrans('dateTimeAt') . $orderTime .$this->getTrans('dateTimeoClock') ?>&emsp;|&emsp;<?=$this->getTrans('infoOrderFinished') ?>
         </div>
@@ -199,16 +199,16 @@ $settingsMapper = $this->get('settingsMapper');
                 <td>
                     <div class="btn-group btn-group-sm">
                         <button type="submit" name="status" value="0" class="btn btn-sm alert-danger">
-                            <i class="fas fa-plus-square" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('openBIG') ?>
+                            <i class="fa-solid fa-plus-square" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('openBIG') ?>
                         </button>
                         <button type="submit" name="status" value="1" class="btn btn-sm alert-warning">
-                            <i class="fas fa-pencil-square" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('processingBIG') ?>
+                            <i class="fa-solid fa-pencil-square" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('processingBIG') ?>
                         </button>
                         <button type="submit" name="status" value="2" class="btn btn-sm alert-info">
-                            <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('canceledBIG') ?>
+                            <i class="fa-solid fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('canceledBIG') ?>
                         </button>
                         <button type="submit" name="status" value="3" class="btn btn-sm alert-success">
-                            <i class="fas fa-check-square" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('completedBIG') ?>
+                            <i class="fa-solid fa-check-square" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('completedBIG') ?>
                         </button>
                     </div>
                 </td>
@@ -238,17 +238,17 @@ $settingsMapper = $this->get('settingsMapper');
                         $file_show = BASE_URL.$shopInvoicePath.$invoiceFilename.'.pdf';
                         if (file_exists($file_location)) { ?>
                             <a href="<?=$this->getUrl(['action' => 'download', 'id' => $order->getId()], null, true) ?>" target="_blank" class="btn btn-sm alert-success">
-                                <i class="fas fa-file-pdf" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('showPDF') ?>
+                                <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('showPDF') ?>
                             </a>
                             <a href="<?=$this->getUrl(['action' => 'sendInvoice', 'id' => $order->getId()], null, true) ?>" class="btn btn-sm alert-success">
-                                <i class="fas fa-file-pdf" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('sendInvoice') ?>
+                                <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('sendInvoice') ?>
                             </a>
                             <button type="submit" name="PDF" value="delete" class="btn btn-sm alert-danger">
-                                <i class="fas fa-minus-square" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('deletePDF') ?>
+                                <i class="fa-solid fa-minus-square" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('deletePDF') ?>
                             </button>
                         <?php } else { ?>
                             <button type="submit" name="PDF" value="create" class="btn btn-sm alert-default">
-                                <i class="fas fa-file-pdf" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('createPDF') ?>
+                                <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('createPDF') ?>
                             </button>
                         <?php } ?>
                     </form>
@@ -261,17 +261,17 @@ $settingsMapper = $this->get('settingsMapper');
                 <td>
                     <div class="btn-group btn-group-sm">
                         <button type="submit" name="delete" value="1" class="btn btn-sm alert-default delete_button">
-                            <i class="far fa-trash-alt" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('deleteBIG') ?>
+                            <i class="fa-regular fa-trash-can" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('deleteBIG') ?>
                         </button>
                         <span class="btn btn-sm alert-default" style="pointer-events: none">
-                            <i class="fas fa-info"></i> <?=$this->getTrans('infoDeleteOrder') ?>
+                            <i class="fa-solid fa-info"></i> <?=$this->getTrans('infoDeleteOrder') ?>
                         </span>
                     </div>
                 </td>
             </tr>
         </table>
         <a class="btn btn-default" href="<?=$this->getUrl(['action' => 'index']) ?>">
-            <i class="fas fa-backward"></i> <?=$this->getTrans('back') ?>
+            <i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?>
         </a>
     </form>
 
@@ -531,7 +531,7 @@ $settingsMapper = $this->get('settingsMapper');
     <h1><?=$this->getTrans('menuOrder'); ?></h1>
     <div class="alert alert-warning"><?=$this->getTrans('noOrderSelected') ?></div>
     <a class="btn btn-default" href="<?=$this->getUrl(['action' => 'index']) ?>">
-        <i class="fas fa-backward"></i> <?=$this->getTrans('back') ?>
+        <i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?>
     </a>
 <?php endif; ?>
 

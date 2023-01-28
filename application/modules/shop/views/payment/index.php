@@ -19,7 +19,7 @@ $purchaseUnits = [];
 </h1>
 
 <div class="panel panel-default">
-    <div class="panel-heading" id="orderHeading" data-toggle="collapse" data-target="#orderDetails"><?=$this->getTrans('paymentPanelHeading', substr($order->getInvoiceFilename(),0,strrpos($order->getInvoiceFilename(), '_')), $order->getDatetimeInvoiceSent(), $order->getDatetime()) ?><span class="pull-right clickable"><i class="fas fa-chevron-down"></i></span></div>
+    <div class="panel-heading" id="orderHeading" data-toggle="collapse" data-target="#orderDetails"><?=$this->getTrans('paymentPanelHeading', substr($order->getInvoiceFilename(),0,strrpos($order->getInvoiceFilename(), '_')), $order->getDatetimeInvoiceSent(), $order->getDatetime()) ?><span class="pull-right clickable"><i class="fa-solid fa-chevron-down"></i></span></div>
     <div class="panel-body collapse" id="orderDetails">
         <div class="table-responsive order">
             <table class="table table-striped">

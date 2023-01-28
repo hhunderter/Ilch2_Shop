@@ -26,7 +26,7 @@
             <tr id="<?=$this->escape($costumer->getId()) ?>">
                 <td><?=$this->getDeleteCheckbox('check_costumers', $costumer->getId()) ?></td>
                 <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $costumer->getId()]) ?></td>
-                <td><a href="<?=$this->getUrl(['action' => 'show', 'id' => $costumer->getId()]) ?>" title="<?=$this->getTrans('showCostumerDetails') ?>"><i class="far fa-folder-open"></i></a></td>
+                <td><a href="<?=$this->getUrl(['action' => 'show', 'id' => $costumer->getId()]) ?>" title="<?=$this->getTrans('showCostumerDetails') ?>"><i class="fa-regular fa-folder-open"></i></a></td>
                 <td><?=$this->escape($costumer->getId()) ?></td>
                 <td><?=$this->escape($costumer->getEmail()) ?></td>
             </tr>

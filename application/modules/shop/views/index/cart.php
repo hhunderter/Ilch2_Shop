@@ -30,7 +30,7 @@ if(!empty($_SESSION['shopping_cart'])) {
 $cart_badge = '';
 if(!empty($_SESSION['shopping_cart'])) {
     $cart_count = count(array_keys($_SESSION['shopping_cart']));
-    $cart_badge = ($cart_count>0)?'<a class="activecart" href="'.$this->getUrl('shop/index/cart').'#shopAnker">'.$this->getTrans('menuCart').'<i class="fas fa-shopping-cart"><span class="badge">'.$cart_count.'</span></i></a>':'';
+    $cart_badge = ($cart_count>0)?'<a class="activecart" href="'.$this->getUrl('shop/index/cart').'#shopAnker">'.$this->getTrans('menuCart').'<i class="fa-solid fa-shopping-cart"><span class="badge">'.$cart_count.'</span></i></a>':'';
 } 
 ?>
 
@@ -87,7 +87,7 @@ if(!empty($_SESSION['shopping_cart'])) {
                             <input type="hidden" name="code" value="<?=$this->escape($itemCode); ?>" />
                             <input type="hidden" name="name" value="<?=$this->escape($itemName); ?>" />
                             <input type="hidden" name="action" value="remove" />
-                            <button type="submit" class="btn btn-sm btn-default far fa-trash-alt remove"></button>
+                            <button type="submit" class="btn btn-sm btn-default fa-regular fa-trash-can remove"></button>
                         </form>
                     </td>
                     <td data-label="<?=$this->getTrans('productName') ?>">
@@ -104,7 +104,7 @@ if(!empty($_SESSION['shopping_cart'])) {
                             <div class="input-group">
                                 <input type="hidden" name="maxStock" value="<?=$itemMaxStock; ?>" />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-xs btn-default plus-btn" type="button" name="button"><i class="fas fa-plus"></i></button>
+                                    <button class="btn btn-xs btn-default plus-btn" type="button" name="button"><i class="fa-solid fa-plus"></i></button>
                                 </span>
                                 <input class="form-control item-quantity input-sm"
                                     type="text"
@@ -114,7 +114,7 @@ if(!empty($_SESSION['shopping_cart'])) {
                                     value="<?=$product['quantity'] ?>"
                                     readonly>
                                 <span class="input-group-btn">
-                                    <button class="btn btn-xs btn-default minus-btn" type="button" name="button"><i class="fas fa-minus"></i></button>
+                                    <button class="btn btn-xs btn-default minus-btn" type="button" name="button"><i class="fa-solid fa-minus"></i></button>
                                 </span>
                             </div>
                         </form>
@@ -151,15 +151,15 @@ if(!empty($_SESSION['shopping_cart'])) {
         </table>
         <form method="post" action="order#shopAnker" class="text-right">
             <div class="btn-group btn-group-sm">
-                <a class="btn btn-default" href="<?=$this->getUrl('shop/index') ?>#shopAnker"><i class="fas fa-backward"></i> <?=$this->getTrans('back') ?></a>
-                <button class="btn btn-warning"><?=$this->getTrans('completePurchase') ?> <i class="fas fa-forward"></i></button>
+                <a class="btn btn-default" href="<?=$this->getUrl('shop/index') ?>#shopAnker"><i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?></a>
+                <button class="btn btn-warning"><?=$this->getTrans('completePurchase') ?> <i class="fa-solid fa-forward"></i></button>
             </div>
         </form>
     <?php } else { ?>
     <?=$this->getTrans('cartEmpty') ?>
     <div class="row space20"></div>
     <a href="<?=$this->getUrl('shop/index') ?>#shopAnker" class="btn btn-default">
-        <i class="fas fa-backward"></i> <?=$this->getTrans('back') ?>
+        <i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?>
     </a>
 <?php } ?>
 </div>

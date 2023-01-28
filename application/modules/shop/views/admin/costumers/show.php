@@ -98,24 +98,24 @@
                 <td>
                     <?php if ($order->getStatus() == 0) { ?>
                         <a href="<?=$this->getUrl(['controller' => 'orders', 'action' => 'treat', 'id' => $order->getId()]) ?>" class="btn btn-sm alert-danger">
-                            <i class="fas fa-plus-square" aria-hidden="true"></i>&nbsp;<b><?=$this->getTrans('newBIG') ?></b>
+                            <i class="fa-solid fa-plus-square" aria-hidden="true"></i>&nbsp;<b><?=$this->getTrans('newBIG') ?></b>
                         </a>
                     <?php } elseif ($order->getStatus() == 1) { ?>
                         <a href="<?=$this->getUrl(['controller' => 'orders', 'action' => 'treat', 'id' => $order->getId()]) ?>"
                            class="btn btn-sm alert-warning">
-                            <i class="fas fa-pencil-square"
+                            <i class="fa-solid fa-pencil-square"
                                aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('processingBIG') ?></b>
                         </a>
                     <?php } elseif ($order->getStatus() == 2) { ?>
                         <a href="<?=$this->getUrl(['controller' => 'orders', 'action' => 'treat', 'id' => $order->getId()]) ?>"
                            class="btn btn-sm alert-info">
-                            <i class="fas fa-exclamation-triangle"
+                            <i class="fa-solid fa-exclamation-triangle"
                                aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('canceledBIG') ?></b>
                         </a>
                     <?php } else { ?>
                         <a href="<?=$this->getUrl(['controller' => 'orders', 'action' => 'treat', 'id' => $order->getId()]) ?>"
                            class="btn btn-sm alert-success">
-                            <i class="fas fa-check-square"
+                            <i class="fa-solid fa-check-square"
                                aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('completedBIG') ?></b>
                         </a>
                     <?php } ?>

@@ -18,7 +18,7 @@ $countDoneOrders = count($this->get('orders')->getOrders(['status'=>'3']));
 
 <?php if ($countNewOrders > 0) : ?>
     <div class="alert alert-danger">
-        <i class="fas fa-plus-square" aria-hidden="true"></i>
+        <i class="fa-solid fa-plus-square" aria-hidden="true"></i>
         <b> &nbsp; <?=$this->getTrans('infoNewOrders') ?></b>
     </div>
 <?php endif; ?>
@@ -28,7 +28,7 @@ $countDoneOrders = count($this->get('orders')->getOrders(['status'=>'3']));
         <div class="thumbnail media">
             <div class="media-body">
                 <h4 class="media-heading">
-                    <i class="fas fa-cart-arrow-down"></i>&nbsp;&nbsp;<?=$this->getTrans('menuOrders') ?></h4>
+                    <i class="fa-solid fa-cart-arrow-down"></i>&nbsp;&nbsp;<?=$this->getTrans('menuOrders') ?></h4>
                 <hr>
                 <?php if ($countAllOrders > 0) { ?>
                     <p>
@@ -53,7 +53,7 @@ $countDoneOrders = count($this->get('orders')->getOrders(['status'=>'3']));
     <div class="col-sm-12 col-md-6">
         <div class="thumbnail media">
             <div class="media-body">
-                <h4 class="media-heading"><i class="fas fa-tshirt"></i>&nbsp;&nbsp;<?=$this->getTrans('menuItems') ?></h4>
+                <h4 class="media-heading"><i class="fa-solid fa-tshirt"></i>&nbsp;&nbsp;<?=$this->getTrans('menuItems') ?></h4>
                 <hr>
                 <?php $countCats = count($this->get('cats')); ?>
                 <?php $countItems = count($this->get('itemsMapper')); ?>

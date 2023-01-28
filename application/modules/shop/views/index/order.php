@@ -5,7 +5,7 @@ $itemsMapper = $this->get('itemsMapper');
 $cart_badge = '';
 if(!empty($_SESSION['shopping_cart'])) {
     $cart_count = count(array_keys($_SESSION['shopping_cart']));
-    $cart_badge = ($cart_count>0)?'<a class="activecart" href="'.$this->getUrl('shop/index/cart').'#shopAnker">'.$this->getTrans('menuCart').'<i class="fas fa-shopping-cart"><span class="badge">'.$cart_count.'</span></i></a>':'';
+    $cart_badge = ($cart_count>0)?'<a class="activecart" href="'.$this->getUrl('shop/index/cart').'#shopAnker">'.$this->getTrans('menuCart').'<i class="fa-solid fa-shopping-cart"><span class="badge">'.$cart_count.'</span></i></a>':'';
 }
 ?>
 
@@ -277,7 +277,7 @@ if(!empty($_SESSION['shopping_cart'])) {
                                 document.getElementById('captcha').src='<?=$this->getUrl() ?>/application/libraries/Captcha/Captcha.php?'+Math.random();
                                 document.getElementById('captcha-form').focus();"
                                 id="change-image">
-                                <i class="fas fa-refresh"></i>
+                                <i class="fa-solid fa-refresh"></i>
                             </a>
                         </span>
                     </div>
@@ -423,18 +423,18 @@ if(!empty($_SESSION['shopping_cart'])) {
             <div class="col-lg-12 text-center">
                 <div class="btn-group btn-group-sm">
                     <a class="btn btn-default" href="<?=$this->getUrl('shop/index') ?>#shopAnker">
-                        <i class="fas fa-backward"></i> <?=$this->getTrans('back') ?>
+                        <i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?>
                     </a>
                     <a class="btn btn-default" href="<?=$this->getUrl('shop/index/cart') ?>#shopAnker">
-                        <i class="fas fa-shopping-basket"></i> <?=$this->getTrans('menuCart') ?>
+                        <i class="fa-solid fa-shopping-basket"></i> <?=$this->getTrans('menuCart') ?>
                     </a>
                     <a class="btn btn-default" href="<?=$this->getUrl('shop/index/agb') ?>#shopAnker" target="_blank">
-                        <i class="fas fa-gavel"></i> <?=$this->getTrans('menuAGB') ?>
+                        <i class="fa-solid fa-gavel"></i> <?=$this->getTrans('menuAGB') ?>
                     </a>
                 </div>
                 <br />
                 <button type="submit" class="btn btn-warning mt1" name="saveOrder" value="save">
-                    <?=$this->getTrans('completePurchase') ?> <i class="fas fa-forward"></i>
+                    <?=$this->getTrans('completePurchase') ?> <i class="fa-solid fa-forward"></i>
                 </button>
             </div>
         </form>
@@ -451,7 +451,7 @@ if(!empty($_SESSION['shopping_cart'])) {
             <div class="form-group">
                 <div class="col-lg-8">
                     <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1"><i class="fas fa-user"></i></span>
+                        <span class="input-group-addon" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
                         <input type="text"
                                class="form-control"
                                name="login_emailname"
@@ -462,7 +462,7 @@ if(!empty($_SESSION['shopping_cart'])) {
             <div class="form-group">
                 <div class="col-lg-8">
                     <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1"><i class="fas fa-lock"></i></span>
+                        <span class="input-group-addon" id="basic-addon1"><i class="fa-solid fa-lock"></i></span>
                         <input type="password"
                                class="form-control"
                                name="login_password"
@@ -482,7 +482,7 @@ if(!empty($_SESSION['shopping_cart'])) {
             <div class="form-group">
                 <div class="col-lg-12">
                     <button type="submit" class="btn btn-default" name="login">
-                        <i class="fas fa-sign-in-alt"></i> <?=$this->getTrans('login') ?>
+                        <i class="fa-solid fa-right-to-bracket"></i> <?=$this->getTrans('login') ?>
                     </button>
                 </div>
             </div>
@@ -492,7 +492,7 @@ if(!empty($_SESSION['shopping_cart'])) {
     <?=$this->getTrans('noProductInCart') ?>
     <div class="row space20"></div>
     <a href="<?=$this->getUrl('shop/index') ?>#shopAnker" class="btn btn-default">
-        <i class="fas fa-backward"></i> <?=$this->getTrans('back') ?>
+        <i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?>
     </a>
 <?php } ?>
 

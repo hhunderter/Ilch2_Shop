@@ -4,11 +4,11 @@
 <h1><?=$this->getTrans('manage') ?>
     <div class="input-group input-group-sm filter">
         <span class="input-group-addon">
-            <i class="fas fa-filter"></i>
+            <i class="fa-solid fa-filter"></i>
         </span>
         <input type="text" id="filterInput" class="form-control" placeholder="<?=$this->getTrans('filter') ?>">
         <span class="input-group-addon">
-            <span id="filterClear" class="fas fa-times"></span>
+            <span id="filterClear" class="fa-solid fa-times"></span>
         </span>
     </div>
 </h1>
@@ -60,9 +60,9 @@
                             <td><?=$this->getDeleteIcon(['action' => 'delshop', 'id' => $shopItem->getId()]) ?></td>
                             <td class="text-center">
                             <?php if ($shopItem->getStatus()==1) {
-                                echo '<a href="'.$this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]).'" class="btn btn-xs alert-success" title="'.$this->getTrans('active').'"><i class="fas fa-eye"></i></a>';
+                                echo '<a href="'.$this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]).'" class="btn btn-xs alert-success" title="'.$this->getTrans('active').'"><i class="fa-solid fa-eye"></i></a>';
                             } else {
-                                echo '<a href="'.$this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]).'" class="btn btn-xs alert-danger" title="'.$this->getTrans('inactive').'"><i class="fas fa-eye-slash inactiv"></i></a>';
+                                echo '<a href="'.$this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]).'" class="btn btn-xs alert-danger" title="'.$this->getTrans('inactive').'"><i class="fa-solid fa-eye-slash inactiv"></i></a>';
                             } ?>
                             </td>
                             <td class="text-center"><a href="<?=$this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]) ?>"><img src="<?=$img ?>" class="item_image <?=($shopItem->getCordon()==1)?$shopItem->getCordonColor():''; ?>" alt="<?=$this->escape($shopItem->getName()) ?>"/></a></td>
