@@ -86,6 +86,7 @@ if(!empty($_SESSION['shopping_cart'])) {
                             <?php endforeach; ?>
                         </ul>
                     </li>
+                    <li><a href="<?=$this->getUrl('shop/costumerarea/index') ?>#shopAnker"><?=$this->getTrans('menuCostumerArea') ?></a></li>
                     <li><a href="<?=$this->getUrl('shop/index/agb') ?>#shopAnker"><?=$this->getTrans('menuAGB') ?></a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

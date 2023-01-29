@@ -27,7 +27,7 @@ class Payment extends Frontend
             ->add($this->getTranslator()->trans('menuPayment'), ['controller' => 'payment', 'action' => 'index']);
 
         if (!$this->getUser()) {
-            $this->addMessage('loginrequired', 'danger');
+            $this->addMessage('paymentLoginRequired', 'danger');
             $this->redirect(['module' => 'user', 'controller' => 'login', 'action' => 'index']);
         }
 
