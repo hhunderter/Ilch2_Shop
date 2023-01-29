@@ -242,7 +242,7 @@ class Orders extends Admin
         $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
         $date = new Date();
         $mailContent = $emailsMapper->getEmail('shop', 'send_invoice_mail', $this->getTranslator()->getLocale());
-        $name = $this->getLayout()->escape($order->getLastname());
+        $name = $this->getLayout()->escape($order->getInvoiceAddress()->getLastname());
 
         $layout = $_SESSION['layout'] ?? '';
 

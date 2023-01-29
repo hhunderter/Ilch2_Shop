@@ -110,6 +110,9 @@ class Currency extends Admin
 
     public function treatAction()
     {
+        // https://developer.paypal.com/reference/currency-codes/
+        $currencyCodesPayPal = ['AUD', 'BRL', 'CAD', 'CNY', 'CZK', 'DKK', 'EUR', 'HKD', 'HUF', 'ILS', 'JPY', 'MYR', 'MXN', 'TWD', 'NZD', 'NOK', 'PHP', 'PLN', 'GBP', 'RUB', 'SGD', 'SEK', 'CHF', 'THB', 'USD'];
+
         $currencyMapper = new CurrencyMapper();
         $id = $this->getRequest()->getParam('id');
 
@@ -136,6 +139,10 @@ class Currency extends Admin
                 'name' => 'required',
                 'code' => 'required|size:3'
             ];
+
+            if (!in_array(trim($this->getRequest()->getPost('code')), $currencyCodesPayPal)) {
+                $this->addMessage($this->getTranslator()->trans('notSupportedForPayPal'), 'warning', true);
+            }
 
             if ($this->getRequest()->getParam('id')) {
                 $rules['id'] = 'required|numeric|integer|min:1';

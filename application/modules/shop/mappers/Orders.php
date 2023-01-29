@@ -25,8 +25,8 @@ class Orders extends Mapper
             ->fields(['o.id', 'o.invoiceAddressId', 'o.deliveryAddressId', 'o.datetime', 'o.order', 'o.invoicefilename', 'o.datetimeInvoiceSent', 'o.selector', 'o.confirmCode', 'o.status'])
             ->from(['o' => 'shop_orders'])
             ->join(['c' => 'shop_costumers'], 'o.costumerId = c.id', 'INNER', ['costumerId' => 'c.id', 'c.email'])
-            ->join(['ia' => 'shop_addresses'], 'o.invoiceAddressId = ia.id', 'INNER', ['invoiceAddressId' => 'ia.id', 'invoiceAddressPrename' => 'ia.prename', 'invoiceAddressLastname' => 'ia.lastname', 'invoiceAddressStreet' => 'ia.street', 'invoiceAddressPostcode' => 'ia.postcode', 'invoiceAddressCity' => 'ia.city', 'invoiceAddressCountry' => 'ia.country'])
-            ->join(['da' => 'shop_addresses'], 'o.deliveryAddressId = da.id', 'INNER', ['deliveryAddressId' => 'da.id', 'deliveryAddressPrename' => 'da.prename', 'deliveryAddressLastname' => 'da.lastname', 'deliveryAddressStreet' => 'da.street', 'deliveryAddressPostcode' => 'da.postcode', 'deliveryAddressCity' => 'da.city', 'deliveryAddressCountry' => 'da.country'])
+            ->join(['ia' => 'shop_addresses'], 'o.invoiceAddressId = ia.id', 'INNER', ['invoiceAddressId' => 'ia.id', 'invoiceAddressCostumerId' => 'ia.costumerId', 'invoiceAddressPrename' => 'ia.prename', 'invoiceAddressLastname' => 'ia.lastname', 'invoiceAddressStreet' => 'ia.street', 'invoiceAddressPostcode' => 'ia.postcode', 'invoiceAddressCity' => 'ia.city', 'invoiceAddressCountry' => 'ia.country'])
+            ->join(['da' => 'shop_addresses'], 'o.deliveryAddressId = da.id', 'INNER', ['deliveryAddressId' => 'da.id', 'deliveryAddressCostumerId' => 'da.costumerId', 'deliveryAddressPrename' => 'da.prename', 'deliveryAddressLastname' => 'da.lastname', 'deliveryAddressStreet' => 'da.street', 'deliveryAddressPostcode' => 'da.postcode', 'deliveryAddressCity' => 'da.city', 'deliveryAddressCountry' => 'da.country'])
             ->where($where)
             ->order(['o.status' => 'ASC', 'o.id' => 'DESC'])
             ->execute()
@@ -45,6 +45,7 @@ class Orders extends Mapper
 
             $addressModel = new Address();
             $addressModel->setId($orderRow['invoiceAddressId']);
+            $addressModel->setCostumerID($orderRow['invoiceAddressCostumerId']);
             $addressModel->setPrename($orderRow['invoiceAddressPrename']);
             $addressModel->setLastname($orderRow['invoiceAddressLastname']);
             $addressModel->setStreet($orderRow['invoiceAddressStreet']);
@@ -55,6 +56,7 @@ class Orders extends Mapper
 
             $addressModel = new Address();
             $addressModel->setId($orderRow['deliveryAddressId']);
+            $addressModel->setCostumerID($orderRow['deliveryAddressCostumerId']);
             $addressModel->setPrename($orderRow['deliveryAddressPrename']);
             $addressModel->setLastname($orderRow['deliveryAddressLastname']);
             $addressModel->setStreet($orderRow['deliveryAddressStreet']);

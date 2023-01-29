@@ -46,6 +46,7 @@ return [
     'currencyCode' => 'Code (ISO 4217)',
     'currencyCodeInfo' => 'Die Abkürzungen umfassen jeweils drei Buchstaben. ISO 4217 ist die von der Internationalen Organisation für Normung publizierte Norm für Währungs-Kurzzeichen, die im internationalen Zahlungsverkehr zur eindeutigen Identifizierung benutzt werden sollen.',
     'currencyInUse' => 'Diese Währung wird zurzeit verwendet und kann daher nicht gelöscht werden.',
+    'notSupportedForPayPal' => 'Dieser Währungscode wird möglicherweise nicht von PayPal unterstützt.',
     'currentlySoldOut' => 'Aktuell ausverkauft',
     'date' => 'Datum',
     'dateOfInvoice' => 'Rechnungsdatum',
