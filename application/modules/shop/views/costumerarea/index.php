@@ -74,3 +74,38 @@
 <?php else : ?>
 <p><?=$this->getTrans('costumerAreaNoPreviousOrder') ?></p>
 <?php endif; ?>
+
+<script>
+    $("table").on("click", "th.sort", function () {
+        const index = $(this).index(),
+            rows = [],
+            thClass = $(this).hasClass("asc") ? "desc" : "asc";
+        $("#sortTable th.sort").removeClass("asc desc");
+        $(this).addClass(thClass);
+        $("#sortTable tbody tr").each(function (index, row) {
+            rows.push($(row).detach());
+        });
+        rows.sort(function (a, b) {
+            const aValue = $(a).find("td").eq(index).text(),
+                bValue = $(b).find("td").eq(index).text();
+            return aValue > bValue ? 1 : (aValue < bValue ? -1 : 0);
+        });
+        if ($(this).hasClass("desc")) {
+            rows.reverse();
+        }
+        $.each(rows, function (index, row) {
+            $("#sortTable tbody").append(row);
+        });
+    });
+    $("#filterInput").on("keyup", function() {
+        const value = $(this).val().toLowerCase();
+        $("#sortTable tr.filter").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+    $("#filterClear").click(function(){
+        $("#sortTable tr.filter").show(function() {
+            $("#filterInput").val('');
+        });
+    });
+</script>
