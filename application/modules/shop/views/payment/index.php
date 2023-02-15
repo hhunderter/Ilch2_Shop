@@ -1,17 +1,8 @@
 <link href="<?=$this->getModuleUrl('static/css/shop_admin.css') ?>" rel="stylesheet">
 <?php
-    $itemsMapper = $this->get('itemsMapper');
-    $order = $this->get('order');
+$itemsMapper = $this->get('itemsMapper');
+$order = $this->get('order');
 $purchaseUnits = [];
-//    $purchaseUnits = [
-//        'amount' => [
-//            'value' => '',
-//            'currency_code' => '',
-//            'breakdown' => ['item_total' => ['value' => '', 'currency_code' => '']]
-//        ],
-//        'invoice_id' => '',
-//        'items' => []
-//    ];
 ?>
 
 <h1>
@@ -94,7 +85,7 @@ $purchaseUnits = [];
                     <?php
                     $subtotal_price += round($itemPrice * $orderItem['quantity'], 2);
 
-                    // FIll purchase_units array for PayPal.
+                    // Fill purchase_units array for PayPal.
                     $purchaseUnits['items'][] = ['name' => $this->escape($itemName), 'unit_amount' => ['value' => $itemPrice, 'currency_code' => $this->escape($this->get('currency')->getCode())], 'quantity' => $orderItem['quantity'], 'sku' => $this->escape($itemNumber)];
                     ?>
                 <?php endforeach; ?>
@@ -176,11 +167,8 @@ $purchaseUnits['invoice_id'] = substr($order->getInvoiceFilename(),0,strrpos($or
                 // Successful capture! For dev/demo purposes:
                 console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
                 const transaction = orderData.purchase_units[0].payments.captures[0];
-                alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
-                // When ready to go live, remove the alert and show a success message within this page. For example:
-                // const element = document.getElementById('paypal-button-container');
-                // element.innerHTML = '<h3>Thank you for your payment!</h3>';
-                // Or go to another URL:  actions.redirect('thank_you.html');
+                const element = document.getElementById('paypal-button-container');
+                element.innerHTML = '<h3>Thank you for your payment!</h3>';
             });
         }
     }).render('#paypal-button-container');

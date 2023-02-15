@@ -512,19 +512,19 @@ if(!empty($_SESSION['shopping_cart'])) {
 
         dropdownDeliveryAddress.change(function () {
             if (dropdownDeliveryAddress.val() !== '') {
-                $('#deliveryAddress :input').prop('disabled', true);
-                dropdownDeliveryAddress.prop('disabled', false);
+                $('#deliveryAddress :input').prop('readonly', true);
+                dropdownDeliveryAddress.prop('readonly', false);
             } else {
-                $('#deliveryAddress :input').prop('disabled', false);
+                $('#deliveryAddress :input').prop('readonly', false);
             }
         });
 
         dropdownInvoiceAddress.change(function () {
             if (dropdownInvoiceAddress.val() !== '') {
-                $('#invoiceAddress :input').prop('disabled', true);
-                dropdownInvoiceAddress.prop('disabled', false);
+                $('#invoiceAddress :input').prop('readonly', true);
+                dropdownInvoiceAddress.prop('readonly', false);
             } else {
-                $('#invoiceAddress :input').prop('disabled', false);
+                $('#invoiceAddress :input').prop('readonly', false);
             }
         });
     });
