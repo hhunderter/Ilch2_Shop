@@ -146,7 +146,7 @@ $purchaseUnits['amount']['currency_code'] = $this->escape($this->get('currency')
 $purchaseUnits['amount']['breakdown']['item_total']['value'] = $purchaseUnits['amount']['value'];
 $purchaseUnits['amount']['breakdown']['item_total']['currency_code'] = $purchaseUnits['amount']['currency_code'];
 
-$purchaseUnits['invoice_id'] = substr($order->getInvoiceFilename(),0,strrpos($order->getInvoiceFilename(), '_'));
+$purchaseUnits['invoice_id'] = substr($order->getInvoiceFilename(),0, strrpos($order->getInvoiceFilename(), '_'));
 ?>
 
 <script src="https://www.paypal.com/sdk/js?client-id=<?=urlencode($this->get('settings')->getClientID()) ?>&currency=<?=urlencode($this->get('currency')->getCode()) ?>"></script>

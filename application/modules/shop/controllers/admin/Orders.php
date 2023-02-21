@@ -242,14 +242,22 @@ class Orders extends Admin
         $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
         $date = new Date();
         $mailContent = $emailsMapper->getEmail('shop', 'send_invoice_mail', $this->getTranslator()->getLocale());
+        $templateName = 'sendinvoice.php';
+
+        if (!$settingsMapper->getSettings()->getClientID()) {
+            // PayPal not configured. Send email without payment link.
+            $mailContent = $emailsMapper->getEmail('shop', 'send_invoice_mail_no_paymentlink', $this->getTranslator()->getLocale());
+            $templateName = 'sendinvoicenopaymentlink.php';
+        }
+
         $name = $this->getLayout()->escape($order->getInvoiceAddress()->getLastname());
 
         $layout = $_SESSION['layout'] ?? '';
 
-        if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/shop/layouts/mail/sendinvoice.php')) {
-            $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/shop/layouts/mail/sendinvoice.php');
+        if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/shop/layouts/mail/'.$templateName)) {
+            $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/shop/layouts/mail/'.$templateName);
         } else {
-            $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/shop/layouts/mail/sendinvoice.php');
+            $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/shop/layouts/mail/'.$templateName);
         }
         $messageReplace = [
             '{content}' => $this->getLayout()->purify($mailContent->getText()),

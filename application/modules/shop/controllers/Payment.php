@@ -23,7 +23,7 @@ class Payment extends Frontend
 
         $this->getLayout()->header()->css('static/css/style_front.css');
         $this->getLayout()->getHmenu()
-            ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuPayment'), ['controller' => 'payment', 'action' => 'index']);
 
         if (!$this->getUser()) {

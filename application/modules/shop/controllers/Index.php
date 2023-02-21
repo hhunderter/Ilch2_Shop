@@ -214,7 +214,6 @@ class Index extends Frontend
                 $model->setOrder($this->getRequest()->getPost('order'));
 
                 if ($this->getRequest()->getPost('differentInvoiceAddress')) {
-
                     if ($this->getRequest()->getPost('dropdownInvoiceAddress')) {
                         // Don't use possible user input. Get the address from the database.
                         if (empty($costumer)) {

@@ -13,6 +13,18 @@ $itemsMapper = $this->get('itemsMapper');
     $orderTime = date_format($myDateTime, ' H:i ');
     $orderDate = date_format($myDateTime, 'd.m.Y ');
     $invoiceNr = date_format($myDateTime, 'ymd').'-'.$order->getId();
+
+    $invoiceFilename = '';
+    $nameInvoice = utf8_decode($this->getTrans('invoice'));
+    $shopInvoicePath = '/application/modules/shop/static/invoice/';
+
+    if (empty($order->getInvoiceFIlename())) {
+        $hash = bin2hex(random_bytes(32));
+        $invoiceFilename = $nameInvoice.'_'.$invoiceNr.'_'.$hash;
+    } else {
+        $invoiceFilename = $order->getInvoiceFIlename();
+    }
+    $file_location = ROOT_PATH.$shopInvoicePath.$invoiceFilename.'.pdf';
     ?>
 
     <h4><?=$this->getTrans('CostumerAreaInfoBuyer') ?></h4>
@@ -61,29 +73,42 @@ $itemsMapper = $this->get('itemsMapper');
                     <?php endif; ?>
                 </td>
             </tr>
+            <?php if (file_exists($file_location)) : ?>
+            <tr>
+                <th><?=$this->getTrans('invoice') ?></th>
+                <td>
+                    <a href="<?=$this->getUrl(['action' => 'download', 'id' => $order->getId()], null, true) ?>" target="_blank" class="btn btn-sm alert-success">
+                        <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('showPDF') ?>
+                    </a>
+                </td>
+            </tr>
+            <?php endif; ?>
             </tbody>
         </table>
     </div>
 
     <h4><?=$this->getTrans('orderedItems') ?></h4>
-    <div class="cart">
-        <table>
+    <div class="table-responsive cart">
+        <table class="table table-striped">
             <thead>
             <tr>
-                <th scope="col" width="10%"><?=$this->getTrans('productImage') ?><br />&nbsp;</th>
-                <th scope="col" width="25%"><?=$this->getTrans('productName') ?><br /><small><?=$this->getTrans('itemNumber') ?></small></th>
-                <th scope="col" width="15%"><?=$this->getTrans('singlePrice') ?><br /><small><?=$this->getTrans('withoutTax') ?></small></th>
-                <th scope="col" width="10%"><?=$this->getTrans('taxShort') ?><br />&nbsp;</th>
-                <th scope="col" width="15%"><?=$this->getTrans('singlePrice') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
-                <th scope="col" width="10%" class="text-center"><?=$this->getTrans('entries') ?><br />&nbsp;</th>
-                <th scope="col" width="15%" class="text-right"><?=$this->getTrans('total') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
+                <th><?=$this->getTrans('productImage') ?><br />&nbsp;</th>
+                <th><?=$this->getTrans('productName') ?><br /><small><?=$this->getTrans('itemNumber') ?></small></th>
+                <th><?=$this->getTrans('shippingTime') ?><br />&nbsp;</th>
+                <th><?=$this->getTrans('singlePrice') ?><br /><small><?=$this->getTrans('withoutTax') ?></small></th>
+                <th><?=$this->getTrans('taxShort') ?><br />&nbsp;</th>
+                <th><?=$this->getTrans('singlePrice') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
+                <th class="text-center"><?=$this->getTrans('entries') ?><br />&nbsp;</th>
+                <th class="text-right"><?=$this->getTrans('total') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
             </tr>
             </thead>
             <tbody>
             <?php
+            $orderItems = json_decode(str_replace("'", '"', $order->getOrder()), true);
             $subtotal_price = 0;
-            foreach ($_SESSION['shopping_cart'] as $product) {
-                $itemId = $product['id'];
+            $pdfOrderNr = 1;
+            foreach ($orderItems as $orderItem):
+                $itemId = $orderItem['id'];
                 $itemImg = $itemsMapper->getShopItemById($itemId)->getImage();
                 $itemName = $itemsMapper->getShopItemById($itemId)->getName();
                 $itemNumber = $itemsMapper->getShopItemById($itemId)->getItemnumber();
@@ -91,88 +116,95 @@ $itemsMapper = $this->get('itemsMapper');
                 $itemTax = $itemsMapper->getShopItemById($itemId)->getTax();
                 $itemPriceWithoutTax = round(($itemPrice / (100 + $itemTax)) * 100, 2);
                 $arrayShippingCosts[] = $itemsMapper->getShopItemById($itemId)->getShippingCosts();
+                $itemShippingTime = $itemsMapper->getShopItemById($itemId)->getShippingTime();
+                $arrayShippingTime[] = $itemShippingTime;
                 $arrayTaxes[] = $itemTax;
-                $arrayPrices[] = $itemPrice * $product['quantity'];
-                $arrayPricesWithoutTax[] = $itemPriceWithoutTax * $product['quantity'];
+                $arrayPrices[] = $itemPrice * $orderItem['quantity'];
+                $arrayPricesWithoutTax[] = $itemPriceWithoutTax * $orderItem['quantity'];
                 $shopImgPath = '/application/modules/shop/static/img/';
                 if ($itemImg AND file_exists(ROOT_PATH.'/'.$itemImg)) {
                     $img = BASE_URL.'/'.$itemImg;
                 } else {
                     $img = BASE_URL.$shopImgPath.'noimg.jpg';
                 }
+                $currency = iconv('UTF-8', 'windows-1252', $this->escape($this->get('currency')));
+                $pdfOrderData[] = array(
+                    $pdfOrderNr++,
+                    utf8_decode($itemName),
+                    number_format($itemPriceWithoutTax, 2, '.', '').' '.$currency,
+                    $itemTax.' %',
+                    number_format($itemPrice, 2, '.', '').' '.$currency,
+                    $orderItem['quantity'],
+                    number_format($itemPrice * $orderItem['quantity'], 2, '.', '').' '.$currency,
+                    utf8_decode($this->getTrans('itemNumberShort')).' '.$itemNumber);
                 ?>
                 <tr>
-                    <td data-label="<?=$this->getTrans('productImage') ?>">
-                        <img src="<?=$img ?>" alt="<?=$this->escape($itemName) ?>"/>
-                    </td>
-                    <td data-label="<?=$this->getTrans('productName') ?>">
+                    <td><img src="<?=$img ?>" class="item_image" alt="<?=$this->escape($itemName) ?>"> </td>
+                    <td>
                         <b><?=$this->escape($itemName); ?></b><br /><small><?=$this->escape($itemNumber); ?></small>
                     </td>
-                    <td data-label="<?=$this->getTrans('singlePrice') ?> (<?=$this->getTrans('withoutTax') ?>)">
+                    <td><?=$itemShippingTime ?> <?=$this->getTrans('days') ?></td>
+                    <td>
                         <?=number_format($itemPriceWithoutTax, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?>
                     </td>
-                    <td data-label="<?=$this->getTrans('taxShort') ?>"><?=$itemTax ?> %</td>
-                    <td data-label="<?=$this->getTrans('singlePrice') ?> (<?=$this->getTrans('withTax') ?>)">
-                        <?=number_format($itemPrice, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?>
+                    <td><?=$itemTax ?> %</td>
+                    <td>
+                        <b><?=number_format($itemPrice, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
                     </td>
-                    <td data-label="<?=$this->getTrans('entries') ?>" class="text-center">
-                        <b><?=$product['quantity'] ?></b>
+                    <td class="text-center">
+                        <b><?=$orderItem['quantity'] ?></b>
                     </td>
-                    <td data-label="<?=$this->getTrans('total') ?> (<?=$this->getTrans('withTax') ?>)" class="text-right">
-                        <b><?=number_format($itemPrice * $product['quantity'], 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
+                    <td class="text-right">
+                        <b><?=number_format($itemPrice * $orderItem['quantity'], 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
                     </td>
                 </tr>
-                <?php
-                $subtotal_price += round($itemPrice * $product['quantity'], 2);
-            }
-            ?>
-            </tbody>
-        </table>
-        <table class="sum">
+                <?php $subtotal_price += round($itemPrice * $orderItem['quantity'], 2); ?>
+            <?php endforeach; ?>
             <tr>
-                <th>
-                    <?=$this->getTrans('deliveryCosts') ?>
-                </th>
-                <td data-label="<?=$this->getTrans('deliveryCosts') ?>" class="text-right">
+                <td colspan="7" class="text-right finished">
+                    <b><?=$this->getTrans('deliveryCosts') ?>:</b>
+                </td>
+                <td colspan="1" class="text-right finished">
                     <?php $shipping_costs = max($arrayShippingCosts); ?>
-                    <?=number_format($shipping_costs, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?>
+                    <b><?=number_format($shipping_costs, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
                 </td>
             </tr>
             <tr>
-                <th>
-                    <?=$this->getTrans('subtotal') ?> (<?=$this->getTrans('withTax') ?>)
-                </th>
-                <td data-label="<?=$this->getTrans('subtotal') ?> (<?=$this->getTrans('withTax') ?>)" class="text-right">
+                <td colspan="7" class="text-right finish">
+                    <?=$this->getTrans('subtotal') ?> <?=$this->getTrans('withTax') ?>:
+                </td>
+                <td colspan="1" class="text-right finish">
                     <?php $total_price = array_sum($arrayPrices) + $shipping_costs; ?>
                     <?=number_format($total_price, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?>
                 </td>
             </tr>
             <tr>
-                <th>
-                    <?=$this->getTrans('subtotal') ?> (<?=$this->getTrans('withoutTax') ?>)
-                </th>
-                <td data-label="<?=$this->getTrans('subtotal') ?> (<?=$this->getTrans('withTax') ?>)" class="text-right">
+                <td colspan="7" class="text-right finish">
+                    <?=$this->getTrans('subtotal') ?> <?=$this->getTrans('withoutTax') ?>:
+                </td>
+                <td colspan="1" class="text-right finish">
                     <?php $sumPricewithoutTax = array_sum($arrayPricesWithoutTax) + round(($shipping_costs / (100 + max($arrayTaxes))) * 100, 2); ?>
                     <?=number_format($sumPricewithoutTax, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?>
                 </td>
             </tr>
             <tr>
-                <th>
-                    <?=$this->getTrans('tax') ?>
-                </th>
-                <td data-label="<?=$this->getTrans('tax') ?>" class="text-right">
+                <td colspan="7" class="text-right finish">
+                    <?=$this->getTrans('tax') ?>:
+                </td>
+                <td colspan="1" class="text-right finish">
                     <?php $differenzTax = round($total_price - $sumPricewithoutTax, 2); ?>
                     <?=number_format($differenzTax, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?>
                 </td>
             </tr>
             <tr>
-                <th>
-                    <b><?=$this->getTrans('totalPrice') ?></b>
-                </th>
-                <td data-label="<?=$this->getTrans('totalPrice') ?>" class="text-right">
+                <td colspan="7" class="text-right finished">
+                    <b><?=$this->getTrans('totalPrice') ?>:</b>
+                </td>
+                <td colspan="1" class="text-right finished">
                     <b><?=number_format($total_price, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
                 </td>
             </tr>
+            </tbody>
         </table>
     </div>
 <?php else : ?>

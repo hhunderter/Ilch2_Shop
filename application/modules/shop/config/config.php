@@ -14,7 +14,7 @@ class Config extends Install
     public $config = [
         'key' => 'shop',
         'version' => '1.0.0',
-        'icon_small' => 'fa-shopping-cart',
+        'icon_small' => 'fa-solid fa-cart-shopping',
         'author' => 'Lord|Schirmer',
         'link' => 'https://ilch.de',
         'languages' => [
@@ -202,6 +202,18 @@ class Config extends Install
                         <p>{paymentLink}</p>
                         <p>&nbsp;</p>
                         <p>Best regards</p>
+                        <p>Administrator</p>", "en_EN"),
+                    ("shop", "send_invoice_mail_no_paymentlink", "Ihre Rechnung", "<p>Sehr geehrte(r) Herr oder Frau <b>{name}</b>,</p>
+                        <p>&nbsp;</p>
+                        <p>hiermit erhalten Sie die Rechnung für Ihre Bestellung auf <i>{shopname}</i>. Die Rechnung befindet sich im Anhang dieser E-Mail.</p>
+                        <p>&nbsp;</p>
+                        <p>Mit freundlichen Gr&uuml;&szlig;en</p>
+                        <p>Administrator</p>", "de_DE"),
+                    ("shop", "send_invoice_mail_no_paymentlink", "Your invoice", "<p>Dear Sir or Madam <b>{name}</b>,</p>
+                        <p>&nbsp;</p>
+                        <p>hereby you receive the invoice for your order at <i>{shopname}</i>. The invoice is in the attachment of this e-mail.</p>
+                        <p>&nbsp;</p>
+                        <p>Best regards</p>
                         <p>Administrator</p>", "en_EN");
 
 /***   example entries   ***/
@@ -287,7 +299,7 @@ class Config extends Install
     public function getUpdate($installedVersion)
     {
         switch ($installedVersion) {
-            case "1.0.0":
+            case '1.0.0':
                 // no break
         }
     }

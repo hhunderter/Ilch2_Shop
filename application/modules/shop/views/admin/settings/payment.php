@@ -40,7 +40,7 @@
         <label for="clientID" class="col-lg-2 control-label">
             <?=$this->getTrans('clientID') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-lg-4">
             <div class="input-group">
                 <span class="input-group-addon">
                     <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('clientIDInfo') ?>"></span>
