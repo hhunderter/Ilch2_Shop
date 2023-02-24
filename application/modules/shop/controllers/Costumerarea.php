@@ -22,7 +22,7 @@ class Costumerarea extends Frontend
 
         $this->getLayout()->header()->css('static/css/style_front.css');
         $this->getLayout()->getHmenu()
-            ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuCostumerArea'), ['controller' => 'costumerarea', 'action' => 'index']);
 
         if ($this->getUser()) {
@@ -51,7 +51,7 @@ class Costumerarea extends Frontend
 
         $this->getLayout()->header()->css('static/css/style_front.css');
         $this->getLayout()->getHmenu()
-            ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuCostumerArea'), ['controller' => 'costumerarea', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuCostumerAreaOrderDetails'), ['controller' => 'costumerarea', 'action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
 
