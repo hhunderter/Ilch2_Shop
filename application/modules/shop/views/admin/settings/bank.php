@@ -7,22 +7,27 @@
     <ul class="nav nav-tabs">
         <li>
             <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'index']) ?>">
-                <i class="fas fa-store"></i> <?=$this->getTrans('menuSettingShop') ?>
+                <i class="fa-solid fa-store"></i> <?=$this->getTrans('menuSettingShop') ?>
             </a>
         </li>
         <li class="active">
             <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'bank']) ?>">
-                <i class="fas fa-university"></i> <b><?=$this->getTrans('menuSettingBank') ?></b>
+                <i class="fa-solid fa-university"></i> <b><?=$this->getTrans('menuSettingBank') ?></b>
             </a>
         </li>
         <li>
             <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'default']) ?>">
-                <i class="fas fa-tools"></i> <?=$this->getTrans('menuSettingDefault') ?>
+                <i class="fa-solid fa-tools"></i> <?=$this->getTrans('menuSettingDefault') ?>
             </a>
         </li>
         <li>
             <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'agb']) ?>">
-                <i class="fas fa-gavel"></i> <?=$this->getTrans('menuSettingAGB') ?>
+                <i class="fa-solid fa-gavel"></i> <?=$this->getTrans('menuSettingAGB') ?>
+            </a>
+        </li>
+        <li>
+            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'payment']) ?>">
+                <i class="fa-solid fa-money-bill"></i> <?=$this->getTrans('menuSettingPayment') ?>
             </a>
         </li>
     </ul>

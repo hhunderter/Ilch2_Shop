@@ -8,7 +8,7 @@ namespace Modules\Shop\Models;
 
 use Ilch\Model;
 
-class Items extends Model
+class Item extends Model
 {
     /**
      * The id of the item.
@@ -173,7 +173,7 @@ class Items extends Model
      * @param int $id
      * @return $this
      */
-    public function setId(int $id): Items
+    public function setId(int $id): Item
     {
         $this->id = $id;
 
@@ -196,7 +196,7 @@ class Items extends Model
      * @param int $catId
      * @return $this
      */
-    public function setCatId(int $catId): Items
+    public function setCatId(int $catId): Item
     {
         $this->catId = $catId;
 
@@ -219,7 +219,7 @@ class Items extends Model
      * @param string $name
      * @return $this
      */
-    public function setName(string $name): Items
+    public function setName(string $name): Item
     {
         $this->name = $name;
 
@@ -242,7 +242,7 @@ class Items extends Model
      * @param string $itemnumber
      * @return $this
      */
-    public function setItemnumber(string $itemnumber): Items
+    public function setItemnumber(string $itemnumber): Item
     {
         $this->itemnumber = $itemnumber;
 
@@ -265,7 +265,7 @@ class Items extends Model
      * @param string $code
      * @return $this
      */
-    public function setCode(string $code): Items
+    public function setCode(string $code): Item
     {
         $this->code = $code;
 
@@ -288,7 +288,7 @@ class Items extends Model
      * @param int $stock
      * @return $this
      */
-    public function setStock(int $stock): Items
+    public function setStock(int $stock): Item
     {
         $this->stock = $stock;
 
@@ -311,7 +311,7 @@ class Items extends Model
      * @param string $unitName
      * @return $this
      */
-    public function setUnitName(string $unitName): Items
+    public function setUnitName(string $unitName): Item
     {
         $this->unitName = $unitName;
 
@@ -334,7 +334,7 @@ class Items extends Model
      * @param int $cordon
      * @return $this
      */
-    public function setCordon(int $cordon): Items
+    public function setCordon(int $cordon): Item
     {
         $this->cordon = $cordon;
 
@@ -357,7 +357,7 @@ class Items extends Model
      * @param string $cordonText
      * @return $this
      */
-    public function setCordonText(string $cordonText): Items
+    public function setCordonText(string $cordonText): Item
     {
         $this->cordonText = $cordonText;
 
@@ -380,7 +380,7 @@ class Items extends Model
      * @param string $cordonColor
      * @return $this
      */
-    public function setCordonColor(string $cordonColor): Items
+    public function setCordonColor(string $cordonColor): Item
     {
         $this->cordonColor = $cordonColor;
 
@@ -403,7 +403,7 @@ class Items extends Model
      * @param string $price
      * @return $this
      */
-    public function setPrice(string $price): Items
+    public function setPrice(string $price): Item
     {
         $this->price = $price;
 
@@ -426,7 +426,7 @@ class Items extends Model
      * @param int $tax
      * @return $this
      */
-    public function setTax(int $tax): Items
+    public function setTax(int $tax): Item
     {
         $this->tax = $tax;
 
@@ -449,7 +449,7 @@ class Items extends Model
      * @param string $shippingCosts
      * @return $this
      */
-    public function setShippingCosts(string $shippingCosts): Items
+    public function setShippingCosts(string $shippingCosts): Item
     {
         $this->shippingCosts = $shippingCosts;
 
@@ -472,7 +472,7 @@ class Items extends Model
      * @param string $shippingTime
      * @return $this
      */
-    public function setShippingTime(string $shippingTime): Items
+    public function setShippingTime(string $shippingTime): Item
     {
         $this->shippingTime = (int)$shippingTime;
 
@@ -495,7 +495,7 @@ class Items extends Model
      * @param string $image
      * @return $this
      */
-    public function setImage(string $image): Items
+    public function setImage(string $image): Item
     {
         $this->image = $image;
 
@@ -518,7 +518,7 @@ class Items extends Model
      * @param string $image1
      * @return $this
      */
-    public function setImage1(string $image1): Items
+    public function setImage1(string $image1): Item
     {
         $this->image1 = $image1;
 
@@ -541,7 +541,7 @@ class Items extends Model
      * @param string $image2
      * @return $this
      */
-    public function setImage2(string $image2): Items
+    public function setImage2(string $image2): Item
     {
         $this->image2 = $image2;
 
@@ -564,7 +564,7 @@ class Items extends Model
      * @param string $image3
      * @return $this
      */
-    public function setImage3(string $image3): Items
+    public function setImage3(string $image3): Item
     {
         $this->image3 = $image3;
 
@@ -587,7 +587,7 @@ class Items extends Model
      * @param string $info
      * @return $this
      */  
-    public function setInfo(string $info): Items
+    public function setInfo(string $info): Item
     {
         $this->info = $info;
 
@@ -610,7 +610,7 @@ class Items extends Model
      * @param string $desc
      * @return $this
      */ 
-    public function setDesc(string $desc): Items
+    public function setDesc(string $desc): Item
     {
         $this->desc = $desc;
 
@@ -633,7 +633,7 @@ class Items extends Model
      * @param int $status
      * @return $this
      */ 
-    public function setStatus(int $status): Items
+    public function setStatus(int $status): Item
     {
         $this->status = $status;
 

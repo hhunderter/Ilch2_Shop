@@ -16,7 +16,7 @@ class Settings extends Mapper
      *
      * @return SettingsModel
      */
-    public function getSettings()
+    public function getSettings(): ?SettingsModel
     {
         $serverRow = $this->db()->select('*')
             ->from('shop_settings')
@@ -50,12 +50,13 @@ class Settings extends Mapper
         $model->setFixTax($serverRow['fixTax']);
         $model->setFixShippingCosts($serverRow['fixShippingCosts']);
         $model->setFixShippingTime($serverRow['fixShippingTime']);
+        $model->setClientID($serverRow['paymentClientID']);
 
         return $model;
     }
-    
+
     /**
-     * Insert or update settingShop.
+     * Update settingShop.
      *
      * @param SettingsModel $settingShop
      */
@@ -77,9 +78,9 @@ class Settings extends Mapper
             ->where(['id' => '1'])
             ->execute();
     }
-    
+
     /**
-     * Insert or update settingBank.
+     * Update settingBank.
      *
      * @param SettingsModel $settingBank
      */
@@ -95,9 +96,9 @@ class Settings extends Mapper
             ->where(['id' => '1'])
             ->execute();
     }
-    
+
     /**
-     * Insert or update settingDefault.
+     * Update settingDefault.
      *
      * @param SettingsModel $settingDefault
      */
@@ -116,7 +117,7 @@ class Settings extends Mapper
     }
 
     /**
-     * Insert or update settingAGB.
+     * Update settingAGB.
      *
      * @param SettingsModel $settingAGB
      */
@@ -130,4 +131,19 @@ class Settings extends Mapper
             ->execute();
     }
 
+    /**
+     * Update settings payment.
+     *
+     * @param SettingsModel $settingPayment
+     * @return void
+     */
+    public function updateSettingPayment(SettingsModel $settingPayment)
+    {
+        $this->db()->update('shop_settings')
+            ->values([
+                'paymentClientID' => $settingPayment->getClientID()
+            ])
+            ->where(['id' => '1'])
+            ->execute();
+    }
 }

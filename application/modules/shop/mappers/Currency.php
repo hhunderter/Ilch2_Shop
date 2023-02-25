@@ -18,7 +18,7 @@ class Currency extends Mapper
      * @param array $where
      * @return CurrencyModel[]|array
      */
-    public function getCurrencies($where = [])
+    public function getCurrencies(array $where = []): array
     {
         $currenciesArray = $this->db()->select('*')
             ->from('shop_currencies')
@@ -37,6 +37,7 @@ class Currency extends Mapper
             $currencyModel = new CurrencyModel();
             $currencyModel->setId($currency['id']);
             $currencyModel->setName($currency['name']);
+            $currencyModel->setCode($currency['code']);
             $currencies[] = $currencyModel;
         }
 
@@ -49,22 +50,9 @@ class Currency extends Mapper
      * @param int $id
      * @return CurrencyModel[]|array
      */
-    public function getCurrencyById($id)
+    public function getCurrencyById(int $id): array
     {
         return $this->getCurrencies(['id' => $id]);
-    }
-
-    /**
-     * Checks if a currency with a specific name exists.
-     *
-     * @param string $name
-     * @return bool
-     */
-    public function currencyWithNameExists($name)
-    {
-        return (boolean) $this->db()->select('COUNT(*)', 'shop_currencies', ['name' => $name])
-            ->execute()
-            ->fetchCell();
     }
 
     /**
@@ -76,12 +64,12 @@ class Currency extends Mapper
     {
         if ($model->getId()) {
             $this->db()->update('shop_currencies')
-                ->values(['name' => $model->getName()])
+                ->values(['name' => $model->getName(), 'code' => $model->getCode()])
                 ->where(['id' => $model->getId()])
                 ->execute();
         } else {
             $this->db()->insert('shop_currencies')
-                ->values(['name' => $model->getName()])
+                ->values(['name' => $model->getName(), 'code' => $model->getCode()])
                 ->execute();
         }
     }
@@ -92,7 +80,7 @@ class Currency extends Mapper
      * @param int $id
      * @return Result|int
      */
-    public function deleteCurrencyById($id)
+    public function deleteCurrencyById(int $id)
     {
         return $this->db()->delete('shop_currencies')
             ->where(['id' => $id])

@@ -18,7 +18,7 @@ class Category extends Mapper
      * @param array $where
      * @return CategoryModel[]|[]
      */
-    public function getCategories($where = [])
+    public function getCategories(array $where = []): array
     {
         $categoryArray = $this->db()->select(['id', 'pos', 'title'])
             ->from('shop_cats')
@@ -53,7 +53,7 @@ class Category extends Mapper
      * @param int $id
      * @return null|CategoryModel
      */
-    public function getCategoryById($id)
+    public function getCategoryById(int $id): ?CategoryModel
     {
         $category = $this->getCategories(['id' => $id]);
 
@@ -70,7 +70,7 @@ class Category extends Mapper
      * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @return CategoryModel[]
      */
-    public function getCategoriesByAccess($groupIds)
+    public function getCategoriesByAccess($groupIds): array
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -85,7 +85,7 @@ class Category extends Mapper
      * @param int $id
      * @param int $position
      */
-    public function updatePositionById($id, $position) {
+    public function updatePositionById(int $id, int $position) {
         $this->db()->update('shop_cats')
             ->values(['pos' => $position])
             ->where(['id' => $id])
@@ -160,7 +160,7 @@ class Category extends Mapper
             }
 
             $rowCount++;
-            $sqlWithValues .= '(' . (int)$catId . ',' . (int)$groupId . '),';
+            $sqlWithValues .= '(' . $catId . ',' . (int)$groupId . '),';
         }
 
         // Insert remaining rows.
@@ -173,7 +173,7 @@ class Category extends Mapper
      *
      * @param int $id
      */
-    public function delete($id)
+    public function delete(int $id)
     {
         $this->db()->delete('shop_cats')
             ->where(['id' => $id])

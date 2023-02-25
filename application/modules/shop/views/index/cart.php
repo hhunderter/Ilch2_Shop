@@ -30,7 +30,7 @@ if(!empty($_SESSION['shopping_cart'])) {
 $cart_badge = '';
 if(!empty($_SESSION['shopping_cart'])) {
     $cart_count = count(array_keys($_SESSION['shopping_cart']));
-    $cart_badge = ($cart_count>0)?'<a class="activecart" href="'.$this->getUrl('shop/index/cart').'#shopAnker">'.$this->getTrans('menuCart').'<i class="fas fa-shopping-cart"><span class="badge">'.$cart_count.'</span></i></a>':'';
+    $cart_badge = ($cart_count>0)?'<a class="activecart" href="'.$this->getUrl('shop/index/cart').'#shopAnker">'.$this->getTrans('menuCart').'<i class="fa-solid fa-shopping-cart"><span class="badge">'.$cart_count.'</span></i></a>':'';
 } 
 ?>
 
@@ -55,20 +55,20 @@ if(!empty($_SESSION['shopping_cart'])) {
                     <th scope="col" width="25%"><?=$this->getTrans('productName') ?><br /><small><?=$this->getTrans('itemNumber') ?></small></th>
                     <th scope="col" width="20%"><?=$this->getTrans('singlePrice') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
                     <th scope="col" width="18%" class="text-center"><?=$this->getTrans('entries') ?><br />&nbsp;</th>
-                    <th scope="col" width="20%" class="text-right"><?=$this->getTrans('total') ?><br /><small>incl. <?=$this->getTrans('taxShort') ?></small></th>
+                    <th scope="col" width="20%" class="text-right"><?=$this->getTrans('total') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
                 </tr>
             </thead>
             <tbody>
                 <?php	
                 foreach ($_SESSION['shopping_cart'] as $product) {
                     $itemId = $product['id'];
-                    $itemCode = $itemsMapper->getShopById($itemId)->getCode();
-                    $itemName = $itemsMapper->getShopById($itemId)->getName();
-                    $itemPrice = $itemsMapper->getShopById($itemId)->getPrice();
-                    $itemNumber = $itemsMapper->getShopById($itemId)->getItemnumber();
-                    $itemImg = $itemsMapper->getShopById($itemId)->getImage();
-                    $itemMaxStock = $itemsMapper->getShopById($itemId)->getStock();
-                    $arrayShippingCosts[] = $itemsMapper->getShopById($itemId)->getShippingCosts();
+                    $itemCode = $itemsMapper->getShopItemById($itemId)->getCode();
+                    $itemName = $itemsMapper->getShopItemById($itemId)->getName();
+                    $itemPrice = $itemsMapper->getShopItemById($itemId)->getPrice();
+                    $itemNumber = $itemsMapper->getShopItemById($itemId)->getItemnumber();
+                    $itemImg = $itemsMapper->getShopItemById($itemId)->getImage();
+                    $itemMaxStock = $itemsMapper->getShopItemById($itemId)->getStock();
+                    $arrayShippingCosts[] = $itemsMapper->getShopItemById($itemId)->getShippingCosts();
                     $shopImgPath = '/application/modules/shop/static/img/';
                     if ($itemImg AND file_exists(ROOT_PATH.'/'.$itemImg)) {
                         $img = BASE_URL.'/'.$itemImg;
@@ -87,7 +87,7 @@ if(!empty($_SESSION['shopping_cart'])) {
                             <input type="hidden" name="code" value="<?=$this->escape($itemCode); ?>" />
                             <input type="hidden" name="name" value="<?=$this->escape($itemName); ?>" />
                             <input type="hidden" name="action" value="remove" />
-                            <button type="submit" class="btn btn-sm btn-default far fa-trash-alt remove"></button>
+                            <button type="submit" class="btn btn-sm btn-default fa-regular fa-trash-can remove"></button>
                         </form>
                     </td>
                     <td data-label="<?=$this->getTrans('productName') ?>">
@@ -104,7 +104,7 @@ if(!empty($_SESSION['shopping_cart'])) {
                             <div class="input-group">
                                 <input type="hidden" name="maxStock" value="<?=$itemMaxStock; ?>" />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-xs btn-default plus-btn" type="button" name="button"><i class="fa fa-plus"></i></button>
+                                    <button class="btn btn-xs btn-default plus-btn" type="button" name="button"><i class="fa-solid fa-plus"></i></button>
                                 </span>
                                 <input class="form-control item-quantity input-sm"
                                     type="text"
@@ -114,12 +114,12 @@ if(!empty($_SESSION['shopping_cart'])) {
                                     value="<?=$product['quantity'] ?>"
                                     readonly>
                                 <span class="input-group-btn">
-                                    <button class="btn btn-xs btn-default minus-btn" type="button" name="button"><i class="fa fa-minus"></i></button>
+                                    <button class="btn btn-xs btn-default minus-btn" type="button" name="button"><i class="fa-solid fa-minus"></i></button>
                                 </span>
                             </div>
                         </form>
                     </td>
-                    <td data-label="<?=$this->getTrans('total') ?> (incl. <?=$this->getTrans('taxShort') ?>)" class="text-right">
+                    <td data-label="<?=$this->getTrans('total') ?> (<?=$this->getTrans('withTax') ?>)" class="text-right">
                         <b><?=number_format($itemPrice * $product['quantity'], 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
                     </td>
                 </tr>
@@ -151,15 +151,15 @@ if(!empty($_SESSION['shopping_cart'])) {
         </table>
         <form method="post" action="order#shopAnker" class="text-right">
             <div class="btn-group btn-group-sm">
-                <a class="btn btn-default" href="<?=$this->getUrl('shop/index') ?>#shopAnker"><i class="fas fa-backward"></i> <?=$this->getTrans('back') ?></a>
-                <button class="btn btn-warning"><?=$this->getTrans('completePurchase') ?> <i class="fas fa-forward"></i></button>
+                <a class="btn btn-default" href="<?=$this->getUrl('shop/index') ?>#shopAnker"><i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?></a>
+                <button class="btn btn-warning"><?=$this->getTrans('completePurchase') ?> <i class="fa-solid fa-forward"></i></button>
             </div>
         </form>
     <?php } else { ?>
     <?=$this->getTrans('cartEmpty') ?>
     <div class="row space20"></div>
     <a href="<?=$this->getUrl('shop/index') ?>#shopAnker" class="btn btn-default">
-        <i class="fas fa-backward"></i> <?=$this->getTrans('back') ?>
+        <i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?>
     </a>
 <?php } ?>
 </div>

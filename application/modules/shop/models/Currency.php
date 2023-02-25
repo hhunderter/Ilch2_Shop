@@ -22,14 +22,22 @@ class Currency extends Model
      *
      * @var string
      */
-    protected $name;
+    protected $name = '';
+
+    /**
+     * The currency code according to ISO 4217.
+     *
+     * @link https://www.six-group.com/en/products-services/financial-information/data-standards.html
+     * @var string
+     */
+    protected $code = '';
 
     /**
      * Gets the id of the currency.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -39,7 +47,7 @@ class Currency extends Model
      *
      * @return string
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -49,9 +57,9 @@ class Currency extends Model
      *
      * @param int $id
      */
-    public function setId($id)
+    public function setId(int $id)
     {
-        $this->id = (int)$id;
+        $this->id = $id;
     }
 
     /**
@@ -59,8 +67,30 @@ class Currency extends Model
      *
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name)
     {
-        $this->name = (string)$name;
+        $this->name = $name;
+    }
+
+    /**
+     * Gets the currency code according to ISO 4217.
+     *
+     * @link https://www.six-group.com/en/products-services/financial-information/data-standards.html
+     * @return string
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    /**
+     * Sets the currency code according to ISO 4217.
+     *
+     * @link https://www.six-group.com/en/products-services/financial-information/data-standards.html
+     * @param string $code
+     */
+    public function setCode(string $code): void
+    {
+        $this->code = $code;
     }
 }

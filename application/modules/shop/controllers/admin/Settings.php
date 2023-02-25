@@ -20,48 +20,52 @@ class Settings extends Admin
             [
                 'name' => 'menuOverwiev',
                 'active' => false,
-                'icon' => 'fas fa-store-alt',
+                'icon' => 'fa-solid fa-store-alt',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
                 'name' => 'menuItems',
                 'active' => false,
-                'icon' => 'fas fa-tshirt',
+                'icon' => 'fa-solid fa-tshirt',
                 'url' => $this->getLayout()->getUrl(['controller' => 'items', 'action' => 'index'])
+            ],
+            [
+                'name' => 'menuCostumers',
+                'active' => false,
+                'icon' => 'fa-solid fa-users',
+                'url' => $this->getLayout()->getUrl(['controller' => 'costumers', 'action' => 'index'])
             ],
             [
                 'name' => 'menuOrders',
                 'active' => false,
-                'icon' => 'fas fa-cart-arrow-down',
+                'icon' => 'fa-solid fa-cart-arrow-down',
                 'url' => $this->getLayout()->getUrl(['controller' => 'orders', 'action' => 'index'])
             ],
             [
                 'name' => 'menuCats',
                 'active' => false,
-                'icon' => 'fas fa-list-alt',
+                'icon' => 'fa-solid fa-rectangle-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index'])
             ],
             [
                 'name' => 'menuCurrencies',
                 'active' => false,
-                'icon' => 'fas fa-money-bill-alt',
+                'icon' => 'fa-solid fa-money-bill-alt',
                 'url' => $this->getLayout()->getUrl(['controller' => 'currency', 'action' => 'index'])
             ],
             [
                 'name' => 'menuSettings',
-                'active' => false,
-                'icon' => 'fa fa-cogs',
+                'active' => true,
+                'icon' => 'fa-solid fa-cogs',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ],
             [
                 'name' => 'menuNote',
                 'active' => false,
-                'icon' => 'fas fa-info-circle',
+                'icon' => 'fa-solid fa-info-circle',
                 'url' => $this->getLayout()->getUrl(['controller' => 'note', 'action' => 'index'])
             ]
         ];
-        
-        $items[5]['active'] = true;
 
         $this->getLayout()->addMenu
         (
@@ -116,7 +120,7 @@ class Settings extends Admin
 
         $this->getView()->set('settings', $settingsMapper->getSettings());
     }
-    
+
     public function bankAction()
     {
         $settingsMapper = new SettingsMapper();
@@ -153,7 +157,7 @@ class Settings extends Admin
 
         $this->getView()->set('settings', $settingsMapper->getSettings());
     }
-    
+
     public function defaultAction()
     {
         $currencyMapper = new CurrencyMapper();
@@ -199,7 +203,7 @@ class Settings extends Admin
         $this->getView()->set('currency', $currency->getName());
         $this->getView()->set('shopCurrency', $this->getConfig()->get('shop_currency'));
     }
-    
+
     public function agbAction()
     {
         $settingsMapper = new SettingsMapper();
@@ -231,4 +235,34 @@ class Settings extends Admin
         $this->getView()->set('settings', $settingsMapper->getSettings());
     }
 
+    public function paymentAction()
+    {
+        $settingsMapper = new SettingsMapper();
+
+        $this->getLayout()->getAdminHmenu()
+            ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettingPayment'), ['action' => 'payment']);
+
+        if ($this->getRequest()->isPost()) {
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'clientID' => 'required'
+            ]);
+
+            if ($validation->isValid()) {
+                $model = new SettingsModel();
+                $model->setClientID($this->getRequest()->getPost('clientID'));
+                $settingsMapper->updateSettingPayment($model);
+                $this->addMessage('saveSuccess');
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withInput()
+                    ->withErrors($validation->getErrorBag())
+                    ->to(['action' => 'payment']);
+            }
+        }
+
+        $this->getView()->set('settings', $settingsMapper->getSettings());
+    }
 }

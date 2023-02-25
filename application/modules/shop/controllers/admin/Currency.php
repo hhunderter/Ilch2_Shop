@@ -19,57 +19,63 @@ class Currency extends Admin
             [
                 'name' => 'menuOverwiev',
                 'active' => false,
-                'icon' => 'fas fa-store-alt',
+                'icon' => 'fa-solid fa-store-alt',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
                 'name' => 'menuItems',
                 'active' => false,
-                'icon' => 'fas fa-tshirt',
+                'icon' => 'fa-solid fa-tshirt',
                 'url' => $this->getLayout()->getUrl(['controller' => 'items', 'action' => 'index'])
+            ],
+            [
+                'name' => 'menuCostumers',
+                'active' => false,
+                'icon' => 'fa-solid fa-users',
+                'url' => $this->getLayout()->getUrl(['controller' => 'costumers', 'action' => 'index'])
             ],
             [
                 'name' => 'menuOrders',
                 'active' => false,
-                'icon' => 'fas fa-cart-arrow-down',
+                'icon' => 'fa-solid fa-cart-arrow-down',
                 'url' => $this->getLayout()->getUrl(['controller' => 'orders', 'action' => 'index'])
             ],
             [
                 'name' => 'menuCats',
                 'active' => false,
-                'icon' => 'fas fa-list-alt',
+                'icon' => 'fa-solid fa-rectangle-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index'])
             ],
             [
                 'name' => 'menuCurrencies',
                 'active' => false,
-                'icon' => 'fas fa-money-bill-alt',
+                'icon' => 'fa-solid fa-money-bill-alt',
                 'url' => $this->getLayout()->getUrl(['controller' => 'currency', 'action' => 'index']),
                 [
                     'name' => 'add',
                     'active' => false,
-                    'icon' => 'fa fa-plus-circle',
+                    'icon' => 'fa-solid fa-plus-circle',
                     'url' => $this->getLayout()->getUrl(['controller' => 'currency', 'action' => 'treat'])
                 ]
             ],
             [
                 'name' => 'menuSettings',
                 'active' => false,
-                'icon' => 'fa fa-cogs',
+                'icon' => 'fa-solid fa-cogs',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ],
             [
                 'name' => 'menuNote',
                 'active' => false,
-                'icon' => 'fas fa-info-circle',
+                'icon' => 'fa-solid fa-info-circle',
                 'url' => $this->getLayout()->getUrl(['controller' => 'note', 'action' => 'index'])
             ]
         ];
 
         if ($this->getRequest()->getActionName() == 'treat') {
-            $items[4][0]['active'] = true;
+            $items[5][0]['active'] = true;
         } else {
-            $items[4]['active'] = true;
+            $items[5]['active'] = true;
         }
 
         $this->getLayout()->addMenu
@@ -104,6 +110,9 @@ class Currency extends Admin
 
     public function treatAction()
     {
+        // https://developer.paypal.com/reference/currency-codes/
+        $currencyCodesPayPal = ['AUD', 'BRL', 'CAD', 'CNY', 'CZK', 'DKK', 'EUR', 'HKD', 'HUF', 'ILS', 'JPY', 'MYR', 'MXN', 'TWD', 'NZD', 'NOK', 'PHP', 'PLN', 'GBP', 'RUB', 'SGD', 'SEK', 'CHF', 'THB', 'USD'];
+
         $currencyMapper = new CurrencyMapper();
         $id = $this->getRequest()->getParam('id');
 
@@ -122,32 +131,46 @@ class Currency extends Admin
         if ($this->getRequest()->isPost() && $this->getRequest()->isSecure()) {
             $post = [
                 'id' => $this->getRequest()->getPost('id'),
-                'name' => trim($this->getRequest()->getPost('name'))
+                'name' => trim($this->getRequest()->getPost('name')),
+                'code' => trim($this->getRequest()->getPost('code'))
             ];
 
-            $validation = Validation::create($post, [
-                'id' => 'required|numeric|integer|min:1',
-                'name' => 'required'
-            ]);
+            $rules = [
+                'name' => 'required',
+                'code' => 'required|size:3'
+            ];
+
+            if (!in_array(trim($this->getRequest()->getPost('code')), $currencyCodesPayPal)) {
+                $this->addMessage($this->getTranslator()->trans('notSupportedForPayPal'), 'warning', true);
+            }
+
+            if ($this->getRequest()->getParam('id')) {
+                $rules['id'] = 'required|numeric|integer|min:1';
+            }
+            $validation = Validation::create($post, $rules);
 
             if ($validation->isValid()) {
-                if ($currencyMapper->currencyWithNameExists($post['name'])) {
-                    $this->addMessage('alreadyExisting', 'danger');
-                } else {
-                    $currencyModel = new CurrencyModel();
+                $currencyModel = new CurrencyModel();
+                if (!empty($post['id'])) {
                     $currencyModel->setId($post['id']);
-                    $currencyModel->setName($post['name']);
-                    
-                    $currencyMapper->save($currencyModel);
-                    $this->addMessage('saveSuccess');
-                    $this->redirect(['action' => 'index']);
                 }
+                $currencyModel->setName($post['name']);
+                $currencyModel->setCode($post['code']);
+
+                $currencyMapper->save($currencyModel);
+                $this->addMessage('saveSuccess');
+                $this->redirect(['action' => 'index']);
             } else {
                 $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             }
         }
 
-        $currency = $currencyMapper->getCurrencyById($id);
+        if ($this->getRequest()->getParam('id')) {
+            $currency = $currencyMapper->getCurrencyById($id);
+        } else {
+            $currency = [];
+        }
+
         if (count($currency) > 0) {
             $currency = $currency[0];
         } else {

@@ -43,7 +43,7 @@ class Category extends Model
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -53,9 +53,9 @@ class Category extends Model
      *
      * @param int $id
      */
-    public function setId($id)
+    public function setId(int $id)
     {
-        $this->id = (int)$id;
+        $this->id = $id;
     }
 
     /**
@@ -63,7 +63,7 @@ class Category extends Model
      *
      * @return int
      */
-    public function getPos()
+    public function getPos(): int
     {
         return $this->pos;
     }
@@ -73,9 +73,9 @@ class Category extends Model
      *
      * @param int $pos
      */
-    public function setPos($pos)
+    public function setPos(int $pos)
     {
-        $this->pos = (int)$pos;
+        $this->pos = $pos;
     }
 
     /**
@@ -83,7 +83,7 @@ class Category extends Model
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -93,9 +93,9 @@ class Category extends Model
      *
      * @param string $title
      */
-    public function setTitle($title)
+    public function setTitle(string $title)
     {
-        $this->title = (string)$title;
+        $this->title = $title;
     }
 
     /**
@@ -103,7 +103,7 @@ class Category extends Model
      *
      * @return string
      */
-    public function getReadAccess()
+    public function getReadAccess(): string
     {
         return $this->read_access;
     }
@@ -114,7 +114,7 @@ class Category extends Model
      * @param string $read_access
      * @return $this
      */
-    public function setReadAccess($read_access)
+    public function setReadAccess(string $read_access): Category
     {
         $this->read_access = $read_access;
         return $this;

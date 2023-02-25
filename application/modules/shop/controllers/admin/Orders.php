@@ -14,7 +14,7 @@ use Modules\Shop\Mappers\Currency as CurrencyMapper;
 use Modules\Shop\Mappers\Items as ItemsMapper;
 use Modules\Shop\Mappers\Orders as OrdersMapper;
 use Modules\Shop\Mappers\Settings as SettingsMapper;
-use Modules\Shop\Models\Orders as OrdersModel;
+use Modules\Shop\Models\Order as OrdersModel;
 
 class Orders extends Admin
 {
@@ -24,58 +24,52 @@ class Orders extends Admin
             [
                 'name' => 'menuOverwiev',
                 'active' => false,
-                'icon' => 'fas fa-store-alt',
+                'icon' => 'fa-solid fa-store-alt',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
                 'name' => 'menuItems',
                 'active' => false,
-                'icon' => 'fas fa-tshirt',
+                'icon' => 'fa-solid fa-tshirt',
                 'url' => $this->getLayout()->getUrl(['controller' => 'items', 'action' => 'index'])
             ],
             [
-                'name' => 'menuOrders',
+                'name' => 'menuCostumers',
                 'active' => false,
-                'icon' => 'fas fa-cart-arrow-down',
-                'url' => $this->getLayout()->getUrl(['controller' => 'orders', 'action' => 'index']),
-                [
-                    'name' => 'manage',
-                    'active' => false,
-                    'icon' => 'fa fa-plus-circle',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'orders', 'action' => 'treat'])
-                ]
+                'icon' => 'fa-solid fa-users',
+                'url' => $this->getLayout()->getUrl(['controller' => 'costumers', 'action' => 'index'])
+            ],
+            [
+                'name' => 'menuOrders',
+                'active' => true,
+                'icon' => 'fa-solid fa-cart-arrow-down',
+                'url' => $this->getLayout()->getUrl(['controller' => 'orders', 'action' => 'index'])
             ],
             [
                 'name' => 'menuCats',
                 'active' => false,
-                'icon' => 'fas fa-list-alt',
+                'icon' => 'fa-solid fa-rectangle-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index'])
             ],
             [
                 'name' => 'menuCurrencies',
                 'active' => false,
-                'icon' => 'fas fa-money-bill-alt',
+                'icon' => 'fa-solid fa-money-bill-alt',
                 'url' => $this->getLayout()->getUrl(['controller' => 'currency', 'action' => 'index'])
             ],
             [
                 'name' => 'menuSettings',
                 'active' => false,
-                'icon' => 'fa fa-cogs',
+                'icon' => 'fa-solid fa-cogs',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ],
             [
                 'name' => 'menuNote',
                 'active' => false,
-                'icon' => 'fas fa-info-circle',
+                'icon' => 'fa-solid fa-info-circle',
                 'url' => $this->getLayout()->getUrl(['controller' => 'note', 'action' => 'index'])
             ]
         ];
-
-        if ($this->getRequest()->getActionName() === 'treat') {
-            $items[2][0]['active'] = true;
-        } else {
-            $items[2]['active'] = true;
-        }
 
         $this->getLayout()->addMenu
         (
@@ -95,7 +89,7 @@ class Orders extends Admin
         if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_orders')) {
             $orderInUse = 0;
             foreach ($this->getRequest()->getPost('check_orders') as $orderId) {
-                if ($ordersMapper->getOrdersById($orderId)->getStatus() == 0 || $ordersMapper->getOrdersById($orderId)->getStatus() == 1) {
+                if ($ordersMapper->getOrderById($orderId)->getStatus() == 0 || $ordersMapper->getOrderById($orderId)->getStatus() == 1) {
                     $orderInUse++;
                     continue;
                 }
@@ -127,7 +121,7 @@ class Orders extends Admin
         $order = null;
 
         if ($this->getRequest()->getParam('id')) {
-            $order = $ordersMapper->getOrdersById($this->getRequest()->getParam('id'));
+            $order = $ordersMapper->getOrderById($this->getRequest()->getParam('id'));
             $this->getView()->set('order', $order);
             $this->getView()->set('currency', $currency->getName());
             $this->getView()->set('itemsMapper', $itemsMapper);
@@ -137,11 +131,10 @@ class Orders extends Admin
 
         if ($this->getRequest()->isPost()) {
             $model = new OrdersModel();
+            $stockSufficient = true;
 
             if ($this->getRequest()->getPost('status') != '') {
-                $model->setId($this->getRequest()->getPost('id'));
-                $model->setStatus($this->getRequest()->getPost('status'));
-                $ordersMapper->updateStatus($model);
+
                 $items = json_decode(str_replace("'", '"', $order->getOrder()), true);
 
                 if ($this->getRequest()->getPost('status') == 2 && $this->getRequest()->getPost('confirmTransferBackToStock') === 'true') {
@@ -150,15 +143,28 @@ class Orders extends Admin
                     }
                 } elseif ($this->getRequest()->getPost('status') != 2 && $this->getRequest()->getPost('confirmRemoveFromStock') === 'true') {
                     foreach ($items as $item) {
-                        $itemsMapper->removeStock($item['id'], $item['quantity']);
+                        $currentStock = $itemsMapper->getShopItemById($item['id']);
+
+                        if ($currentStock->getStock() >= $item['quantity']) {
+                            $itemsMapper->removeStock($item['id'], $item['quantity']);
+                        } else {
+                            $stockSufficient = false;
+                            $this->addMessage('currentStockInsufficient', 'danger');
+                        }
                     }
+                }
+
+                if ($stockSufficient) {
+                    $model->setId($this->getRequest()->getPost('id'));
+                    $model->setStatus($this->getRequest()->getPost('status'));
+                    $ordersMapper->updateStatus($model);
                 }
 
                 $this->redirect(['action' => 'treat', 'id' => $this->getRequest()->getPost('id')]);
             }
 
             if ($this->getRequest()->getPost('delete') == 1) {
-                if ($ordersMapper->getOrdersById($this->getRequest()->getParam('id'))->getStatus() == 0 || $ordersMapper->getOrdersById($this->getRequest()->getParam('id'))->getStatus() == 1) {
+                if ($ordersMapper->getOrderById($this->getRequest()->getParam('id'))->getStatus() == 0 || $ordersMapper->getOrderById($this->getRequest()->getParam('id'))->getStatus() == 1) {
                     $this->addMessage('orderInUse', 'danger');
                 } else {
                     $ordersMapper->delete($this->getRequest()->getParam('id'));
@@ -182,7 +188,7 @@ class Orders extends Admin
 
         if (!empty($id)) {
             $ordersMapper = new OrdersMapper();
-            $order = $ordersMapper->getOrdersById($id);
+            $order = $ordersMapper->getOrderById($id);
 
             if ($order !== null) {
                 $fullPath = $shopInvoicePath.$order->getInvoiceFilename().'.pdf';
@@ -221,7 +227,12 @@ class Orders extends Admin
         $settingsMapper = new SettingsMapper();
 
         $id = $this->getRequest()->getParam('id');
-        $order = $orderMapper->getOrdersById($id);
+        $order = $orderMapper->getOrderById($id);
+
+        // Generate selector and confirm code for the payment link.
+        $order->setSelector(bin2hex(random_bytes(9)));
+        $order->setConfirmCode(bin2hex(random_bytes(32)));
+
         $shopInvoicePath = '/application/modules/shop/static/invoice/';
         $pathInvoice = ROOT_PATH.$shopInvoicePath.$order->getInvoiceFilename().'.pdf';
         $path_parts = pathinfo($pathInvoice);
@@ -231,20 +242,29 @@ class Orders extends Admin
         $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
         $date = new Date();
         $mailContent = $emailsMapper->getEmail('shop', 'send_invoice_mail', $this->getTranslator()->getLocale());
-        $name = $this->getLayout()->escape($order->getLastname());
+        $templateName = 'sendinvoice.php';
+
+        if (!$settingsMapper->getSettings()->getClientID()) {
+            // PayPal not configured. Send email without payment link.
+            $mailContent = $emailsMapper->getEmail('shop', 'send_invoice_mail_no_paymentlink', $this->getTranslator()->getLocale());
+            $templateName = 'sendinvoicenopaymentlink.php';
+        }
+
+        $name = $this->getLayout()->escape($order->getInvoiceAddress()->getLastname());
 
         $layout = $_SESSION['layout'] ?? '';
 
-        if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/shop/layouts/mail/sendinvoice.php')) {
-            $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/shop/layouts/mail/sendinvoice.php');
+        if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/shop/layouts/mail/'.$templateName)) {
+            $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/shop/layouts/mail/'.$templateName);
         } else {
-            $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/shop/layouts/mail/sendinvoice.php');
+            $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/shop/layouts/mail/'.$templateName);
         }
         $messageReplace = [
             '{content}' => $this->getLayout()->purify($mailContent->getText()),
             '{shopname}' => $this->getLayout()->escape($settingsMapper->getSettings()->getShopName()),
             '{date}' => $date->format('l, d. F Y', true),
             '{name}' => $name,
+            '{paymentLink}' => '<a href="'.BASE_URL.'/index.php/shop/payment/index/selector/'.$order->getSelector().'/code/'.$order->getConfirmCode().'">'.$this->getTranslator()->trans('paymentInvoiceLink').'</a>',
             '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
         ];
         $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
@@ -270,7 +290,7 @@ class Orders extends Admin
     {
         if ($this->getRequest()->isSecure()) {
             $ordersMapper = new OrdersMapper();
-            if ($ordersMapper->getOrdersById($this->getRequest()->getParam('id'))->getStatus() == 0 || $ordersMapper->getOrdersById($this->getRequest()->getParam('id'))->getStatus() == 1) {
+            if ($ordersMapper->getOrderById($this->getRequest()->getParam('id'))->getStatus() == 0 || $ordersMapper->getOrderById($this->getRequest()->getParam('id'))->getStatus() == 1) {
                 $this->addMessage('orderInUse', 'danger');
             } else {
                 $ordersMapper->delete($this->getRequest()->getParam('id'));

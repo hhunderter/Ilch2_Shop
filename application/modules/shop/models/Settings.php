@@ -158,11 +158,18 @@ class Settings extends Model
     protected $fixShippingTime;
 
     /**
+     * The paypal client id of the settings.
+     *
+     * @var string
+     */
+    protected $clientID;
+
+    /**
      * Gets the id of the settings.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -172,9 +179,9 @@ class Settings extends Model
      *
      * @param int $id
      */
-    public function setId($id)
+    public function setId(int $id)
     {
-        $this->id = (int)$id;
+        $this->id = $id;
     }
 
     /**
@@ -182,7 +189,7 @@ class Settings extends Model
      *
      * @return string
      */
-    public function getShopName()
+    public function getShopName(): string
     {
         return $this->shopName;
     }
@@ -192,9 +199,9 @@ class Settings extends Model
      *
      * @param string $shopName
      */
-    public function setShopName($shopName)
+    public function setShopName(string $shopName)
     {
-        $this->shopName = (string)$shopName;
+        $this->shopName = $shopName;
     }
     
     /**
@@ -202,7 +209,7 @@ class Settings extends Model
      *
      * @return string
      */
-    public function getShopLogo()
+    public function getShopLogo(): string
     {
         return $this->shopLogo;
     }
@@ -212,9 +219,9 @@ class Settings extends Model
      *
      * @param string $shopLogo
      */
-    public function setShopLogo($shopLogo)
+    public function setShopLogo(string $shopLogo)
     {
-        $this->shopLogo = (string)$shopLogo;
+        $this->shopLogo = $shopLogo;
     }
 
     /**
@@ -222,7 +229,7 @@ class Settings extends Model
      *
      * @return string
      */
-    public function getShopStreet()
+    public function getShopStreet(): string
     {
         return $this->shopStreet;
     }
@@ -232,9 +239,9 @@ class Settings extends Model
      *
      * @param string $shopStreet
      */
-    public function setShopStreet($shopStreet)
+    public function setShopStreet(string $shopStreet)
     {
-        $this->shopStreet = (string)$shopStreet;
+        $this->shopStreet = $shopStreet;
     }
 
     /**
@@ -242,7 +249,7 @@ class Settings extends Model
      *
      * @return string
      */
-    public function getShopPlz()
+    public function getShopPlz(): string
     {
         return $this->shopPlz;
     }
@@ -252,9 +259,9 @@ class Settings extends Model
      *
      * @param string $shopPlz
      */
-    public function setShopPlz($shopPlz)
+    public function setShopPlz(string $shopPlz)
     {
-        $this->shopPlz = (string)$shopPlz;
+        $this->shopPlz = $shopPlz;
     }
 
     /**
@@ -262,7 +269,7 @@ class Settings extends Model
      *
      * @return string
      */
-    public function getShopCity()
+    public function getShopCity(): string
     {
         return $this->shopCity;
     }
@@ -272,9 +279,9 @@ class Settings extends Model
      *
      * @param string $shopCity
      */
-    public function setShopCity($shopCity)
+    public function setShopCity(string $shopCity)
     {
-        $this->shopCity = (string)$shopCity;
+        $this->shopCity = $shopCity;
     }
 
     /**
@@ -282,7 +289,7 @@ class Settings extends Model
      *
      * @return string
      */
-    public function getShopTel()
+    public function getShopTel(): string
     {
         return $this->shopTel;
     }
@@ -292,9 +299,9 @@ class Settings extends Model
      *
      * @param string $shopTel
      */
-    public function setShopTel($shopTel)
+    public function setShopTel(string $shopTel)
     {
-        $this->shopTel = (string)$shopTel;
+        $this->shopTel = $shopTel;
     }
 
     /**
@@ -302,7 +309,7 @@ class Settings extends Model
      *
      * @return string
      */
-    public function getShopFax()
+    public function getShopFax(): string
     {
         return $this->shopFax;
     }
@@ -312,9 +319,9 @@ class Settings extends Model
      *
      * @param string $shopFax
      */
-    public function setShopFax($shopFax)
+    public function setShopFax(string $shopFax)
     {
-        $this->shopFax = (string)$shopFax;
+        $this->shopFax = $shopFax;
     }
 
     /**
@@ -322,7 +329,7 @@ class Settings extends Model
      *
      * @return string
      */
-    public function getShopMail()
+    public function getShopMail(): string
     {
         return $this->shopMail;
     }
@@ -332,9 +339,9 @@ class Settings extends Model
      *
      * @param string $shopMail
      */
-    public function setShopMail($shopMail)
+    public function setShopMail(string $shopMail)
     {
-        $this->shopMail = (string)$shopMail;
+        $this->shopMail = $shopMail;
     }
 
     /**
@@ -342,7 +349,7 @@ class Settings extends Model
      *
      * @return string
      */
-    public function getShopWeb()
+    public function getShopWeb(): string
     {
         return $this->shopWeb;
     }
@@ -352,9 +359,9 @@ class Settings extends Model
      *
      * @param string $shopWeb
      */
-    public function setShopWeb($shopWeb)
+    public function setShopWeb(string $shopWeb)
     {
-        $this->shopWeb = (string)$shopWeb;
+        $this->shopWeb = $shopWeb;
     }
 
     /**
@@ -362,7 +369,7 @@ class Settings extends Model
      *
      * @return string
      */
-    public function getShopStNr()
+    public function getShopStNr(): string
     {
         return $this->shopStNr;
     }
@@ -372,9 +379,9 @@ class Settings extends Model
      *
      * @param string $shopStNr
      */
-    public function setShopStNr($shopStNr)
+    public function setShopStNr(string $shopStNr)
     {
-        $this->shopStNr = (string)$shopStNr;
+        $this->shopStNr = $shopStNr;
     }
     
     /**
@@ -382,7 +389,7 @@ class Settings extends Model
      *
      * @return string
      */
-    public function getBankName()
+    public function getBankName(): string
     {
         return $this->bankName;
     }
@@ -392,9 +399,9 @@ class Settings extends Model
      *
      * @param string $bankName
      */
-    public function setBankName($bankName)
+    public function setBankName(string $bankName)
     {
-        $this->bankName = (string)$bankName;
+        $this->bankName = $bankName;
     }
 
     /**
@@ -402,7 +409,7 @@ class Settings extends Model
      *
      * @return string
      */
-    public function getBankOwner()
+    public function getBankOwner(): string
     {
         return $this->bankOwner;
     }
@@ -412,9 +419,9 @@ class Settings extends Model
      *
      * @param string $bankOwner
      */
-    public function setBankOwner($bankOwner)
+    public function setBankOwner(string $bankOwner)
     {
-        $this->bankOwner = (string)$bankOwner;
+        $this->bankOwner = $bankOwner;
     }
 
     /**
@@ -422,7 +429,7 @@ class Settings extends Model
      *
      * @return string
      */
-    public function getBankIBAN()
+    public function getBankIBAN(): string
     {
         return $this->bankIBAN;
     }
@@ -432,9 +439,9 @@ class Settings extends Model
      *
      * @param string $bankIBAN
      */
-    public function setBankIBAN($bankIBAN)
+    public function setBankIBAN(string $bankIBAN)
     {
-        $this->bankIBAN = (string)$bankIBAN;
+        $this->bankIBAN = $bankIBAN;
     }
 
     /**
@@ -442,7 +449,7 @@ class Settings extends Model
      *
      * @return string
      */
-    public function getBankBIC()
+    public function getBankBIC(): string
     {
         return $this->bankBIC;
     }
@@ -452,9 +459,9 @@ class Settings extends Model
      *
      * @param string $bankBIC
      */
-    public function setBankBIC($bankBIC)
+    public function setBankBIC(string $bankBIC)
     {
-        $this->bankBIC = (string)$bankBIC;
+        $this->bankBIC = $bankBIC;
     }
 
     /**
@@ -462,7 +469,7 @@ class Settings extends Model
      *
      * @return string
      */
-    public function getInvoiceTextTop()
+    public function getInvoiceTextTop(): string
     {
         return $this->invoiceTextTop;
     }
@@ -472,9 +479,9 @@ class Settings extends Model
      *
      * @param string $invoiceTextTop
      */
-    public function setInvoiceTextTop($invoiceTextTop)
+    public function setInvoiceTextTop(string $invoiceTextTop)
     {
-        $this->invoiceTextTop = (string)$invoiceTextTop;
+        $this->invoiceTextTop = $invoiceTextTop;
     }
 
     /**
@@ -482,7 +489,7 @@ class Settings extends Model
      *
      * @return string
      */
-    public function getInvoiceTextBottom()
+    public function getInvoiceTextBottom(): string
     {
         return $this->invoiceTextBottom;
     }
@@ -492,9 +499,9 @@ class Settings extends Model
      *
      * @param string $invoiceTextBottom
      */
-    public function setInvoiceTextBottom($invoiceTextBottom)
+    public function setInvoiceTextBottom(string $invoiceTextBottom)
     {
-        $this->invoiceTextBottom = (string)$invoiceTextBottom;
+        $this->invoiceTextBottom = $invoiceTextBottom;
     }
 
     /**
@@ -502,7 +509,7 @@ class Settings extends Model
      *
      * @return string
      */
-    public function getAGB()
+    public function getAGB(): string
     {
         return $this->agb;
     }
@@ -512,9 +519,9 @@ class Settings extends Model
      *
      * @param string $agb
      */
-    public function setAGB($agb)
+    public function setAGB(string $agb)
     {
-        $this->agb = (string)$agb;
+        $this->agb = $agb;
     }
 
     /**
@@ -522,7 +529,7 @@ class Settings extends Model
      *
      * @return int
      */
-    public function getFixTax()
+    public function getFixTax(): int
     {
         return $this->fixTax;
     }
@@ -532,9 +539,9 @@ class Settings extends Model
      *
      * @param int $fixTax
      */
-    public function setFixTax($fixTax)
+    public function setFixTax(int $fixTax)
     {
-        $this->fixTax = (int)$fixTax;
+        $this->fixTax = $fixTax;
     }
 
     /**
@@ -542,7 +549,7 @@ class Settings extends Model
      *
      * @return string
      */
-    public function getFixShippingCosts()
+    public function getFixShippingCosts(): string
     {
         return $this->fixShippingCosts;
     }
@@ -552,9 +559,9 @@ class Settings extends Model
      *
      * @param string $fixShippingCosts
      */
-    public function setFixShippingCosts($fixShippingCosts)
+    public function setFixShippingCosts(string $fixShippingCosts)
     {
-        $this->fixShippingCosts = (string)$fixShippingCosts;
+        $this->fixShippingCosts = $fixShippingCosts;
     }
 
     /**
@@ -562,7 +569,7 @@ class Settings extends Model
      *
      * @return int
      */
-    public function getFixShippingTime()
+    public function getFixShippingTime(): int
     {
         return $this->fixShippingTime;
     }
@@ -572,9 +579,24 @@ class Settings extends Model
      *
      * @param int $fixShippingTime
      */
-    public function setFixShippingTime($fixShippingTime)
+    public function setFixShippingTime(int $fixShippingTime)
     {
-        $this->fixShippingTime = (int)$fixShippingTime;
+        $this->fixShippingTime = $fixShippingTime;
     }
 
+    /**
+     * @return string
+     */
+    public function getClientID(): ?string
+    {
+        return $this->clientID;
+    }
+
+    /**
+     * @param string $clientID
+     */
+    public function setClientID(string $clientID): void
+    {
+        $this->clientID = $clientID;
+    }
 }

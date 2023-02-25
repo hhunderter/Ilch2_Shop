@@ -3,11 +3,11 @@
 <h1><?=$this->getTrans('menuOrders') ?>
     <div class="input-group input-group-sm filter">
         <span class="input-group-addon">
-            <i class="fas fa-filter"></i>
+            <i class="fa-solid fa-filter"></i>
         </span>
         <input type="text" id="filterInput" class="form-control" placeholder="<?=$this->getTrans('filter') ?>">
         <span class="input-group-addon">
-            <span id="filterClear" class="fas fa-times"></span>
+            <span id="filterClear" class="fa-solid fa-times"></span>
         </span>
     </div>
 </h1>
@@ -27,6 +27,7 @@
                     <col>
                     <col>
                     <col>
+                    <col>
                 </colgroup>
                 <thead>
                     <tr>
@@ -38,7 +39,8 @@
                         <th class="sort"><?=$this->getTrans('orderDate') ?></th>
                         <th class="sort"><?=$this->getTrans('invoice').' '.$this->getTrans('numberShort') ?></th>
                         <th class="sort"><?=$this->getTrans('name') ?></th>
-                        <th class="sort"><?=$this->getTrans('address') ?></th>
+                        <th class="sort"><?=$this->getTrans('deliveryAddress') ?></th>
+                        <th class="sort"><?=$this->getTrans('invoiceAddress') ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,34 +53,33 @@
                             <td>
                                 <?php if ($order->getStatus() == 0) { ?>
                                     <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $order->getId()]) ?>" class="btn btn-sm alert-danger">
-                                        <i class="fa fa-plus-square" aria-hidden="true"></i>&nbsp;<b><?=$this->getTrans('newBIG') ?></b>
+                                        <i class="fa-solid fa-plus-square" aria-hidden="true"></i>&nbsp;<b><?=$this->getTrans('newBIG') ?></b>
                                     </a>
                                 <?php } elseif ($order->getStatus() == 1) { ?>
                                     <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $order->getId()]) ?>"
                                        class="btn btn-sm alert-warning">
-                                        <i class="fa fa-pencil-square"
+                                        <i class="fa-solid fa-pencil-square"
                                            aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('processingBIG') ?></b>
                                     </a>
                                 <?php } elseif ($order->getStatus() == 2) { ?>
                                     <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $order->getId()]) ?>"
                                        class="btn btn-sm alert-info">
-                                        <i class="fas fa-exclamation-triangle"
+                                        <i class="fa-solid fa-exclamation-triangle"
                                            aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('canceledBIG') ?></b>
                                     </a>
                                 <?php } else { ?>
                                     <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $order->getId()]) ?>"
                                        class="btn btn-sm alert-success">
-                                        <i class="fa fa-check-square"
+                                        <i class="fa-solid fa-check-square"
                                            aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('completedBIG') ?></b>
                                     </a>
                                 <?php } ?>
                             </td>
                             <?php 
                             $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $this->escape($order->getDatetime()));
-                            $orderTime = date_format($myDateTime, 'd.m.Y | H:i \U\h\r'); 
                             ?>
                             <td>
-                                <?=$orderTime ?>
+                                <?=date_format($myDateTime, 'd.m.Y | H:i ') . $this->getTrans('dateTimeoClock') ?>
                             </td>
                             <?php
                             $orderDate = date_format($myDateTime, 'd.m.Y');
@@ -88,12 +89,17 @@
                                 <?=$invoiceNr ?>
                             </td>
                             <td>
-                                <?=$this->escape($order->getPrename()) ?> <?=$this->escape($order->getLastname()) ?>
+                                <?=$this->escape($order->getInvoiceAddress()->getPrename()) ?> <?=$this->escape($order->getInvoiceAddress()->getLastname()) ?>
                             </td>
                             <td>
-                                <?=$this->escape($order->getStreet()) ?>, 
-                                <?=$this->escape($order->getPostcode()) ?> <?=$this->escape($order->getCity()) ?>, 
-                                <?=$this->escape($order->getCountry()) ?>
+                                <?=$this->escape($order->getInvoiceAddress()->getStreet()) ?>,
+                                <?=$this->escape($order->getInvoiceAddress()->getPostcode()) ?> <?=$this->escape($order->getInvoiceAddress()->getCity()) ?>,
+                                <?=$this->escape($order->getInvoiceAddress()->getCountry()) ?>
+                            </td>
+                            <td>
+                                <?=$this->escape($order->getDeliveryAddress()->getStreet()) ?>,
+                                <?=$this->escape($order->getDeliveryAddress()->getPostcode()) ?> <?=$this->escape($order->getDeliveryAddress()->getCity()) ?>,
+                                <?=$this->escape($order->getDeliveryAddress()->getCountry()) ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

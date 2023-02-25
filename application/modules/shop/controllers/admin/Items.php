@@ -12,7 +12,7 @@ use Modules\Shop\Mappers\Currency as CurrencyMapper;
 use Modules\Shop\Mappers\Items as ItemsMapper;
 use Modules\Shop\Mappers\Orders as OrdersMapper;
 use Modules\Shop\Mappers\Settings as SettingsMapper;
-use Modules\Shop\Models\Items as ItemsModel;
+use Modules\Shop\Models\Item as ItemsModel;
 use Ilch\Validation;
 
 class Items extends Admin
@@ -23,49 +23,55 @@ class Items extends Admin
             [
                 'name' => 'menuOverwiev',
                 'active' => false,
-                'icon' => 'fas fa-store-alt',
+                'icon' => 'fa-solid fa-store-alt',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
                 'name' => 'menuItems',
                 'active' => false,
-                'icon' => 'fas fa-tshirt',
+                'icon' => 'fa-solid fa-tshirt',
                 'url' => $this->getLayout()->getUrl(['controller' => 'items', 'action' => 'index']),
                 [
                     'name' => 'add',
                     'active' => false,
-                    'icon' => 'fa fa-plus-circle',
+                    'icon' => 'fa-solid fa-plus-circle',
                     'url' => $this->getLayout()->getUrl(['controller' => 'items', 'action' => 'treat'])
                 ]
             ],
             [
+                'name' => 'menuCostumers',
+                'active' => false,
+                'icon' => 'fa-solid fa-users',
+                'url' => $this->getLayout()->getUrl(['controller' => 'costumers', 'action' => 'index'])
+            ],
+            [
                 'name' => 'menuOrders',
                 'active' => false,
-                'icon' => 'fas fa-cart-arrow-down',
+                'icon' => 'fa-solid fa-cart-arrow-down',
                 'url' => $this->getLayout()->getUrl(['controller' => 'orders', 'action' => 'index'])
             ],
             [
                 'name' => 'menuCats',
                 'active' => false,
-                'icon' => 'fas fa-list-alt',
+                'icon' => 'fa-solid fa-rectangle-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index'])
             ],
             [
                 'name' => 'menuCurrencies',
                 'active' => false,
-                'icon' => 'fas fa-money-bill-alt',
+                'icon' => 'fa-solid fa-money-bill-alt',
                 'url' => $this->getLayout()->getUrl(['controller' => 'currency', 'action' => 'index'])
             ],
             [
                 'name' => 'menuSettings',
                 'active' => false,
-                'icon' => 'fa fa-cogs',
+                'icon' => 'fa-solid fa-cogs',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ],
             [
                 'name' => 'menuNote',
                 'active' => false,
-                'icon' => 'fas fa-info-circle',
+                'icon' => 'fa-solid fa-info-circle',
                 'url' => $this->getLayout()->getUrl(['controller' => 'note', 'action' => 'index'])
             ]
         ];
@@ -138,7 +144,7 @@ class Items extends Admin
                     ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('menuItems'), ['controller' => 'items', 'action' => 'index'])
                     ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
-            $this->getView()->set('shopItem', $itemsMapper->getShopById($this->getRequest()->getParam('id')));
+            $this->getView()->set('shopItem', $itemsMapper->getShopItemById($this->getRequest()->getParam('id')));
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])

@@ -7,8 +7,9 @@
 namespace Modules\Shop\Models;
 
 use Ilch\Model;
+use Modules\Shop\Models\Address as AddressModel;
 
-class Orders extends Model
+class Order extends Model
 {
     /**
      * The id of the order.
@@ -25,46 +26,25 @@ class Orders extends Model
     protected $datetime;
 
     /**
-     * The prename of the order.
+     * The id of the order.
      *
-     * @var string
+     * @var int
      */
-    protected $prename;
+    protected $costumerId;
 
     /**
-     * The lastname of the order.
+     * The invoice address of the order.
      *
-     * @var string
+     * @var Address
      */
-    protected $lastname;
+    protected $invoiceAddress;
 
     /**
-     * The street of the order.
+     * The delivery address of the order.
      *
-     * @var string
+     * @var Address
      */
-    protected $street;
-
-    /**
-     * The postcode of the order.
-     *
-     * @var string
-     */
-    protected $postcode;
-
-    /**
-     * The city of the order.
-     *
-     * @var string
-     */
-    protected $city;
-
-    /**
-     * The country of the order.
-     *
-     * @var string
-     */
-    protected $country;
+    protected $deliveryAddress;
 
     /**
      * The email of the order.
@@ -115,12 +95,18 @@ class Orders extends Model
      */
     protected $status;
 
+    public function __construct()
+    {
+        $this->deliveryAddress = new AddressModel();
+        $this->invoiceAddress = new AddressModel();
+    }
+
     /**
      * Gets the id of the order.
      *
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -131,7 +117,7 @@ class Orders extends Model
      * @param int $id
      * @return $this
      */
-    public function setId(int $id): Orders
+    public function setId(int $id): Order
     {
         $this->id = $id;
 
@@ -154,7 +140,7 @@ class Orders extends Model
      * @param string $datetime
      * @return $this
      */
-    public function setDatetime(string $datetime): Orders
+    public function setDatetime(string $datetime): Order
     {
         $this->datetime = $datetime;
 
@@ -162,140 +148,68 @@ class Orders extends Model
     }
 
     /**
-     * Gets the prename of the order.
+     * Get the costumer id.
      *
-     * @return string
+     * @return int
      */
-    public function getPrename(): string
+    public function getCostumerId(): int
     {
-        return $this->prename;
+        return $this->costumerId;
     }
 
     /**
-     * Sets the prename of the order.
+     * Set the costumer id.
      *
-     * @param string $prename
-     * @return $this
+     * @param int $costumerId
+     * @return Order
      */
-    public function setPrename(string $prename): Orders
+    public function setCostumerId(int $costumerId): Order
     {
-        $this->prename = $prename;
-
+        $this->costumerId = $costumerId;
         return $this;
     }
 
     /**
-     * Gets the lastname of the order.
+     * Get the innvoice address.
      *
-     * @return string
+     * @return Address
      */
-    public function getLastname(): string
+    public function getInvoiceAddress(): Address
     {
-        return $this->lastname;
+        return $this->invoiceAddress;
     }
 
     /**
-     * Sets the lastname of the order.
+     * Set the invoice address
      *
-     * @param string $lastname
-     * @return $this
+     * @param Address $invoiceAddress
+     * @return Order
      */
-    public function setLastname(string $lastname): Orders
+    public function setInvoiceAddress(Address $invoiceAddress): Order
     {
-        $this->lastname = $lastname;
-
+        $this->invoiceAddress = $invoiceAddress;
         return $this;
     }
 
     /**
-     * Gets the street of the order.
+     * Get the delivery address.
      *
-     * @return string
+     * @return Address
      */
-    public function getStreet(): string
+    public function getDeliveryAddress(): Address
     {
-        return $this->street;
+        return $this->deliveryAddress;
     }
 
     /**
-     * Sets the street of the order.
+     * Set the delivery address.
      *
-     * @param string $street
-     * @return $this
+     * @param Address $deliveryAddress
+     * @return Order
      */
-    public function setStreet(string $street): Orders
+    public function setDeliveryAddress(Address $deliveryAddress): Order
     {
-        $this->street = $street;
-
-        return $this;
-    }
-
-    /**
-     * Gets the postcode of the order.
-     *
-     * @return string
-     */
-    public function getPostcode(): string
-    {
-        return $this->postcode;
-    }
-
-    /**
-     * Sets the postcode of the order.
-     *
-     * @param string $postcode
-     * @return $this
-     */
-    public function setPostcode(string $postcode): Orders
-    {
-        $this->postcode = $postcode;
-
-        return $this;
-    }
-
-    /**
-     * Gets the city of the order.
-     *
-     * @return string
-     */
-    public function getCity(): string
-    {
-        return $this->city;
-    }
-
-    /**
-     * Sets the city of the order.
-     *
-     * @param string $city
-     * @return $this
-     */
-    public function setCity(string $city): Orders
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    /**
-     * Gets the country of the order.
-     *
-     * @return string
-     */
-    public function getCountry(): string
-    {
-        return $this->country;
-    }
-
-    /**
-     * Sets the country of the order.
-     *
-     * @param string $country
-     * @return $this
-     */
-    public function setCountry(string $country): Orders
-    {
-        $this->country = $country;
-
+        $this->deliveryAddress = $deliveryAddress;
         return $this;
     }
 
@@ -315,7 +229,7 @@ class Orders extends Model
      * @param string $email
      * @return $this
      */
-    public function setEmail(string $email): Orders
+    public function setEmail(string $email): Order
     {
         $this->email = $email;
 
@@ -338,7 +252,7 @@ class Orders extends Model
      * @param string $order
      * @return $this
      */
-    public function setOrder(string $order): Orders
+    public function setOrder(string $order): Order
     {
         $this->order = $order;
 
@@ -350,7 +264,7 @@ class Orders extends Model
      *
      * @return string
      */
-    public function getInvoiceFilename(): string
+    public function getInvoiceFilename(): ?string
     {
         return $this->invoicefilename;
     }
@@ -361,7 +275,7 @@ class Orders extends Model
      * @param string $invoicefilename
      * @return $this
      */
-    public function setInvoiceFilename(string $invoicefilename): Orders
+    public function setInvoiceFilename(string $invoicefilename): Order
     {
         $this->invoicefilename = $invoicefilename;
 
@@ -373,7 +287,7 @@ class Orders extends Model
      *
      * @return string
      */
-    public function getDatetimeInvoiceSent(): string
+    public function getDatetimeInvoiceSent(): ?string
     {
         return $this->datetimeInvoiceSent;
     }
@@ -384,7 +298,7 @@ class Orders extends Model
      * @param string $datetimeInvoiceSent
      * @return $this
      */
-    public function setDatetimeInvoiceSent(string $datetimeInvoiceSent): Orders
+    public function setDatetimeInvoiceSent(string $datetimeInvoiceSent): Order
     {
         $this->datetimeInvoiceSent = $datetimeInvoiceSent;
 
@@ -407,7 +321,7 @@ class Orders extends Model
      * @param string $selector
      * @return $this
      */
-    public function setSelector(string $selector): Orders
+    public function setSelector(string $selector): Order
     {
         $this->selector = $selector;
         return $this;
@@ -427,9 +341,9 @@ class Orders extends Model
      * Set the 64 char long confirm code.
      *
      * @param string $confirmCode
-     * @return Orders
+     * @return Order
      */
-    public function setConfirmCode(string $confirmCode): Orders
+    public function setConfirmCode(string $confirmCode): Order
     {
         $this->confirmCode = $confirmCode;
         return $this;
@@ -440,7 +354,7 @@ class Orders extends Model
      *
      * @return int
      */
-    public function getStatus(): int
+    public function getStatus(): ?int
     {
         return $this->status;
     }
@@ -451,7 +365,7 @@ class Orders extends Model
      * @param int $status
      * @return $this
      */
-    public function setStatus(int $status): Orders
+    public function setStatus(int $status): Order
     {
         $this->status = $status;
 

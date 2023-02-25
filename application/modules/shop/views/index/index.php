@@ -10,7 +10,7 @@ $status = '';
 if (isset($_POST['code']) && $_POST['code']!= '') {
     $code = $_POST['code'];
     $itemid = $_POST['itemid']; 
-    $shopItem = $itemsMapper->getShopById($itemid);
+    $shopItem = $itemsMapper->getShopItemById($itemid);
     $id = $shopItem->getId();
     $name = $shopItem->getName();
     $cartArray = array(
@@ -38,7 +38,7 @@ if (isset($_POST['code']) && $_POST['code']!= '') {
 $cart_badge = '';
 if(!empty($_SESSION['shopping_cart'])) {
     $cart_count = count(array_keys($_SESSION['shopping_cart']));
-    $cart_badge = ($cart_count>0)?'<a class="activecart" href="'.$this->getUrl('shop/index/cart').'#shopAnker">'.$this->getTrans('menuCart').'<i class="fas fa-shopping-cart"><span class="badge">'.$cart_count.'</span></i></a>':'';
+    $cart_badge = ($cart_count>0)?'<a class="activecart" href="'.$this->getUrl('shop/index/cart').'#shopAnker">'.$this->getTrans('menuCart').'<i class="fa-solid fa-shopping-cart"><span class="badge">'.$cart_count.'</span></i></a>':'';
 } 
 ?>
 
@@ -86,6 +86,7 @@ if(!empty($_SESSION['shopping_cart'])) {
                             <?php endforeach; ?>
                         </ul>
                     </li>
+                    <li><a href="<?=$this->getUrl('shop/costumerarea/index') ?>#shopAnker"><?=$this->getTrans('menuCostumerArea') ?></a></li>
                     <li><a href="<?=$this->getUrl('shop/index/agb') ?>#shopAnker"><?=$this->getTrans('menuAGB') ?></a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -145,12 +146,12 @@ if(!empty($_SESSION['shopping_cart'])) {
                         <input type="hidden" name="code" value="<?=$this->escape($shopItem->getCode()) ?>" />
                         <input type="hidden" name="itemid" value="<?=$shopItem->getId() ?>" />
                         <button type="submit" class="btn btn-sm btn-warning">
-                            <small><?=$this->getTrans('inToCart') ?> <i class="fas fa-shopping-cart"></i></small>
+                            <small><?=$this->getTrans('inToCart') ?> <i class="fa-solid fa-shopping-cart"></i></small>
                         </button>
                     </form>
                 <?php } else { ?>
                     <button class="btn btn-sm btn-default">
-                        <small><?=$this->getTrans('currentlySoldOut') ?> <i class="fas fa-store-slash"></i></small>
+                        <small><?=$this->getTrans('currentlySoldOut') ?> <i class="fa-solid fa-store-slash"></i></small>
                     </button>
                 <?php } ?>
             </div>

@@ -8,20 +8,27 @@ $countNewOrders = count($this->get('orders')->getOrders(['status'=>'0']));
 $countWorkOrders = count($this->get('orders')->getOrders(['status'=>'1']));
 $countCancelOrders = count($this->get('orders')->getOrders(['status'=>'2']));
 $countDoneOrders = count($this->get('orders')->getOrders(['status'=>'3']));
+?>
 
-if ($countNewOrders > 0) { ?>
+<?php if (str_starts_with($this->getURL(), 'http')) : ?>
     <div class="alert alert-danger">
-        <i class="fa fa-plus-square" aria-hidden="true"></i>
+        <b><?=$this->getTrans('warningUnencryptedConnection') ?></b>
+    </div>
+<?php endif; ?>
+
+<?php if ($countNewOrders > 0) : ?>
+    <div class="alert alert-danger">
+        <i class="fa-solid fa-plus-square" aria-hidden="true"></i>
         <b> &nbsp; <?=$this->getTrans('infoNewOrders') ?></b>
     </div>
-<?php } ?>
+<?php endif; ?>
 
 <div class="row">
     <div class="col-sm-12 col-md-6">
         <div class="thumbnail media">
             <div class="media-body">
                 <h4 class="media-heading">
-                    <i class="fas fa-cart-arrow-down"></i>&nbsp;&nbsp;<?=$this->getTrans('menuOrders') ?></h4>
+                    <i class="fa-solid fa-cart-arrow-down"></i>&nbsp;&nbsp;<?=$this->getTrans('menuOrders') ?></h4>
                 <hr>
                 <?php if ($countAllOrders > 0) { ?>
                     <p>
@@ -46,7 +53,7 @@ if ($countNewOrders > 0) { ?>
     <div class="col-sm-12 col-md-6">
         <div class="thumbnail media">
             <div class="media-body">
-                <h4 class="media-heading"><i class="fas fa-tshirt"></i>&nbsp;&nbsp;<?=$this->getTrans('menuItems') ?></h4>
+                <h4 class="media-heading"><i class="fa-solid fa-tshirt"></i>&nbsp;&nbsp;<?=$this->getTrans('menuItems') ?></h4>
                 <hr>
                 <?php $countCats = count($this->get('cats')); ?>
                 <?php $countItems = count($this->get('itemsMapper')); ?>
