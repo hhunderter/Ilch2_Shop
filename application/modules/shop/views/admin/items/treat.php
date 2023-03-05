@@ -256,7 +256,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            placeholder="<?=$this->getTrans('choosePic') ?>"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getImage()) : $this->escape($this->originalInput('image')) ?>" />
                     <span class="input-group-addon">
-                        <span class="fa-solid fa-times"></span>
+                        <span class="fa-solid fa-xmark"></span>
                     </span>
                     <span class="input-group-addon">
                         <a id="media_image" href="javascript:media_image()"><i class="fa-regular fa-image"></i></a>
@@ -293,7 +293,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            placeholder="<?=$this->getTrans('choosePic') ?>"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getImage1()) : $this->escape($this->originalInput('image1')) ?>" />
                     <span class="input-group-addon">
-                        <span class="fa-solid fa-times"></span>
+                        <span class="fa-solid fa-xmark"></span>
                     </span>
                     <span class="input-group-addon">
                         <a id="media_image1" href="javascript:media_image1()"><i class="fa-regular fa-image"></i></a>
@@ -330,7 +330,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            placeholder="<?=$this->getTrans('choosePic') ?>"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getImage2()) : $this->escape($this->originalInput('image2')) ?>" />
                     <span class="input-group-addon">
-                        <span class="fa-solid fa-times"></span>
+                        <span class="fa-solid fa-xmark"></span>
                     </span>
                     <span class="input-group-addon">
                         <a id="media_image2" href="javascript:media_image2()"><i class="fa-regular fa-image"></i></a>
@@ -367,7 +367,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            placeholder="<?=$this->getTrans('choosePic') ?>"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getImage3()) : $this->escape($this->originalInput('image3')) ?>" />
                     <span class="input-group-addon">
-                        <span class="fa-solid fa-times"></span>
+                        <span class="fa-solid fa-xmark"></span>
                     </span>
                     <span class="input-group-addon">
                         <a id="media_image3" href="javascript:media_image3()"><i class="fa-regular fa-image"></i></a>

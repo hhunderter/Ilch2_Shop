@@ -107,7 +107,7 @@ if ($shopItem->getImage() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage())) 
                                     </a>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa-solid fa-times"></i> Close</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa-solid fa-xmark"></i> Close</button>
                                 </div>
                             </div>
                         </div>

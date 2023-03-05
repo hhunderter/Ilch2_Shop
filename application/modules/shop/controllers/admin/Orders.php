@@ -24,7 +24,7 @@ class Orders extends Admin
             [
                 'name' => 'menuOverwiev',
                 'active' => false,
-                'icon' => 'fa-solid fa-store-alt',
+                'icon' => 'fa-solid fa-shop',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
@@ -54,19 +54,19 @@ class Orders extends Admin
             [
                 'name' => 'menuCurrencies',
                 'active' => false,
-                'icon' => 'fa-solid fa-money-bill-alt',
+                'icon' => 'fa-solid fa-money-bill-1',
                 'url' => $this->getLayout()->getUrl(['controller' => 'currency', 'action' => 'index'])
             ],
             [
                 'name' => 'menuSettings',
                 'active' => false,
-                'icon' => 'fa-solid fa-cogs',
+                'icon' => 'fa-solid fa-gears',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ],
             [
                 'name' => 'menuNote',
                 'active' => false,
-                'icon' => 'fa-solid fa-info-circle',
+                'icon' => 'fa-solid fa-circle-info',
                 'url' => $this->getLayout()->getUrl(['controller' => 'note', 'action' => 'index'])
             ]
         ];
