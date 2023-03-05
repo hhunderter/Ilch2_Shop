@@ -107,7 +107,7 @@
                        placeholder="<?=$this->getTrans('choosePic') ?>"
                        value="<?=($this->escape($this->get('settings')->getShopLogo()) != '') ? $this->escape($this->get('settings')->getShopLogo()) : $this->escape($this->originalInput('shopLogo')) ?>" />
                 <span class="input-group-addon">
-                    <span class="fa-solid fa-times"></span>
+                    <span class="fa-solid fa-xmark"></span>
                 </span>
                 <span class="input-group-addon">
                     <a id="media_shopLogo" href="javascript:media_shopLogo()"><i class="fa-regular fa-image"></i></a>

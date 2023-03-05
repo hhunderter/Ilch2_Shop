@@ -7,7 +7,7 @@
         </span>
         <input type="text" id="filterInput" class="form-control" placeholder="<?=$this->getTrans('filter') ?>">
         <span class="input-group-addon">
-            <span id="filterClear" class="fa-solid fa-times"></span>
+            <span id="filterClear" class="fa-solid fa-xmark"></span>
         </span>
     </div>
 </h1>

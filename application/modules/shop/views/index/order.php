@@ -277,7 +277,7 @@ if(!empty($_SESSION['shopping_cart'])) {
                                 document.getElementById('captcha').src='<?=$this->getUrl() ?>/application/libraries/Captcha/Captcha.php?'+Math.random();
                                 document.getElementById('captcha-form').focus();"
                                 id="change-image">
-                                <i class="fa-solid fa-refresh"></i>
+                                <i class="fa-solid fa-arrows-rotate"></i>
                             </a>
                         </span>
                     </div>
