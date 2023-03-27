@@ -23,7 +23,7 @@ $purchaseUnits = [];
                     <th><?=$this->getTrans('taxShort') ?><br />&nbsp;</th>
                     <th><?=$this->getTrans('singlePrice') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
                     <th class="text-center"><?=$this->getTrans('entries') ?><br />&nbsp;</th>
-                    <th class="text-right"><?=$this->getTrans('total') ?><br /><small>incl. <?=$this->getTrans('taxShort') ?></small></th>
+                    <th class="text-right"><?=$this->getTrans('total') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
                 </tr>
                 </thead>
                 <tbody>

@@ -44,6 +44,7 @@ class Payment extends Frontend
 
         $settings = $settingsMapper->getSettings();
 
+        // Outcomment the check for 'test' for testing purposes of the PayPal payment method.
         if (empty($settings->getClientID()) || $settings->getClientID() === 'test') {
             $this->addMessage('paypalNotConfigured', 'danger');
             $this->redirect(['controller' => 'index', 'action' => 'index']);

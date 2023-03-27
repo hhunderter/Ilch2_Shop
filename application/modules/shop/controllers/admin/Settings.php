@@ -245,22 +245,10 @@ class Settings extends Admin
             ->add($this->getTranslator()->trans('menuSettingPayment'), ['action' => 'payment']);
 
         if ($this->getRequest()->isPost()) {
-            $validation = Validation::create($this->getRequest()->getPost(), [
-                'clientID' => 'required'
-            ]);
-
-            if ($validation->isValid()) {
-                $model = new SettingsModel();
-                $model->setClientID($this->getRequest()->getPost('clientID'));
-                $settingsMapper->updateSettingPayment($model);
-                $this->addMessage('saveSuccess');
-            } else {
-                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
-                $this->redirect()
-                    ->withInput()
-                    ->withErrors($validation->getErrorBag())
-                    ->to(['action' => 'payment']);
-            }
+            $model = new SettingsModel();
+            $model->setClientID($this->getRequest()->getPost('clientID'));
+            $settingsMapper->updateSettingPayment($model);
+            $this->addMessage('saveSuccess');
         }
 
         $this->getView()->set('settings', $settingsMapper->getSettings());
