@@ -146,7 +146,7 @@ class Index extends Frontend
                 'prename' => 'required',
                 'lastname' => 'required',
                 'street' => 'required',
-                'postcode' => 'required|numeric|integer',
+                'postcode' => 'required',
                 'city' => 'required',
                 'acceptOrder' =>  'required'
             ];
