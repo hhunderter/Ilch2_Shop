@@ -115,12 +115,12 @@ class Orders extends Admin
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuOrders'), ['action' => 'index'])
-            ->add($this->getTranslator()->trans('manage'), ['action' => 'treat', 'id' => 'treat']);
+            ->add($this->getTranslator()->trans('manage'), ['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
 
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
         $order = null;
 
-        if ($this->getRequest()->getParam('id')) {
+        if ($this->getRequest()->getParam('id') && is_numeric($this->getRequest()->getParam('id'))) {
             $order = $ordersMapper->getOrderById($this->getRequest()->getParam('id'));
             $this->getView()->set('order', $order);
             $this->getView()->set('currency', $currency->getName());

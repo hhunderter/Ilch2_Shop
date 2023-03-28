@@ -135,6 +135,11 @@ class Cats extends Admin
         $groupMapper = new GroupMapper();
 
         if ($this->getRequest()->getParam('id')) {
+            if (!is_numeric($this->getRequest()->getParam('id'))) {
+                $this->addMessage('editCatFailedNotFound', 'danger');
+                $this->redirect(['action' => 'index']);
+            }
+
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
@@ -188,18 +193,23 @@ class Cats extends Admin
     public function delCatAction()
     {
         $itemsMapper = new ItemsMapper();
-        $countItems = count($itemsMapper->getShopItems(['cat_id' => $this->getRequest()->getParam('id')]));
 
-        if ($countItems == 0) {
-            if ($this->getRequest()->isSecure()) {
-                $categoryMapper = new CategoryMapper();
-                $categoryMapper->delete($this->getRequest()->getParam('id'));
-                $this->addMessage('deleteSuccess');
+        if ($this->getRequest()->getParam('id') && is_numeric($this->getRequest()->getParam('id'))) {
+            $countItems = count($itemsMapper->getShopItems(['cat_id' => $this->getRequest()->getParam('id')]));
+
+            if ($countItems == 0) {
+                if ($this->getRequest()->isSecure()) {
+                    $categoryMapper = new CategoryMapper();
+                    $categoryMapper->delete($this->getRequest()->getParam('id'));
+                    $this->addMessage('deleteSuccess');
+                }
+            } else {
+                $this->addMessage('deleteCatFailed', 'danger');
             }
         } else {
-            $this->addMessage('deleteCatFailed', 'danger');
+            $this->addMessage('deleteCatFailedNotFound', 'danger');
         }
-        
+
         $this->redirect(['action' => 'index']);
     }
 }

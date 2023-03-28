@@ -140,6 +140,11 @@ class Items extends Admin
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
 
         if ($this->getRequest()->getParam('id')) {
+            if (!is_numeric($this->getRequest()->getParam('id'))) {
+                $this->addMessage('editItemNotFound', 'danger');
+                $this->redirect(['action' => 'index']);
+            }
+
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('menuItems'), ['controller' => 'items', 'action' => 'index'])
@@ -211,7 +216,7 @@ class Items extends Admin
 
     public function delShopAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && is_numeric($this->getRequest()->getParam('id'))) {
             $itemsMapper = new ItemsMapper();
             $ordersMapper = new OrdersMapper();
             $itemInUse = 0;
@@ -229,6 +234,8 @@ class Items extends Admin
             } else {
                 $this->addMessage('deleteItemFailed', 'danger');
             }
+        } else {
+            $this->addMessage('deleteItemFailedNotFound', 'danger');
         }
         $this->redirect(['action' => 'index']);
     }

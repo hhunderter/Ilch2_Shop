@@ -117,6 +117,11 @@ class Currency extends Admin
         $id = $this->getRequest()->getParam('id');
 
         if ($this->getRequest()->getParam('id')) {
+            if (!is_numeric($this->getRequest()->getParam('id'))) {
+                $this->addMessage('editCurrencyFailedNotFound', 'danger');
+                $this->redirect(['action' => 'index']);
+            }
+
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('menuCurrencies'), ['action' => 'index'])
@@ -182,7 +187,7 @@ class Currency extends Admin
 
     public function deleteAction()
     {
-        if ($this->getRequest() && $this->getRequest()->isSecure()) {
+        if ($this->getRequest() && $this->getRequest()->isSecure() && $this->getRequest()->getParam('id') && is_numeric($this->getRequest()->getParam('id'))) {
             $currencyMapper = new CurrencyMapper();
             $id = $this->getRequest()->getParam('id');
             
@@ -194,7 +199,9 @@ class Currency extends Admin
             $currencyMapper->deleteCurrencyById($id);
             $this->addMessage('deleteSuccess');
             $this->redirect(['action' => 'index']);
+        } else {
+            $this->addMessage('deleteCurrencyFailed', 'danger');
+            $this->redirect(['action' => 'index']);
         }
     }
-
 }
