@@ -175,19 +175,19 @@ class Config extends Install
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 INSERT INTO `[prefix]_emails` (`moduleKey`, `type`, `desc`, `text`, `locale`) VALUES
-                    ("shop", "order_confirmed_mail", "Bestellung eingegangen", "<p>Sehr geehrte(r) Herr oder Frau <b>{name}</b>,</p>
+                    ("shop", "order_confirmed_mail", "Bestellung eingegangen", "<p>Sehr geehrte(r) <b>{name}</b>,</p>
                         <p>&nbsp;</p>
                         <p>Ihre Bestellung auf <i>{shopname}</i> ist eingegangen.</p>
                         <p>&nbsp;</p>
                         <p>Mit freundlichen Gr&uuml;&szlig;en</p>
                         <p>Administrator</p>", "de_DE"),
-                    ("shop", "order_confirmed_mail", "Order received", "<p>Dear Sir or Madam <b>{name}</b>,</p>
+                    ("shop", "order_confirmed_mail", "Order received", "<p>Dear <b>{name}</b>,</p>
                         <p>&nbsp;</p>
                         <p>your order at <i>{shopname}</i> has been received.</p>
                         <p>&nbsp;</p>
                         <p>Best regards</p>
                         <p>Administrator</p>", "en_EN"),
-                    ("shop", "send_invoice_mail", "Ihre Rechnung", "<p>Sehr geehrte(r) Herr oder Frau <b>{name}</b>,</p>
+                    ("shop", "send_invoice_mail", "Ihre Rechnung", "<p>Sehr geehrte(r) <b>{name}</b>,</p>
                         <p>&nbsp;</p>
                         <p>hiermit erhalten Sie die Rechnung für Ihre Bestellung auf <i>{shopname}</i>. Die Rechnung befindet sich im Anhang dieser E-Mail.</p>
                         <p>Sie können den folgenden Link nutzen um die Rechnung direkt bequem zu bezahlen:</p>
@@ -195,7 +195,7 @@ class Config extends Install
                         <p>&nbsp;</p>
                         <p>Mit freundlichen Gr&uuml;&szlig;en</p>
                         <p>Administrator</p>", "de_DE"),
-                    ("shop", "send_invoice_mail", "Your invoice", "<p>Dear Sir or Madam <b>{name}</b>,</p>
+                    ("shop", "send_invoice_mail", "Your invoice", "<p>Dear <b>{name}</b>,</p>
                         <p>&nbsp;</p>
                         <p>hereby you receive the invoice for your order at <i>{shopname}</i>. The invoice is in the attachment of this e-mail.</p>
                         <p>You can use the following link to comfortably pay the invoice:</p>
@@ -203,13 +203,13 @@ class Config extends Install
                         <p>&nbsp;</p>
                         <p>Best regards</p>
                         <p>Administrator</p>", "en_EN"),
-                    ("shop", "send_invoice_mail_no_paymentlink", "Ihre Rechnung", "<p>Sehr geehrte(r) Herr oder Frau <b>{name}</b>,</p>
+                    ("shop", "send_invoice_mail_no_paymentlink", "Ihre Rechnung", "<p>Sehr geehrte(r) <b>{name}</b>,</p>
                         <p>&nbsp;</p>
                         <p>hiermit erhalten Sie die Rechnung für Ihre Bestellung auf <i>{shopname}</i>. Die Rechnung befindet sich im Anhang dieser E-Mail.</p>
                         <p>&nbsp;</p>
                         <p>Mit freundlichen Gr&uuml;&szlig;en</p>
                         <p>Administrator</p>", "de_DE"),
-                    ("shop", "send_invoice_mail_no_paymentlink", "Your invoice", "<p>Dear Sir or Madam <b>{name}</b>,</p>
+                    ("shop", "send_invoice_mail_no_paymentlink", "Your invoice", "<p>Dear <b>{name}</b>,</p>
                         <p>&nbsp;</p>
                         <p>hereby you receive the invoice for your order at <i>{shopname}</i>. The invoice is in the attachment of this e-mail.</p>
                         <p>&nbsp;</p>
