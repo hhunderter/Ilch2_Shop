@@ -162,13 +162,20 @@ class Items extends Admin
                 'catId' => 'cat',
             ]);
 
-            $validation = Validation::create($this->getRequest()->getPost(), [
+            $validationRules = [
                 'catId' => 'required|numeric|integer|min:1',
                 'name' => 'required',
+                'stock' => 'required|integer',
                 'price' => 'required',
                 'shippingCosts' => 'required',
                 'shippingTime' => 'required|numeric|integer|min:1'
-            ]);
+            ];
+
+            if ($this->getRequest()->getPost('cordon') == '1') {
+                $validationRules['cordonColor'] = 'required';
+            }
+
+            $validation = Validation::create($this->getRequest()->getPost(), $validationRules);
 
             if ($validation->isValid()) {
                 $model = new ItemsModel();

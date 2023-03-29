@@ -160,9 +160,9 @@ class Item extends Model
     /**
      * Gets the id of the item.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -367,9 +367,9 @@ class Item extends Model
     /**
      * Gets the cordonColor of the item.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCordonColor(): string
+    public function getCordonColor(): ?string
     {
         return $this->cordonColor;
     }
@@ -377,10 +377,10 @@ class Item extends Model
     /**
      * Sets the cordonColor of the item.
      *
-     * @param string $cordonColor
+     * @param string|null $cordonColor
      * @return $this
      */
-    public function setCordonColor(string $cordonColor): Item
+    public function setCordonColor(?string $cordonColor): Item
     {
         $this->cordonColor = $cordonColor;
 

@@ -85,7 +85,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            class="form-control"
                            id="stock"
                            name="stock"
-                           min="1"
+                           min="0"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getStock()) : $this->escape($this->originalInput('stock')) ?>" />
                 </div>
                 <div class="form-group">
@@ -99,7 +99,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
         
-        <div class="form-group <?=$this->validation()->hasError('cordon') ? 'has-error' : '' ?>">
+        <div class="form-group <?=$this->validation()->hasError('cordon') || $this->validation()->hasError('cordonColor') ? 'has-error' : '' ?>">
             <label for="cordon" class="col-lg-2 control-label">
                 <?=$this->getTrans('cordon') ?>:
             </label>

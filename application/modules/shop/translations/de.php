@@ -40,6 +40,7 @@ return [
     'confirmation' => 'Bestätigung und Abschluß',
     'contentShopCart' => 'Inhalt des Warenkorbs',
     'cordon' => 'Infoband',
+    'cordonColor' => 'Infoband Farbe',
     'country' => 'Land',
     'createPDF' => 'PDF ERSTELLEN',
     'currency' => 'Währung',

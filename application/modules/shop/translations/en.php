@@ -40,6 +40,7 @@ return [
     'confirmation' => 'Confirmation and completion',
     'contentShopCart' => 'Contents of the shopping cart',
     'cordon' => 'Ribbon',
+    'cordonColor' => 'Ribbon color',
     'country' => 'Country',
     'createPDF' => 'CREATE A PDF',
     'currency' => 'Currency',

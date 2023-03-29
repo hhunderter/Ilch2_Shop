@@ -64,13 +64,25 @@ if (!empty($_SESSION['shopping_cart'])) {
                 <?php	
                 foreach ($_SESSION['shopping_cart'] as $product) {
                     $itemId = $product['id'];
-                    $itemCode = $itemsMapper->getShopItemById($itemId)->getCode();
-                    $itemName = $itemsMapper->getShopItemById($itemId)->getName();
-                    $itemPrice = $itemsMapper->getShopItemById($itemId)->getPrice();
-                    $itemNumber = $itemsMapper->getShopItemById($itemId)->getItemnumber();
-                    $itemImg = $itemsMapper->getShopItemById($itemId)->getImage();
-                    $itemMaxStock = $itemsMapper->getShopItemById($itemId)->getStock();
-                    $arrayShippingCosts[] = $itemsMapper->getShopItemById($itemId)->getShippingCosts();
+                    $item = $itemsMapper->getShopItemById($itemId);
+                    $itemCode = '';
+                    $itemName = '';
+                    $itemPrice = 0;
+                    $itemNumber = '';
+                    $itemImg = '';
+                    $itemMaxStock = '';
+                    $arrayShippingCosts = [0];
+
+                    if ($item) {
+                        $itemCode = $item->getCode();
+                        $itemName = $item->getName();
+                        $itemPrice = $item->getPrice();
+                        $itemNumber = $item->getItemnumber();
+                        $itemImg = $item->getImage();
+                        $itemMaxStock = $item->getStock();
+                        $arrayShippingCosts[] = $item->getShippingCosts();
+                    }
+
                     $shopImgPath = '/application/modules/shop/static/img/';
                     if ($itemImg AND file_exists(ROOT_PATH.'/'.$itemImg)) {
                         $img = BASE_URL.'/'.$itemImg;
