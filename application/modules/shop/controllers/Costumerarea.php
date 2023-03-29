@@ -89,7 +89,8 @@ class Costumerarea extends Frontend
 
             if ($order !== null) {
                 $fullPath = $shopInvoicePath.$order->getInvoiceFilename().'.pdf';
-                if ($fd = fopen($fullPath, 'rb')) {
+                $fd = fopen($fullPath, 'rb');
+                if ($fd) {
                     $path_parts = pathinfo($fullPath);
                     // Remove the random part of the filename as it should not end in e.g. the browser history.
                     $publicFileName = preg_replace('/_[^_.]*\./', '.', $path_parts['basename']);
