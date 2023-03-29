@@ -4,20 +4,22 @@ $itemsMapper = $this->get('itemsMapper');
 /* shopcart session */
 $status = '';
 
-if(!empty($_SESSION['shopping_cart'])) {
+if (!empty($_SESSION['shopping_cart'])) {
     if (isset($_POST['action']) && $_POST['action'] == 'remove') {
         foreach($_SESSION['shopping_cart'] as $key => $value) {
-            if($_POST['code'] == $key) {
+            if (isset($_POST['code']) && $_POST['code'] == $key) {
                 unset($_SESSION['shopping_cart'][$key]);
                 $status = '<div id="infobox" class="alert alert-danger" role="alert">'.$this->getTrans('theProduct').' <b>'.$_POST['name'].'</b> '.$this->getTrans('removedFromCart').'</div>';
             }
-            if(empty($_SESSION['shopping_cart'])) unset($_SESSION['shopping_cart']);
+            if (empty($_SESSION['shopping_cart'])) {
+                unset($_SESSION['shopping_cart']);
+            }
         }
     }
 
     if (isset($_POST['action']) && $_POST['action'] == 'change') {
         foreach($_SESSION['shopping_cart'] as &$value) {
-            if($value['code'] === $_POST['code']) {
+            if (isset($_POST['code']) && $value['code'] === $_POST['code']) {
                 $_POST['quantity'] = ($_POST['quantity']<=0)?1:$_POST['quantity'];
                 $value['quantity'] = $_POST['quantity'];
                 break;
@@ -28,7 +30,7 @@ if(!empty($_SESSION['shopping_cart'])) {
 
 /* show shopcart */
 $cart_badge = '';
-if(!empty($_SESSION['shopping_cart'])) {
+if (!empty($_SESSION['shopping_cart'])) {
     $cart_count = count(array_keys($_SESSION['shopping_cart']));
     $cart_badge = ($cart_count>0)?'<a class="activecart" href="'.$this->getUrl('shop/index/cart').'#shopAnker">'.$this->getTrans('menuCart').'<i class="fa-solid fa-shopping-cart"><span class="badge">'.$cart_count.'</span></i></a>':'';
 } 
@@ -45,7 +47,7 @@ if(!empty($_SESSION['shopping_cart'])) {
 </div>
 <div class="table cart">
     <?php
-    if(isset($_SESSION['shopping_cart'])) {
+    if (isset($_SESSION['shopping_cart'])) {
         $subtotal_price = 0; ?>
         <table>
             <thead>
