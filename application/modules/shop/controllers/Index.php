@@ -46,7 +46,7 @@ class Index extends Frontend
 
         $categories = $categoryMapper->getCategoriesByAccess($readAccess);
 
-        if ($this->getRequest()->getParam('catId')) {
+        if ($this->getRequest()->getParam('catId') && is_numeric($this->getRequest()->getParam('catId'))) {
             $category = $categoryMapper->getCategoryById($this->getRequest()->getParam('catId'));
 
             if (!$category) {

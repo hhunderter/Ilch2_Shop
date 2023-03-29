@@ -83,7 +83,7 @@ class Costumerarea extends Frontend
 
         $id = $this->getRequest()->getParam('id');
 
-        if (!empty($id)) {
+        if (!empty($id) && is_numeric($id)) {
             $ordersMapper = new OrdersMapper();
             $order = $ordersMapper->getOrderById($id);
 
@@ -108,6 +108,8 @@ class Costumerarea extends Frontend
                 }
                 fclose($fd);
             }
+        } else {
+            $this->addMessage('invoiceNotFound', 'danger');
         }
 
         $this->redirect(['controller' => 'costumerarea', 'action' => 'show', 'id' => $id]);
