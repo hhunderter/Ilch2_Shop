@@ -27,6 +27,7 @@ return [
     'canceled' => 'canceled',
     'canceledBIG' => 'CANCELED',
     'cartEmpty' => 'The cart is empty.',
+    'reloadCart' => 'Refresh cart',
     'cat' => 'Category',
     'catInfoText' => 'The categories can be sorted by dragging and dropping.',
     'cats' => 'Categories',

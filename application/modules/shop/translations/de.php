@@ -27,6 +27,7 @@ return [
     'canceled' => 'storniert',
     'canceledBIG' => 'STORNIERT',
     'cartEmpty' => 'Der Warenkorb ist leer.',
+    'reloadCart' => 'Warenkorb aktualisieren',
     'cat' => 'Kategorie',
     'catInfoText' => 'Die Kategorien können durch ziehen und ablegen sortiert werden.',
     'cats' => 'Kategorien',

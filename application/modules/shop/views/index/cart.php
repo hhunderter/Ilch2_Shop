@@ -4,7 +4,7 @@ $itemsMapper = $this->get('itemsMapper');
 /* shopcart session */
 $status = '';
 
-if (!empty($_SESSION['shopping_cart'])) {
+if (!empty($_SESSION['shopping_cart']) && $this->getRequest()->isSecure()) {
     if (isset($_POST['action']) && $_POST['action'] == 'remove') {
         foreach($_SESSION['shopping_cart'] as $key => $value) {
             if (isset($_POST['code']) && $_POST['code'] == $key) {
@@ -20,7 +20,7 @@ if (!empty($_SESSION['shopping_cart'])) {
     if (isset($_POST['action']) && $_POST['action'] == 'change') {
         foreach($_SESSION['shopping_cart'] as &$value) {
             if (isset($_POST['code']) && $value['code'] === $_POST['code']) {
-                $_POST['quantity'] = ($_POST['quantity']<=0)?1:$_POST['quantity'];
+                $_POST['quantity'] = ($_POST['quantity'] <= 0) ? 1 : $_POST['quantity'];
                 $value['quantity'] = $_POST['quantity'];
                 break;
             }
@@ -39,6 +39,7 @@ if (!empty($_SESSION['shopping_cart'])) {
 <h1>
     <?=$this->getTrans('menuCart') ?>
     <?=$cart_badge ?>
+    <div id="reload" class="collapse"><a href="" title="<?=$this->getTrans('reloadCart') ?>"><i class="fa-solid fa-arrows-rotate"></i></a></div>
     <div id="shopAnker"></div>
 </h1>
 
@@ -201,6 +202,7 @@ $('.minus-btn').on('click', function(e) {
         url: url,
         data: form.serialize()
     });
+    $('#reload').css('display','inline-block');
 });
 $('.plus-btn').on('click', function(e) {
     e.preventDefault();
@@ -221,5 +223,6 @@ $('.plus-btn').on('click', function(e) {
         url: url,
         data: form.serialize()
     });
+    $('#reload').css('display','inline-block');
 });
 </script>
