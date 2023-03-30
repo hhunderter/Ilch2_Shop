@@ -223,6 +223,7 @@ return [
     'confirmTransferBackToStock' => 'Do you want to transfer the item back to the stock?',
     'confirmRemoveFromStock' => 'Do you want to remove the item from the stock?',
     'currentStockInsufficient' => 'The current stock is insufficient. The item couldn\'t be removed from stock.',
+    'currentStockInsufficientDetails' => 'The current stock of %s is insufficient. %s %s are available.',
     'menuSettingPayment' => 'Method of payment',
     'clientID' => 'Client ID',
     'clientIDInfo' => 'A newly created PayPal Business account is automatically in a sandbox mode. In this mode you can test purchases without having real transactions. If you confirmed your settings you can switch to the live mode. In this mode everything is real.',

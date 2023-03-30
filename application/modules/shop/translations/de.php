@@ -223,6 +223,7 @@ return [
     'confirmTransferBackToStock' => 'Möchten Sie die Artikel zurück in den Warenbestand buchen?',
     'confirmRemoveFromStock' => 'Möchten Sie die Artikel vom Warenbestand abbuchen?',
     'currentStockInsufficient' => 'Der Warenbestand ist nicht ausreichend. Die Artikel konnten nicht abgebucht werden.',
+    'currentStockInsufficientDetails' => 'Der Warenbestand von %s ist nicht ausreichend. Es sind %s %s verfügbar.',
     'menuSettingPayment' => 'Bezahlmethoden',
     'clientID' => 'Client ID',
     'clientIDInfo' => 'Ein neu erstellter PayPal Händleraccount ist automatisch im Sandbox-Modus. In diesem Modus können z.B. Testkäufe durchgeführt werden. Sind Sie sich mit den Einstellungen sicher, wechseln Sie in den Live-Modus. Ab dann sind alle Einkäufe real.',
