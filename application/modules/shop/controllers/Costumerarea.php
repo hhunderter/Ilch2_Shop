@@ -83,13 +83,14 @@ class Costumerarea extends Frontend
 
         $id = $this->getRequest()->getParam('id');
 
-        if (!empty($id)) {
+        if (!empty($id) && is_numeric($id)) {
             $ordersMapper = new OrdersMapper();
             $order = $ordersMapper->getOrderById($id);
 
             if ($order !== null) {
                 $fullPath = $shopInvoicePath.$order->getInvoiceFilename().'.pdf';
-                if ($fd = fopen($fullPath, 'rb')) {
+                $fd = fopen($fullPath, 'rb');
+                if ($fd) {
                     $path_parts = pathinfo($fullPath);
                     // Remove the random part of the filename as it should not end in e.g. the browser history.
                     $publicFileName = preg_replace('/_[^_.]*\./', '.', $path_parts['basename']);
@@ -108,6 +109,8 @@ class Costumerarea extends Frontend
                 }
                 fclose($fd);
             }
+        } else {
+            $this->addMessage('invoiceNotFound', 'danger');
         }
 
         $this->redirect(['controller' => 'costumerarea', 'action' => 'show', 'id' => $id]);

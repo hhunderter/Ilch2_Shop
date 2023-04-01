@@ -102,8 +102,7 @@ class Category extends Mapper
         if ($category->getId()) {
             $this->db()->update('shop_cats')
                 ->values([
-                    'title' => $category->getTitle(),
-                    'read_access' => $category->getReadAccess()
+                    'title' => $category->getTitle()
                 ])
                 ->where(['id' => $category->getId()])
                 ->execute();
@@ -117,8 +116,7 @@ class Category extends Mapper
             $id = $this->db()->insert('shop_cats')
                 ->values([
                     'title' => $category->getTitle(),
-                    'pos' => $maxPos+1,
-                    'read_access' => $category->getReadAccess()
+                    'pos' => $maxPos+1
                 ])
                 ->execute();
         }

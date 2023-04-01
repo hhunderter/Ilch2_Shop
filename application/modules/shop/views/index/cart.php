@@ -4,21 +4,23 @@ $itemsMapper = $this->get('itemsMapper');
 /* shopcart session */
 $status = '';
 
-if(!empty($_SESSION['shopping_cart'])) {
+if (!empty($_SESSION['shopping_cart']) && $this->getRequest()->isSecure()) {
     if (isset($_POST['action']) && $_POST['action'] == 'remove') {
         foreach($_SESSION['shopping_cart'] as $key => $value) {
-            if($_POST['code'] == $key) {
+            if (isset($_POST['code']) && $_POST['code'] == $key) {
                 unset($_SESSION['shopping_cart'][$key]);
                 $status = '<div id="infobox" class="alert alert-danger" role="alert">'.$this->getTrans('theProduct').' <b>'.$_POST['name'].'</b> '.$this->getTrans('removedFromCart').'</div>';
             }
-            if(empty($_SESSION['shopping_cart'])) unset($_SESSION['shopping_cart']);
+            if (empty($_SESSION['shopping_cart'])) {
+                unset($_SESSION['shopping_cart']);
+            }
         }
     }
 
     if (isset($_POST['action']) && $_POST['action'] == 'change') {
         foreach($_SESSION['shopping_cart'] as &$value) {
-            if($value['code'] === $_POST['code']) {
-                $_POST['quantity'] = ($_POST['quantity']<=0)?1:$_POST['quantity'];
+            if (isset($_POST['code']) && $value['code'] === $_POST['code']) {
+                $_POST['quantity'] = ($_POST['quantity'] <= 0) ? 1 : $_POST['quantity'];
                 $value['quantity'] = $_POST['quantity'];
                 break;
             }
@@ -28,7 +30,7 @@ if(!empty($_SESSION['shopping_cart'])) {
 
 /* show shopcart */
 $cart_badge = '';
-if(!empty($_SESSION['shopping_cart'])) {
+if (!empty($_SESSION['shopping_cart'])) {
     $cart_count = count(array_keys($_SESSION['shopping_cart']));
     $cart_badge = ($cart_count>0)?'<a class="activecart" href="'.$this->getUrl('shop/index/cart').'#shopAnker">'.$this->getTrans('menuCart').'<i class="fa-solid fa-shopping-cart"><span class="badge">'.$cart_count.'</span></i></a>':'';
 } 
@@ -37,6 +39,7 @@ if(!empty($_SESSION['shopping_cart'])) {
 <h1>
     <?=$this->getTrans('menuCart') ?>
     <?=$cart_badge ?>
+    <div id="reload" class="collapse"><a href="" title="<?=$this->getTrans('reloadCart') ?>"><i class="fa-solid fa-arrows-rotate"></i></a></div>
     <div id="shopAnker"></div>
 </h1>
 
@@ -45,7 +48,7 @@ if(!empty($_SESSION['shopping_cart'])) {
 </div>
 <div class="table cart">
     <?php
-    if(isset($_SESSION['shopping_cart'])) {
+    if (isset($_SESSION['shopping_cart'])) {
         $subtotal_price = 0; ?>
         <table>
             <thead>
@@ -62,13 +65,25 @@ if(!empty($_SESSION['shopping_cart'])) {
                 <?php	
                 foreach ($_SESSION['shopping_cart'] as $product) {
                     $itemId = $product['id'];
-                    $itemCode = $itemsMapper->getShopItemById($itemId)->getCode();
-                    $itemName = $itemsMapper->getShopItemById($itemId)->getName();
-                    $itemPrice = $itemsMapper->getShopItemById($itemId)->getPrice();
-                    $itemNumber = $itemsMapper->getShopItemById($itemId)->getItemnumber();
-                    $itemImg = $itemsMapper->getShopItemById($itemId)->getImage();
-                    $itemMaxStock = $itemsMapper->getShopItemById($itemId)->getStock();
-                    $arrayShippingCosts[] = $itemsMapper->getShopItemById($itemId)->getShippingCosts();
+                    $item = $itemsMapper->getShopItemById($itemId);
+                    $itemCode = '';
+                    $itemName = '';
+                    $itemPrice = 0;
+                    $itemNumber = '';
+                    $itemImg = '';
+                    $itemMaxStock = '';
+                    $arrayShippingCosts = [0];
+
+                    if ($item) {
+                        $itemCode = $item->getCode();
+                        $itemName = $item->getName();
+                        $itemPrice = $item->getPrice();
+                        $itemNumber = $item->getItemnumber();
+                        $itemImg = $item->getImage();
+                        $itemMaxStock = $item->getStock();
+                        $arrayShippingCosts[] = $item->getShippingCosts();
+                    }
+
                     $shopImgPath = '/application/modules/shop/static/img/';
                     if ($itemImg AND file_exists(ROOT_PATH.'/'.$itemImg)) {
                         $img = BASE_URL.'/'.$itemImg;
@@ -187,6 +202,7 @@ $('.minus-btn').on('click', function(e) {
         url: url,
         data: form.serialize()
     });
+    $('#reload').css('display','inline-block');
 });
 $('.plus-btn').on('click', function(e) {
     e.preventDefault();
@@ -207,5 +223,6 @@ $('.plus-btn').on('click', function(e) {
         url: url,
         data: form.serialize()
     });
+    $('#reload').css('display','inline-block');
 });
 </script>

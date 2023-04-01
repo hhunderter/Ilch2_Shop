@@ -23,7 +23,7 @@ $purchaseUnits = [];
                     <th><?=$this->getTrans('taxShort') ?><br />&nbsp;</th>
                     <th><?=$this->getTrans('singlePrice') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
                     <th class="text-center"><?=$this->getTrans('entries') ?><br />&nbsp;</th>
-                    <th class="text-right"><?=$this->getTrans('total') ?><br /><small>incl. <?=$this->getTrans('taxShort') ?></small></th>
+                    <th class="text-right"><?=$this->getTrans('total') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -33,14 +33,15 @@ $purchaseUnits = [];
                 $pdfOrderNr = 1;
                 foreach ($orderItems as $orderItem):
                     $itemId = $orderItem['id'];
-                    $itemImg = $itemsMapper->getShopItemById($itemId)->getImage();
-                    $itemName = $itemsMapper->getShopItemById($itemId)->getName();
-                    $itemNumber = $itemsMapper->getShopItemById($itemId)->getItemnumber();
-                    $itemPrice = $itemsMapper->getShopItemById($itemId)->getPrice();
-                    $itemTax = $itemsMapper->getShopItemById($itemId)->getTax();
+                    $item = $itemsMapper->getShopItemById($itemId);
+                    $itemImg = $item->getImage();
+                    $itemName = $item->getName();
+                    $itemNumber = $item->getItemnumber();
+                    $itemPrice = $item->getPrice();
+                    $itemTax = $item->getTax();
                     $itemPriceWithoutTax = round(($itemPrice / (100 + $itemTax)) * 100, 2);
-                    $arrayShippingCosts[] = $itemsMapper->getShopItemById($itemId)->getShippingCosts();
-                    $itemShippingTime = $itemsMapper->getShopItemById($itemId)->getShippingTime();
+                    $arrayShippingCosts[] = $item->getShippingCosts();
+                    $itemShippingTime = $item->getShippingTime();
                     $arrayShippingTime[] = $itemShippingTime;
                     $arrayTaxes[] = $itemTax;
                     $arrayPrices[] = $itemPrice * $orderItem['quantity'];

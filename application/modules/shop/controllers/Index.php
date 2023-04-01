@@ -46,7 +46,7 @@ class Index extends Frontend
 
         $categories = $categoryMapper->getCategoriesByAccess($readAccess);
 
-        if ($this->getRequest()->getParam('catId')) {
+        if ($this->getRequest()->getParam('catId') && is_numeric($this->getRequest()->getParam('catId'))) {
             $category = $categoryMapper->getCategoryById($this->getRequest()->getParam('catId'));
 
             if (!$category) {
@@ -146,7 +146,7 @@ class Index extends Frontend
                 'prename' => 'required',
                 'lastname' => 'required',
                 'street' => 'required',
-                'postcode' => 'required|numeric|integer',
+                'postcode' => 'required',
                 'city' => 'required',
                 'acceptOrder' =>  'required'
             ];
@@ -243,10 +243,29 @@ class Index extends Frontend
                     $model->setInvoiceAddress($model->getDeliveryAddress());
                 }
 
-                $ordersMapper->save($model);
-
                 $arrayOrder = $this->getRequest()->getPost('order');
                 $arrayOrder = json_decode(str_replace("'", '"', $arrayOrder), true);
+
+                // Check if stock is sufficient for this order.
+                $messages = [];
+                foreach ($arrayOrder as $product) {
+                    $item = $itemsMapper->getShopItemById($product['id']);
+
+                    if ($item->getStock() < $product['quantity']) {
+                        $messages[] = $this->getTranslator()->trans('currentStockInsufficientDetails', $item->getName(), $item->getStock(), $item->getUnitName());
+                    }
+                }
+
+                if (!empty($messages)) {
+                    $this->addMessage($messages, 'danger', true);
+                    $this->redirect()
+                        ->withInput()
+                        ->withErrors($validation->getErrorBag())
+                        ->to(['action' => 'cart']);
+                }
+
+                $ordersMapper->save($model);
+
                 foreach ($arrayOrder as $product) {
                     $itemsMapper->removeStock($product['id'], $product['quantity']);
                 }

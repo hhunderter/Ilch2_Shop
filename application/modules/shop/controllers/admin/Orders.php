@@ -115,12 +115,12 @@ class Orders extends Admin
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuOrders'), ['action' => 'index'])
-            ->add($this->getTranslator()->trans('manage'), ['action' => 'treat', 'id' => 'treat']);
+            ->add($this->getTranslator()->trans('manage'), ['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
 
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
         $order = null;
 
-        if ($this->getRequest()->getParam('id')) {
+        if ($this->getRequest()->getParam('id') && is_numeric($this->getRequest()->getParam('id'))) {
             $order = $ordersMapper->getOrderById($this->getRequest()->getParam('id'));
             $this->getView()->set('order', $order);
             $this->getView()->set('currency', $currency->getName());
@@ -186,13 +186,14 @@ class Orders extends Admin
 
         $id = $this->getRequest()->getParam('id');
 
-        if (!empty($id)) {
+        if (!empty($id) && is_numeric($id)) {
             $ordersMapper = new OrdersMapper();
             $order = $ordersMapper->getOrderById($id);
 
             if ($order !== null) {
                 $fullPath = $shopInvoicePath.$order->getInvoiceFilename().'.pdf';
-                if ($fd = fopen($fullPath, 'rb')) {
+                $fd = fopen($fullPath, 'rb');
+                if ($fd) {
                     $path_parts = pathinfo($fullPath);
                     // Remove the random part of the filename as it should not end in e.g. the browser history.
                     $publicFileName = preg_replace('/_[^_.]*\./', '.', $path_parts['basename']);
@@ -211,6 +212,8 @@ class Orders extends Admin
                 }
                 fclose($fd);
             }
+        } else {
+            $this->addMessage('invoiceNotFound', 'danger');
         }
 
         $this->redirect(['controller' => 'orders', 'action' => 'treat', 'id' => $id]);

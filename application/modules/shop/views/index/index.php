@@ -7,19 +7,19 @@ $adminAccess = $this->get('adminAccess');
 $status = '';
 
 /* shopcart session */
-if (isset($_POST['code']) && $_POST['code']!= '') {
+if (isset($_POST['code']) && $_POST['code'] != '' && isset($_POST['itemid']) && $_POST['itemid'] != '' && is_numeric($_POST['itemid'])) {
     $code = $_POST['code'];
-    $itemid = $_POST['itemid']; 
+    $itemid = $_POST['itemid'];
     $shopItem = $itemsMapper->getShopItemById($itemid);
     $id = $shopItem->getId();
     $name = $shopItem->getName();
-    $cartArray = array(
-        $code => array(
+    $cartArray = [
+        $code => [
         'id' => $id,
         'code' => $code,
-        'quantity' => 1)
-    );
-    
+        'quantity' => 1]
+    ];
+
     if(empty($_SESSION['shopping_cart'])) {
         $_SESSION['shopping_cart'] = $cartArray;
         $status = '<div id="infobox" class="alert alert-success" role="alert">'.$this->getTrans('theProduct').' <b>'.$name.'</b> '.$this->getTrans('addToCart').'</div>';

@@ -36,7 +36,7 @@
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
 
-    <div class="form-group <?=$this->validation()->hasError('clientID') ? 'has-error' : '' ?>">
+    <div class="form-group">
         <label for="clientID" class="col-lg-2 control-label">
             <?=$this->getTrans('clientID') ?>:
         </label>
@@ -50,8 +50,7 @@
                        id="clientID"
                        name="clientID"
                        placeholder="<?=$this->getTrans('clientID') ?>"
-                       value="<?=($this->escape($this->get('settings')->getClientID()) != '') ? $this->escape($this->get('settings')->getClientID()) : $this->escape($this->originalInput('clientID')) ?>"
-                       required />
+                       value="<?=($this->escape($this->get('settings')->getClientID()) != '') ? $this->escape($this->get('settings')->getClientID()) : $this->escape($this->originalInput('clientID')) ?>" />
             </div>
         </div>
     </div>

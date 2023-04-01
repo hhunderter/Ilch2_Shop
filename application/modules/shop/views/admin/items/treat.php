@@ -85,7 +85,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            class="form-control"
                            id="stock"
                            name="stock"
-                           min="1"
+                           min="0"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getStock()) : $this->escape($this->originalInput('stock')) ?>" />
                 </div>
                 <div class="form-group">
@@ -98,8 +98,8 @@ $shopImgPath = '/application/modules/shop/static/img/';
                 </div>
             </div>
         </div>
-        
-        <div class="form-group <?=$this->validation()->hasError('cordon') ? 'has-error' : '' ?>">
+
+        <div class="form-group <?=$this->validation()->hasError('cordon') || $this->validation()->hasError('cordonColor') ? 'has-error' : '' ?>">
             <label for="cordon" class="col-lg-2 control-label">
                 <?=$this->getTrans('cordon') ?>:
             </label>
@@ -152,7 +152,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                 </div>
             </div>
         </div>
-        
+
         <div class="form-group <?=$this->validation()->hasError('tax') ? 'has-error' : '' ?>">
             <label for="tax" class="col-lg-2 control-label">
                 <?=$this->getTrans('tax') ?>:
@@ -270,7 +270,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                 </div>
             </div>
         </div>
-        
+
         <div class="form-group <?=$this->validation()->hasError('image1') ? 'has-error' : '' ?>">
             <label for="selectedImage_1" class="col-lg-2 control-label">
                 <?=$this->getTrans('productImage') ?> 1:
@@ -344,7 +344,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                 </div>
             </div>
         </div>
-        
+
         <div class="form-group <?=$this->validation()->hasError('image3') ? 'has-error' : '' ?>">
             <label for="selectedImage_3" class="col-lg-2 control-label">
                 <?=$this->getTrans('productImage') ?> 3:
@@ -413,7 +413,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                 </textarea>
             </div>
         </div>
-        
+
         <?=(!empty($this->get('shopItem'))) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton'); ?>
     </form>
 <?php else: ?>

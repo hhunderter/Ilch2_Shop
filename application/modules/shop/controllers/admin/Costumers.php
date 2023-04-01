@@ -100,13 +100,16 @@ class Costumers extends Admin
         $userMapper = new UserMapper();
         $addressMapper = new AddressMapper();
         $ordersMapper = new OrdersMapper();
+        $costumer = null;
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuCostumers'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuCostumer'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
 
-        $costumer = $costumerMapper->getCostumerById($this->getRequest()->getParam('id'));
+        if ($this->getRequest()->getParam('id') && is_numeric($this->getRequest()->getParam('id'))) {
+            $costumer = $costumerMapper->getCostumerById($this->getRequest()->getParam('id'));
+        }
 
         if (!$costumer) {
             $this->addMessage('costumerNotFound', 'danger');
@@ -123,7 +126,7 @@ class Costumers extends Admin
 
     public function deleteAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && $this->getRequest()->getParam('id') && is_numeric($this->getRequest()->getParam('id'))) {
             $costumerMapper = new CostumerMapper();
 
             $costumerMapper->delete($this->getRequest()->getParam('id'));

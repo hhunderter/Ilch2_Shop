@@ -39,7 +39,7 @@
                             <td><?=$this->getDeleteIcon(['action' => 'delcat', 'id' => $cat->getId()]) ?></td>
                             <td><?=$this->escape($cat->getTitle()) ?></td>
                             <td align="center"><?=$countItems ?></td>
-                            <td><i class="fa-solid fa-arrows-alt-v"></i></td>
+                            <td><i class="fa-solid fa-up-down"></i></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
