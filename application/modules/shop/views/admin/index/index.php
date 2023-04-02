@@ -68,4 +68,29 @@ $countDoneOrders = count($this->get('orders')->getOrders(['status'=>'3']));
             </div>
         </div>
     </div>
+	<?php if ($this->get('settings')->getIfSampleData() == 1) : ?>
+	<div class="col-md-12">
+		<form class="form-horizontal" id="delSamplaDataForm" method="POST" action="">
+			<?=$this->getTokenField() ?>
+			<input type="hidden" name="delSamplaData" value="delSamplaData" />
+			<input type="button" id="delete_button" class="btn btn-default" value="<?=$this->getTrans('delSampleData') ?>" />
+			<a class="badge" data-toggle="modal" data-target="#infoModal">
+				<i class="fa-solid fa-info"></i>
+			</a>
+		</form>
+	</div>
+	<?php endif; ?>
 </div>
+
+<?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('delSampleDataInfo')) ?>
+<script>
+$(document).ready(function() {
+	$(function() {
+		$('#delete_button').click(function() {
+			if (confirm('<?=$this->getTrans('confirmDeleteSampleData') ?>')) {
+				$('form#delSamplaDataForm').submit();
+			}
+		});
+	});
+});
+</script>

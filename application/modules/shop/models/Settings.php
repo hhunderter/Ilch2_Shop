@@ -163,7 +163,14 @@ class Settings extends Model
      * @var string
      */
     protected $clientID;
-
+	
+    /**
+     * The ifSampleData of the settings.
+     *
+     * @var int
+     */
+    protected $ifSampleData;
+	
     /**
      * Gets the id of the settings.
      *
@@ -599,4 +606,25 @@ class Settings extends Model
     {
         $this->clientID = $clientID;
     }
+	
+	/**
+     * Gets the ifSampleData of the settings.
+     *
+     * @return int
+     */
+    public function getIfSampleData(): int
+    {
+        return $this->ifSampleData;
+    }
+    
+    /**
+     * Sets the ifSampleData of the settings.
+     *
+     * @param int $ifSampleData
+     */
+    public function setIfSampleData(int $ifSampleData)
+    {
+        $this->ifSampleData = $ifSampleData;
+    }
+
 }

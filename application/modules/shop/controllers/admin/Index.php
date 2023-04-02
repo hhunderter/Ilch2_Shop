@@ -10,6 +10,7 @@ use Ilch\Controller\Admin;
 use Modules\Shop\Mappers\Category as CategoryMapper;
 use Modules\Shop\Mappers\Items as ItemsMapper;
 use Modules\Shop\Mappers\Orders as OrdersMapper;
+use Modules\Shop\Mappers\Settings as SettingsMapper;
 
 class Index extends Admin
 {
@@ -78,13 +79,20 @@ class Index extends Admin
         $categoryMapper = new CategoryMapper();
         $itemsMapper = new ItemsMapper();
         $ordersMapper = new OrdersMapper();
+		$settingsMapper = new SettingsMapper();
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index']);
+		
+		if ($this->getRequest()->getPost('delSamplaData')) {
+			$settingsMapper->deleteSampleData();
+			$this->addMessage('deleteSuccess');
+		}
 
         $this->getView()->set('cats', $categoryMapper->getCategories());
         $this->getView()->set('itemsMapper', $itemsMapper->getShopItems());
         $this->getView()->set('orders', $ordersMapper);
+		$this->getView()->set('settings', $settingsMapper->getSettings());
     }
 
     public function noteAction()
