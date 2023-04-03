@@ -84,7 +84,10 @@ class Index extends Admin
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index']);
 		
-		if ($this->getRequest()->getPost('delSamplaData')) {
+		if ($this->getRequest()->getPost('keepSampleData')) {
+			$settingsMapper->keepSampleData();
+		}
+		elseif ($this->getRequest()->getPost('delSampleData')) {
 			$settingsMapper->deleteSampleData();
 			$this->addMessage('deleteSuccess');
 		}

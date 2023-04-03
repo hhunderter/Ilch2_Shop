@@ -169,3 +169,11 @@ input[type="text"].grey {
 .media-body {
     height: 175px;
 }
+input.btn.del:hover {
+	color: #a94442;
+	background-color: #f2dede;
+}
+input.btn.keep:hover {
+	color: #3c763d;
+	background-color: #dff0d8;
+}

@@ -184,5 +184,18 @@ class Settings extends Mapper
 			->where(['id <=' => 4])
 			->execute();
     }
+	
+	/**
+     * Keep example data of the shop.
+     */
+    public function keepSampleData()
+    {
+        $this->db()->update('shop_settings')
+            ->values([
+                'ifSampleData' => '0'
+            ])
+            ->where(['id' => '1'])
+            ->execute();
+    }
 
 }
