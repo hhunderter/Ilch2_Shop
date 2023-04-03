@@ -16,7 +16,7 @@ class Settings extends Model
      * @var int
      */
     protected $id;
-    
+
     /**
      * The shopName of the settings.
      *
@@ -114,21 +114,21 @@ class Settings extends Model
      * @var string
      */
     protected $bankBIC;
-    
+
     /**
      * The invoiceTextTop of the settings.
      *
      * @var string
      */
     protected $invoiceTextTop;
-    
+
     /**
      * The invoiceTextBottom of the settings.
      *
      * @var string
      */
     protected $invoiceTextBottom;
-    
+
     /**
      * The agb of the settings.
      *
@@ -163,14 +163,14 @@ class Settings extends Model
      * @var string
      */
     protected $clientID;
-	
+
     /**
      * The ifSampleData of the settings.
      *
      * @var int
      */
     protected $ifSampleData;
-	
+
     /**
      * Gets the id of the settings.
      *
@@ -210,7 +210,7 @@ class Settings extends Model
     {
         $this->shopName = $shopName;
     }
-    
+
     /**
      * Gets the shopLogo of the settings.
      *
@@ -390,7 +390,7 @@ class Settings extends Model
     {
         $this->shopStNr = $shopStNr;
     }
-    
+
     /**
      * Gets the bankName of the settings.
      *
@@ -520,7 +520,7 @@ class Settings extends Model
     {
         return $this->agb;
     }
-    
+
     /**
      * Sets the agb of the settings.
      *
@@ -540,7 +540,7 @@ class Settings extends Model
     {
         return $this->fixTax;
     }
-    
+
     /**
      * Sets the fixTax of the settings.
      *
@@ -560,7 +560,7 @@ class Settings extends Model
     {
         return $this->fixShippingCosts;
     }
-    
+
     /**
      * Sets the fixShippingCosts of the settings.
      *
@@ -580,7 +580,7 @@ class Settings extends Model
     {
         return $this->fixShippingTime;
     }
-    
+
     /**
      * Sets the fixShippingTime of the settings.
      *
@@ -606,8 +606,8 @@ class Settings extends Model
     {
         $this->clientID = $clientID;
     }
-	
-	/**
+
+    /**
      * Gets the ifSampleData of the settings.
      *
      * @return int
@@ -616,7 +616,7 @@ class Settings extends Model
     {
         return $this->ifSampleData;
     }
-    
+
     /**
      * Sets the ifSampleData of the settings.
      *
@@ -626,5 +626,4 @@ class Settings extends Model
     {
         $this->ifSampleData = $ifSampleData;
     }
-
 }

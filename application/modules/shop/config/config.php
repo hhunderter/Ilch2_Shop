@@ -171,7 +171,7 @@ class Config extends Install
                     `invoiceTextTop` MEDIUMTEXT NOT NULL,
                     `invoiceTextBottom` MEDIUMTEXT NOT NULL,
                     `paymentClientID` VARCHAR(255) NOT NULL,
-					`ifSampleData` INT(1) NULL DEFAULT 0,
+                    `ifSampleData` INT(1) NULL DEFAULT 0,
                     PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 

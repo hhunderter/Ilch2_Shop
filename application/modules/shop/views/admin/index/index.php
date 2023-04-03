@@ -68,30 +68,30 @@ $countDoneOrders = count($this->get('orders')->getOrders(['status'=>'3']));
             </div>
         </div>
     </div>
-	<?php if ($this->get('settings')->getIfSampleData() == 1) : ?>
-	<div class="col-md-12" style="text-align:right">
-		<form class="form-horizontal" id="delSamplaDataForm" method="POST" action="">
-			<?=$this->getTokenField() ?>
-			<a class="badge" data-toggle="modal" data-target="#infoModal">
-				<i class="fa-solid fa-info"></i>
-			</a>
-			<input type="button" id="delete_button" class="btn btn-default del" value="<?=$this->getTrans('delSampleData') ?>" />
-			<input type="hidden" name="delSampleData" value="delete" />
-			<input type="submit" name="keepSampleData" id="keep_button" class="btn btn-default keep" value="<?=$this->getTrans('keepSampleData') ?>" />
-		</form>
-	</div>
-	<?php endif; ?>
+    <?php if ($this->get('settings')->getIfSampleData() == 1) : ?>
+    <div class="col-md-12" style="text-align:right">
+        <form class="form-horizontal" id="delSamplaDataForm" method="POST" action="">
+            <?=$this->getTokenField() ?>
+            <a class="badge" data-toggle="modal" data-target="#infoModal">
+                <i class="fa-solid fa-info"></i>
+            </a>
+            <input type="button" id="delete_button" class="btn btn-default del" value="<?=$this->getTrans('delSampleData') ?>" />
+            <input type="hidden" name="delSampleData" value="delete" />
+            <input type="submit" name="keepSampleData" id="keep_button" class="btn btn-default keep" value="<?=$this->getTrans('keepSampleData') ?>" />
+        </form>
+    </div>
+    <?php endif; ?>
 </div>
 
 <?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('delSampleDataInfo')) ?>
 <script>
 $(document).ready(function() {
-	$(function() {
-		$('#delete_button').click(function() {
-			if (confirm('<?=$this->getTrans('confirmDeleteSampleData') ?>')) {
-				$('form#delSamplaDataForm').submit();
-			}
-		});
-	});
+    $(function() {
+        $('#delete_button').click(function() {
+            if (confirm('<?=$this->getTrans('confirmDeleteSampleData') ?>')) {
+                $('form#delSamplaDataForm').submit();
+            }
+        });
+    });
 });
 </script>
