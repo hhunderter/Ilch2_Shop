@@ -48,7 +48,7 @@ if(!empty($_SESSION['shopping_cart'])) {
     <div id="shopAnker"></div>
 </h1>
 
-<?php if (!empty($shopItems)): ?>
+<?php if (!empty($shopItems) && !empty($categories)): ?>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
