@@ -51,7 +51,7 @@ class Settings extends Mapper
         $model->setFixShippingCosts($serverRow['fixShippingCosts']);
         $model->setFixShippingTime($serverRow['fixShippingTime']);
         $model->setClientID($serverRow['paymentClientID']);
-		$model->setIfSampleData($serverRow['ifSampleData']);
+        $model->setIfSampleData($serverRow['ifSampleData']);
 
         return $model;
     }
@@ -148,7 +148,7 @@ class Settings extends Mapper
             ->execute();
     }
 
-	/**
+    /**
      * Delete example data of the shop.
      */
     public function deleteSampleData()
@@ -160,32 +160,32 @@ class Settings extends Mapper
             ->where(['id' => '1'])
             ->execute();
 
-		$this->db()->delete('shop_cats')
-			->where(['id <=' => 3])
-			->execute();
+        $this->db()->delete('shop_cats')
+            ->where(['id <=' => 3])
+            ->execute();
 
-		$this->db()->delete('shop_access')
-			->where(['cat_id <=' => 3])
-			->execute();
+        $this->db()->delete('shop_access')
+            ->where(['cat_id <=' => 3])
+            ->execute();
 
-		$this->db()->delete('shop_items')
-			->where(['id <=' => 7])
-			->execute();
+        $this->db()->delete('shop_items')
+            ->where(['id <=' => 7])
+            ->execute();
 
-		$this->db()->delete('shop_costumers')
-			->where(['id <=' => 4])
-			->execute();
+        $this->db()->delete('shop_costumers')
+            ->where(['id <=' => 4])
+            ->execute();
 
-		$this->db()->delete('shop_addresses')
-			->where(['id <=' => 4])
-			->execute();
+        $this->db()->delete('shop_addresses')
+            ->where(['id <=' => 4])
+            ->execute();
 
-		$this->db()->delete('shop_orders')
-			->where(['id <=' => 4])
-			->execute();
+        $this->db()->delete('shop_orders')
+            ->where(['id <=' => 4])
+            ->execute();
     }
-	
-	/**
+
+    /**
      * Keep example data of the shop.
      */
     public function keepSampleData()
@@ -197,5 +197,4 @@ class Settings extends Mapper
             ->where(['id' => '1'])
             ->execute();
     }
-
 }

@@ -79,23 +79,22 @@ class Index extends Admin
         $categoryMapper = new CategoryMapper();
         $itemsMapper = new ItemsMapper();
         $ordersMapper = new OrdersMapper();
-		$settingsMapper = new SettingsMapper();
+        $settingsMapper = new SettingsMapper();
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index']);
-		
-		if ($this->getRequest()->getPost('keepSampleData')) {
-			$settingsMapper->keepSampleData();
-		}
-		elseif ($this->getRequest()->getPost('delSampleData')) {
-			$settingsMapper->deleteSampleData();
-			$this->addMessage('deleteSuccess');
-		}
+
+        if ($this->getRequest()->getPost('keepSampleData')) {
+            $settingsMapper->keepSampleData();
+        } elseif ($this->getRequest()->getPost('delSampleData')) {
+            $settingsMapper->deleteSampleData();
+            $this->addMessage('deleteSuccess');
+        }
 
         $this->getView()->set('cats', $categoryMapper->getCategories());
         $this->getView()->set('itemsMapper', $itemsMapper->getShopItems());
         $this->getView()->set('orders', $ordersMapper);
-		$this->getView()->set('settings', $settingsMapper->getSettings());
+        $this->getView()->set('settings', $settingsMapper->getSettings());
     }
 
     public function noteAction()
@@ -104,5 +103,4 @@ class Index extends Admin
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuNote'), ['action' => 'note']);
     }
-
 }

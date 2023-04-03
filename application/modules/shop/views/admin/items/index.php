@@ -68,7 +68,7 @@
                             <td class="text-center"><a href="<?=$this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]) ?>"><img src="<?=$img ?>" class="item_image <?=($shopItem->getCordon()==1)?$shopItem->getCordonColor():''; ?>" alt="<?=$this->escape($shopItem->getName()) ?>"/></a></td>
                             <td><?=$this->escape($shopItem->getName()) ?></td>
                             <td><?=$this->escape($shopItem->getItemnumber()) ?></td>
-                            <td><?=($shopCats)?$this->escape($shopCats->getTitle()):''; ?></td>
+                            <td><?=($shopCats) ? $this->escape($shopCats->getTitle()) : ''; ?></td>
                             <td class="text-right">
                             <?php if ($this->escape($shopItem->getStock()) < 1) { ?>
                                 <button class="btn btn-sm alert-danger stock"><?=$this->escape($shopItem->getStock()) ?></button>
