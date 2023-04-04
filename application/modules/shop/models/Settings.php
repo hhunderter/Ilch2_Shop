@@ -165,6 +165,13 @@ class Settings extends Model
     protected $clientID;
 
     /**
+     * The paypal.me name.
+     *
+     * @var string
+     */
+    protected $paypalMe;
+
+    /**
      * The ifSampleData of the settings.
      *
      * @var int
@@ -605,6 +612,28 @@ class Settings extends Model
     public function setClientID(string $clientID): void
     {
         $this->clientID = $clientID;
+    }
+
+    /**
+     * Get the Paypal.me name.
+     *
+     * @return string
+     */
+    public function getPayPalMe(): ?string
+    {
+        return $this->paypalMe;
+    }
+
+    /**
+     * Set the PayPal.me name.
+     *
+     * @param string $name
+     * @return Settings
+     */
+    public function setPayPalMe(string $name)
+    {
+        $this->paypalMe = $name;
+        return $this;
     }
 
     /**

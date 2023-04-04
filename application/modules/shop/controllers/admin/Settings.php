@@ -18,7 +18,7 @@ class Settings extends Admin
     {
         $items = [
             [
-                'name' => 'menuOverwiev',
+                'name' => 'menuOverview',
                 'active' => false,
                 'icon' => 'fa-solid fa-shop',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
@@ -247,6 +247,7 @@ class Settings extends Admin
         if ($this->getRequest()->isPost()) {
             $model = new SettingsModel();
             $model->setClientID($this->getRequest()->getPost('clientID'));
+            $model->setPayPalMe($this->getRequest()->getPost('paypalMe'));
             $settingsMapper->updateSettingPayment($model);
             $this->addMessage('saveSuccess');
         }

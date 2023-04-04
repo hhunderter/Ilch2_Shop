@@ -142,7 +142,8 @@ class Settings extends Mapper
     {
         $this->db()->update('shop_settings')
             ->values([
-                'paymentClientID' => $settingPayment->getClientID()
+                'paymentClientID' => $settingPayment->getClientID(),
+                'paypalMe' => $settingPayment->getPayPalMe()
             ])
             ->where(['id' => '1'])
             ->execute();

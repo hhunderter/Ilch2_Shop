@@ -54,6 +54,26 @@
             </div>
         </div>
     </div>
+    <hr>
+    <p><?=$this->getTrans('paypalMeDesc') ?></p>
+    <div class="form-group">
+        <label for="paypalMe" class="col-lg-2 control-label">
+            <?=$this->getTrans('paypalMe') ?>:
+        </label>
+        <div class="col-lg-4">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('paypalMeInfo') ?>"></span>
+                </span>
+                <input type="text"
+                       class="form-control"
+                       id="paypalMe"
+                       name="paypalMe"
+                       placeholder="<?=$this->getTrans('paypalMeName') ?>"
+                       value="<?=($this->escape($this->get('settings')->getPayPalMe()) != '') ? $this->escape($this->get('settings')->getPayPalMe()) : $this->escape($this->originalInput('paypalMe')) ?>" />
+            </div>
+        </div>
+    </div>
     <?=$this->getSaveBar('saveButton') ?>
 </form>
 

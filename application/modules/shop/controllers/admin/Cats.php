@@ -18,7 +18,7 @@ class Cats extends Admin
     {
         $items = [
             [
-                'name' => 'menuOverwiev',
+                'name' => 'menuOverview',
                 'active' => false,
                 'icon' => 'fa-solid fa-shop',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
