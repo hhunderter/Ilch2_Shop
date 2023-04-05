@@ -172,6 +172,13 @@ class Settings extends Model
     protected $paypalMe;
 
     /**
+     * Preset the invoice amount when using PayPal.Me
+     *
+     * @var bool
+     */
+    protected $paypalMePresetAmount;
+
+    /**
      * The ifSampleData of the settings.
      *
      * @var int
@@ -615,7 +622,7 @@ class Settings extends Model
     }
 
     /**
-     * Get the Paypal.me name.
+     * Get the PayPal.Me name.
      *
      * @return string
      */
@@ -625,15 +632,33 @@ class Settings extends Model
     }
 
     /**
-     * Set the PayPal.me name.
+     * Set the PayPal.Me name.
      *
      * @param string $name
-     * @return Settings
      */
     public function setPayPalMe(string $name)
     {
         $this->paypalMe = $name;
-        return $this;
+    }
+
+    /**
+     * Preset the invoice amount when using PayPal.Me
+     *
+     * @return bool
+     */
+    public function isPaypalMePresetAmount(): bool
+    {
+        return $this->paypalMePresetAmount;
+    }
+
+    /**
+     * Set if the invoice amount should be preset when using PayPal.Me
+     *
+     * @param bool $paypalMePresetAmount
+     */
+    public function setPaypalMePresetAmount(bool $paypalMePresetAmount): void
+    {
+        $this->paypalMePresetAmount = $paypalMePresetAmount;
     }
 
     /**

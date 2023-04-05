@@ -248,6 +248,7 @@ class Settings extends Admin
             $model = new SettingsModel();
             $model->setClientID($this->getRequest()->getPost('clientID'));
             $model->setPayPalMe($this->getRequest()->getPost('paypalMe'));
+            $model->setPaypalMePresetAmount($this->getRequest()->getPost('paypalMePresetAmount'));
             $settingsMapper->updateSettingPayment($model);
             $this->addMessage('saveSuccess');
         }

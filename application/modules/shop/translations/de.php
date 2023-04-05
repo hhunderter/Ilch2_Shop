@@ -236,6 +236,7 @@ return [
     'paypalMe' => 'PayPal.Me',
     'paypalMeName' => 'PayPal.Me Name',
     'paypalMeInfo' => 'Mit PayPal.Me können Sie einfach Geld über PayPal empfangen. Teilen Sie dazu lediglich Ihren persönlichen PayPal.Me-Link (paypal.me/Name) mit anderen Personen. Diese können Ihnen dann jederzeit Geld senden. Sie tippen einfach auf Ihren Link und senden Ihnen das Geld. Um Ihren PayPal.Me-Link zu erstellen, besuchen Sie einfach PayPal.Me.',
+    'paypalMePresetAmount' => 'Rechnungsbetrag vorgeben',
     'menuPayment' => 'Bezahlmethoden',
     'infoPayPalBusiness' => 'Sie benötigen ein PayPal Geschäftskonto oder PayPal.Me zum Einrichten der Bezahlmethode.',
     'paymentInvoiceLink' => 'Rechnung bezahlen',

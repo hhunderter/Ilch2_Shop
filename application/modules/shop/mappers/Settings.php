@@ -51,6 +51,8 @@ class Settings extends Mapper
         $model->setFixShippingCosts($serverRow['fixShippingCosts']);
         $model->setFixShippingTime($serverRow['fixShippingTime']);
         $model->setClientID($serverRow['paymentClientID']);
+        $model->setPayPalMe($serverRow['paypalMe']);
+        $model->setPaypalMePresetAmount($serverRow['paypalMePresetAmount']);
         $model->setIfSampleData($serverRow['ifSampleData']);
 
         return $model;
@@ -143,7 +145,8 @@ class Settings extends Mapper
         $this->db()->update('shop_settings')
             ->values([
                 'paymentClientID' => $settingPayment->getClientID(),
-                'paypalMe' => $settingPayment->getPayPalMe()
+                'paypalMe' => $settingPayment->getPayPalMe(),
+                'payPalMePresetAmount' => $settingPayment->isPaypalMePresetAmount()
             ])
             ->where(['id' => '1'])
             ->execute();

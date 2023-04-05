@@ -236,6 +236,7 @@ return [
     'paypalMe' => 'PayPal.Me',
     'paypalMeName' => 'PayPal.Me name',
     'paypalMeInfo' => 'PayPal.Me is an easier way to get paid through PayPal. Just share your PayPal.Me link (PayPal.me/Name) with others, and they can send you money whenever they want. They can just click on your link and send the money. To create your own PayPal.Me link, just visit PayPal.Me.',
+    'paypalMePresetAmount' => 'Preset invoice amount',
     'menuPayment' => 'Method of payment',
     'infoPayPalBusiness' => 'You need a PayPal Business account or PayPal.Me to setup the payment method.',
     'paymentInvoiceLink' => 'Pay invoice',

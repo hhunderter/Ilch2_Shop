@@ -247,7 +247,7 @@ class Orders extends Admin
         $mailContent = $emailsMapper->getEmail('shop', 'send_invoice_mail', $this->getTranslator()->getLocale());
         $templateName = 'sendinvoice.php';
 
-        if (!$settingsMapper->getSettings()->getClientID()) {
+        if (!$settingsMapper->getSettings()->getClientID() && !$settingsMapper->getSettings()->getPayPalMe()) {
             // PayPal not configured. Send email without payment link.
             $mailContent = $emailsMapper->getEmail('shop', 'send_invoice_mail_no_paymentlink', $this->getTranslator()->getLocale());
             $templateName = 'sendinvoicenopaymentlink.php';
@@ -267,9 +267,15 @@ class Orders extends Admin
             '{shopname}' => $this->getLayout()->escape($settingsMapper->getSettings()->getShopName()),
             '{date}' => $date->format('l, d. F Y', true),
             '{name}' => $name,
-            '{paymentLink}' => '<a href="'.BASE_URL.'/index.php/shop/payment/index/selector/'.$order->getSelector().'/code/'.$order->getConfirmCode().'">'.$this->getTranslator()->trans('paymentInvoiceLink').'</a>',
             '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
         ];
+
+        if (!$settingsMapper->getSettings()->getClientID() && $settingsMapper->getSettings()->getPayPalMe()) {
+            $messageReplace['{paymentLink}'] = '<a href="https://paypal.me/'.$settingsMapper->getSettings()->getPayPalMe().'">'.$this->getTranslator()->trans('paymentInvoiceLink').'</a>';
+        } else {
+            $messageReplace['{paymentLink}'] = '<a href="'.BASE_URL.'/index.php/shop/payment/index/selector/'.$order->getSelector().'/code/'.$order->getConfirmCode().'">'.$this->getTranslator()->trans('paymentInvoiceLink').'</a>';
+        }
+
         $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
         $mail = new Mail();
