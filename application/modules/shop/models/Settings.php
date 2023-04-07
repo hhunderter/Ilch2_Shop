@@ -165,6 +165,20 @@ class Settings extends Model
     protected $clientID;
 
     /**
+     * The paypal.me name.
+     *
+     * @var string
+     */
+    protected $paypalMe;
+
+    /**
+     * Preset the invoice amount when using PayPal.Me
+     *
+     * @var bool
+     */
+    protected $paypalMePresetAmount;
+
+    /**
      * The ifSampleData of the settings.
      *
      * @var int
@@ -605,6 +619,46 @@ class Settings extends Model
     public function setClientID(string $clientID): void
     {
         $this->clientID = $clientID;
+    }
+
+    /**
+     * Get the PayPal.Me name.
+     *
+     * @return string
+     */
+    public function getPayPalMe(): ?string
+    {
+        return $this->paypalMe;
+    }
+
+    /**
+     * Set the PayPal.Me name.
+     *
+     * @param string $name
+     */
+    public function setPayPalMe(string $name)
+    {
+        $this->paypalMe = $name;
+    }
+
+    /**
+     * Preset the invoice amount when using PayPal.Me
+     *
+     * @return bool
+     */
+    public function isPaypalMePresetAmount(): bool
+    {
+        return $this->paypalMePresetAmount;
+    }
+
+    /**
+     * Set if the invoice amount should be preset when using PayPal.Me
+     *
+     * @param bool $paypalMePresetAmount
+     */
+    public function setPaypalMePresetAmount(bool $paypalMePresetAmount): void
+    {
+        $this->paypalMePresetAmount = $paypalMePresetAmount;
     }
 
     /**

@@ -18,7 +18,7 @@ class Index extends Admin
     {
         $items = [
             [
-                'name' => 'menuOverwiev',
+                'name' => 'menuOverview',
                 'active' => true,
                 'icon' => 'fa-solid fa-shop',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])

@@ -54,6 +54,40 @@
             </div>
         </div>
     </div>
+    <hr>
+    <p><?=$this->getTrans('paypalMeDesc') ?></p>
+    <div class="form-group">
+        <label for="paypalMe" class="col-lg-2 control-label">
+            <?=$this->getTrans('paypalMe') ?>:
+        </label>
+        <div class="col-lg-4">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('paypalMeInfo') ?>"></span>
+                </span>
+                <input type="text"
+                       class="form-control"
+                       id="paypalMe"
+                       name="paypalMe"
+                       placeholder="<?=$this->getTrans('paypalMeName') ?>"
+                       value="<?=($this->escape($this->get('settings')->getPayPalMe()) != '') ? $this->escape($this->get('settings')->getPayPalMe()) : $this->escape($this->originalInput('paypalMe')) ?>" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group <?=$this->validation()->hasError('paypalMePresetAmount') ? 'has-error' : '' ?>">
+        <label for="paypalMePresetAmount" class="col-lg-2 control-label">
+            <?=$this->getTrans('paypalMePresetAmount') ?>:
+        </label>
+        <div class="col-lg-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="paypalMePresetAmount-on" name="paypalMePresetAmount" value="1" <?=($this->get('settings') && $this->get('settings')->isPayPalMePresetAmount() == '1') ? 'checked="checked"' : '' ?> />
+                <label for="paypalMePresetAmount-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" id="paypalMePresetAmount-off" name="paypalMePresetAmount" value="0" <?=(empty($this->get('settings')) || $this->get('settings')->isPayPalMePresetAmount() != '1') ? 'checked="checked"' : '' ?> />
+                <label for="paypalMePresetAmount-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
     <?=$this->getSaveBar('saveButton') ?>
 </form>
 

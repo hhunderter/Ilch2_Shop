@@ -341,6 +341,7 @@ a.thumbnail:hover {
     -moz-transform: rotate(-45deg);
     -ms-transform: rotate(-45deg);
     -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
     position: relative;
     padding: 5px 0;
     top: 15px;

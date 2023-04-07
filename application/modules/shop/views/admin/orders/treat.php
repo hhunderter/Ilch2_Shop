@@ -107,7 +107,7 @@ $settingsMapper = $this->get('settingsMapper');
                         $img = BASE_URL.$shopImgPath.'noimg.jpg';
                     }
                     $currency = iconv('UTF-8', 'windows-1252', $this->escape($this->get('currency')));
-                    $pdfOrderData[] = array(
+                    $pdfOrderData[] = [
                         $pdfOrderNr++,
                         utf8_decode($itemName),
                         number_format($itemPriceWithoutTax, 2, '.', '').' '.$currency,
@@ -115,7 +115,7 @@ $settingsMapper = $this->get('settingsMapper');
                         number_format($itemPrice, 2, '.', '').' '.$currency,
                         $orderItem['quantity'],
                         number_format($itemPrice * $orderItem['quantity'], 2, '.', '').' '.$currency,
-                        utf8_decode($this->getTrans('itemNumberShort')).' '.$itemNumber);
+                        utf8_decode($this->getTrans('itemNumberShort')).' '.$itemNumber];
                 ?>
                 <tr>
                     <td><img src="<?=$img ?>" class="item_image" alt="<?=$this->escape($itemName) ?>"> </td>
@@ -332,7 +332,7 @@ $settingsMapper = $this->get('settingsMapper');
                 $this->SetDrawColor(100, 100, 100);
                 $this->SetLineWidth(.1);
                 $this->SetFont('Arial', 'B', 9);
-                $w = array(5, 65, 26, 10, 26, 12, 26);
+                $w = [5, 65, 26, 10, 26, 12, 26];
                 $this->Cell($w[0], 6, $this->OrderHeader[0], 1, 0, 'R', true);
                 $this->Cell($w[1], 6, $this->OrderHeader[1], 1, 0, 'L', true);
                 $this->Cell($w[2], 6, $this->OrderHeader[2], 1, 0, 'R', true);
@@ -463,13 +463,13 @@ $settingsMapper = $this->get('settingsMapper');
         $pdf->nameNumber = $nameNumber = utf8_decode($this->getTrans('numberShort'));
         $pdf->invoiceNr = $invoiceNr;
         $pdf->invoiceTextTop = utf8_decode($settingsMapper->getSettings()->getInvoiceTextTop());
-        $pdf->OrderHeader = array('#',
+        $pdf->OrderHeader = ['#',
               utf8_decode($this->getTrans('productName')),
               utf8_decode($this->getTrans('singlePrice')),
               utf8_decode($this->getTrans('taxShort')),
               utf8_decode($this->getTrans('singlePrice')),
               utf8_decode($this->getTrans('entries')),
-              utf8_decode($this->getTrans('total')));
+              utf8_decode($this->getTrans('total'))];
         $pdf->OrderData = $pdfOrderData;
         $pdf->OrderCurrency = iconv('UTF-8', 'windows-1252', $this->escape($this->get('currency')));
         $pdf->nameDeliveryCosts = utf8_decode($this->getTrans('deliveryCosts')).':';
