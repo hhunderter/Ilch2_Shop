@@ -53,7 +53,7 @@ $purchaseUnits = [];
                         $img = BASE_URL.$shopImgPath.'noimg.jpg';
                     }
                     $currency = iconv('UTF-8', 'windows-1252', $this->escape($this->get('currency')->getName()));
-                    $pdfOrderData[] = array(
+                    $pdfOrderData[] = [
                         $pdfOrderNr++,
                         utf8_decode($itemName),
                         number_format($itemPriceWithoutTax, 2, '.', '').' '.$currency,
@@ -61,7 +61,7 @@ $purchaseUnits = [];
                         number_format($itemPrice, 2, '.', '').' '.$currency,
                         $orderItem['quantity'],
                         number_format($itemPrice * $orderItem['quantity'], 2, '.', '').' '.$currency,
-                        utf8_decode($this->getTrans('itemNumberShort')).' '.$itemNumber);
+                        utf8_decode($this->getTrans('itemNumberShort')).' '.$itemNumber];
                     ?>
                     <tr>
                         <td><img src="<?=$img ?>" class="item_image" alt="<?=$this->escape($itemName) ?>"> </td>

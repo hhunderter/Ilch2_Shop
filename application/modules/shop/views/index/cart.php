@@ -49,6 +49,7 @@ if (!empty($_SESSION['shopping_cart'])) {
 <div class="table cart">
     <?php
     if (isset($_SESSION['shopping_cart'])) {
+        $arrayShippingCosts = [0];
         $subtotal_price = 0; ?>
         <table>
             <thead>
@@ -72,7 +73,6 @@ if (!empty($_SESSION['shopping_cart'])) {
                     $itemNumber = '';
                     $itemImg = '';
                     $itemMaxStock = '';
-                    $arrayShippingCosts = [0];
 
                     if ($item) {
                         $itemCode = $item->getCode();

@@ -12,12 +12,12 @@ if (isset($_POST['code']) && $_POST['code'] != '') {
     $price = $shopItem->getPrice();
     $image = $shopItem->getImage();
 
-    $cartArray = array(
-        $code => array(
+    $cartArray = [
+        $code => [
         'id' => $id,
         'code' => $code,
-        'quantity' => $quantity)
-    );
+        'quantity' => $quantity]
+    ];
     
     if(empty($_SESSION['shopping_cart'])) {
         $_SESSION['shopping_cart'] = $cartArray;

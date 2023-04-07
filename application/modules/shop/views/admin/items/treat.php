@@ -11,11 +11,11 @@ $shopImgPath = '/application/modules/shop/static/img/';
 <?php if ($this->get('cats') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
-        
+
         <div class="form-group <?=$this->validation()->hasError('status') ? 'has-error' : '' ?>">
-            <div for="status" class="col-lg-2 control-label">
+            <label for="status" class="col-lg-2 control-label">
                 <?=$this->getTrans('visibility') ?>
-            </div>
+            </label>
             <div class="col-lg-4">
                 <div class="flipswitch">
                     <input type="radio" class="flipswitch-input" id="status-on" name="status" value="1" <?php if ($this->get('shopItem') && $this->get('shopItem')->getStatus() == '1') { echo 'checked="checked"'; } ?> />

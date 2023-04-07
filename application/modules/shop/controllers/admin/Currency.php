@@ -198,10 +198,9 @@ class Currency extends Admin
 
             $currencyMapper->deleteCurrencyById($id);
             $this->addMessage('deleteSuccess');
-            $this->redirect(['action' => 'index']);
         } else {
             $this->addMessage('deleteCurrencyFailed', 'danger');
-            $this->redirect(['action' => 'index']);
         }
+        $this->redirect(['action' => 'index']);
     }
 }

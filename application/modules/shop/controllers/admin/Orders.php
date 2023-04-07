@@ -229,6 +229,7 @@ class Orders extends Admin
         $orderMapper = new OrdersMapper();
         $settingsMapper = new SettingsMapper();
 
+        $settings = $settingsMapper->getSettings();
         $id = $this->getRequest()->getParam('id');
         $order = $orderMapper->getOrderById($id);
 
@@ -247,7 +248,7 @@ class Orders extends Admin
         $mailContent = $emailsMapper->getEmail('shop', 'send_invoice_mail', $this->getTranslator()->getLocale());
         $templateName = 'sendinvoice.php';
 
-        if (!$settingsMapper->getSettings()->getClientID() && !$settingsMapper->getSettings()->getPayPalMe()) {
+        if (!$settings->getClientID() && !$settings->getPayPalMe()) {
             // PayPal not configured. Send email without payment link.
             $mailContent = $emailsMapper->getEmail('shop', 'send_invoice_mail_no_paymentlink', $this->getTranslator()->getLocale());
             $templateName = 'sendinvoicenopaymentlink.php';
@@ -264,14 +265,14 @@ class Orders extends Admin
         }
         $messageReplace = [
             '{content}' => $this->getLayout()->purify($mailContent->getText()),
-            '{shopname}' => $this->getLayout()->escape($settingsMapper->getSettings()->getShopName()),
+            '{shopname}' => $this->getLayout()->escape($settings->getShopName()),
             '{date}' => $date->format('l, d. F Y', true),
             '{name}' => $name,
             '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
         ];
 
-        if (!$settingsMapper->getSettings()->getClientID() && $settingsMapper->getSettings()->getPayPalMe()) {
-            $messageReplace['{paymentLink}'] = '<a href="https://paypal.me/'.$settingsMapper->getSettings()->getPayPalMe().'">'.$this->getTranslator()->trans('paymentInvoiceLink').'</a>';
+        if (!$settings->getClientID() && $settings->getPayPalMe()) {
+            $messageReplace['{paymentLink}'] = '<a href="https://paypal.me/'.urlencode($settings->getPayPalMe()).'">'.$this->getTranslator()->trans('paymentInvoiceLink').'</a>';
         } else {
             $messageReplace['{paymentLink}'] = '<a href="'.BASE_URL.'/index.php/shop/payment/index/selector/'.$order->getSelector().'/code/'.$order->getConfirmCode().'">'.$this->getTranslator()->trans('paymentInvoiceLink').'</a>';
         }
