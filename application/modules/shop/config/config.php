@@ -139,7 +139,6 @@ class Config extends Install
                     `costumerId` INT(11) NOT NULL,
                     `invoiceAddressId` INT(11) NOT NULL,
                     `deliveryAddressId` INT(11) NOT NULL,
-                    `order` MEDIUMTEXT NOT NULL,
                     `invoicefilename` VARCHAR(255) NOT NULL,
                     `datetimeInvoiceSent` DATETIME NOT NULL,
                     `selector` char(18),
