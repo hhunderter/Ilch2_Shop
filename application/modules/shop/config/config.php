@@ -47,6 +47,7 @@ class Config extends Install
             DROP TABLE `[prefix]_shop_currencies`;
             DROP TABLE `[prefix]_shop_items`;
             DROP TABLE `[prefix]_shop_addresses`;
+            DROP TABLE `[prefix]_shop_orderdetails`;
             DROP TABLE `[prefix]_shop_orders`;
             DROP TABLE `[prefix]_shop_costumers`;
             DROP TABLE `[prefix]_shop_settings`;');
@@ -134,6 +135,7 @@ class Config extends Install
                 CREATE TABLE IF NOT EXISTS `[prefix]_shop_orders` (
                     `id` INT(11) NOT NULL AUTO_INCREMENT,
                     `datetime` DATETIME NOT NULL,
+                    `currencyId` INT(11) NOT NULL,
                     `costumerId` INT(11) NOT NULL,
                     `invoiceAddressId` INT(11) NOT NULL,
                     `deliveryAddressId` INT(11) NOT NULL,
@@ -146,6 +148,19 @@ class Config extends Install
                     PRIMARY KEY (`id`) USING BTREE,
                     INDEX `FK_[prefix]_shop_orders_[prefix]_shop_costumers` (`costumerId`) USING BTREE,
                     CONSTRAINT `FK_[prefix]_shop_orders_[prefix]_shop_costumers` FOREIGN KEY (`costumerId`) REFERENCES `[prefix]_shop_costumers` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_shop_orderdetails` (
+                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+                    `orderId` INT(11) NOT NULL,
+                    `itemId` INT(11) NOT NULL,
+                    `price` DOUBLE(9,2) NOT NULL,
+                    `quantity` INT(11) NOT NULL,
+                    `tax` INT(11) NOT NULL,
+                    `shippingCosts` DOUBLE(9,2) NOT NULL,
+                    PRIMARY KEY (`id`) USING BTREE,
+                    INDEX `FK_[prefix]_shop_orderdetails_[prefix]_shop_orders` (`orderId`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_shop_orderdetails_[prefix]_shop_orders` FOREIGN KEY (`orderId`) REFERENCES `[prefix]_shop_orders` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_shop_settings` (
@@ -290,11 +305,21 @@ class Config extends Install
                     (3, 3, "Bernd", "Mustermann", "Musterstr. 13", 56789, "Musterdorf", "Deutschland"),
                     (4, 4, "Ingrid", "Musterfrau", "Musterstr. 7", 34567, "Musterort", "Deutschland");
 
-                INSERT INTO `[prefix]_shop_orders` (`id`, `costumerId`, `invoiceAddressId`, `deliveryAddressId`, `datetime`, `order`, `invoicefilename`, `datetimeInvoiceSent`, `selector`, `confirmCode`, `status`) VALUES
-                    (1, 1, 1, 1, "2020-04-22 11:47:27", "{\'tshirttotenkopf_1587485020\':{\'id\':1,\'code\':\'tshirttotenkopf_1587485020\',\'quantity\':\'1\'},\'rawcapblack_1587485064\':{\'id\':5,\'code\':\'rawcapblack_1587485064\',\'quantity\':\'2\'}}", "", "", "", "", 3),
-                    (2, 2, 2, 2, "2020-04-25 05:39:12", "{\'sporttasche_1587485069\':{\'id\':7,\'code\':\'sporttasche_1587485069\',\'quantity\':\'2\'},\'tshirtbeach_1587485058\':{\'id\':3,\'code\':\'tshirtbeach_1587485058\',\'quantity\':\'1\'}}", "", "", "", "", 1),
-                    (3, 3, 3, 3, "2020-04-25 11:51:36", "{\'rawcaporange_1587485061\':{\'id\':4,\'code\':\'rawcaporange_1587485061\',\'quantity\':\'1\'},\'rawcapblack_1587485064\':{\'id\':5,\'code\':\'rawcapblack_1587485064\',\'quantity\':\'2\'},\'rawcapblau_1587485067\':{\'id\':6,\'code\':\'rawcapblau_1587485067\',\'quantity\':\'1\'}}", "", "", "", "", 1),
-                    (4, 4, 4, 4, "2020-04-26 09:54:38", "{\'sporttasche_1587485069\':{\'id\':7,\'code\':\'sporttasche_1587485069\',\'quantity\':\'5\'}}", "", "", "", "", 0);
+                INSERT INTO `[prefix]_shop_orders` (`id`, `currencyId`, `costumerId`, `invoiceAddressId`, `deliveryAddressId`, `datetime`, `invoicefilename`, `datetimeInvoiceSent`, `selector`, `confirmCode`, `status`) VALUES
+                    (1, 1, 1, 1, 1, "2020-04-22 11:47:27", "", "", "", "", 3),
+                    (2, 1, 2, 2, 2, "2020-04-25 05:39:12", "", "", "", "", 1),
+                    (3, 1, 3, 3, 3, "2020-04-25 11:51:36", "", "", "", "", 1),
+                    (4, 1, 4, 4, 4, "2020-04-26 09:54:38", "", "", "", "", 0);
+
+                INSERT INTO `[prefix]_shop_orderdetails` (`id`, `orderId`, `itemId`, `price`, `quantity`, `tax`, `shippingCosts`) VALUES
+                    (1, 1, 1, 25.00, 1, 19, 0.00),
+                    (2, 1, 5, 25.00, 2, 19, 0.00),
+                    (3, 2, 7, 65.90, 2, 19, 0.00),
+                    (4, 2, 3, 19.50, 1, 19, 0.00),
+                    (5, 3, 4, 24.00, 1, 19, 0.00),
+                    (6, 3, 5, 25.00, 2, 19, 0.00),
+                    (7, 3, 6, 21.00, 1, 19, 0.00),
+                    (8, 4, 7, 21.00, 1, 19, 0.00);
 
 /***   example entries   ***/';
     }

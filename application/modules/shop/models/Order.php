@@ -26,7 +26,14 @@ class Order extends Model
     protected $datetime;
 
     /**
-     * The id of the order.
+     * The currency id of the order.
+     *
+     * @var int
+     */
+    protected $currencyId;
+
+    /**
+     * The costumer id of the order.
      *
      * @var int
      */
@@ -59,6 +66,13 @@ class Order extends Model
      * @var string
      */
     protected $order;
+
+    /**
+     * The array of the order details models.
+     *
+     * @var Orderdetails[]
+     */
+    protected $orderdetails;
 
     /**
      * The filename of the invoice.
@@ -99,6 +113,7 @@ class Order extends Model
     {
         $this->deliveryAddress = new AddressModel();
         $this->invoiceAddress = new AddressModel();
+        $this->orderdetails = new Orderdetails();
     }
 
     /**
@@ -144,6 +159,28 @@ class Order extends Model
     {
         $this->datetime = $datetime;
 
+        return $this;
+    }
+
+    /**
+     * Get the currency id of the order.
+     *
+     * @return int
+     */
+    public function getCurrencyId(): int
+    {
+        return $this->currencyId;
+    }
+
+    /**
+     * Set the currency id of the order.
+     *
+     * @param int $currencyId
+     * @return Order
+     */
+    public function setCurrencyId(int $currencyId): Order
+    {
+        $this->currencyId = $currencyId;
         return $this;
     }
 
@@ -237,16 +274,6 @@ class Order extends Model
     }
 
     /**
-     * Gets the order/shopping cart of the order as json string.
-     *
-     * @return string
-     */
-    public function getOrder(): string
-    {
-        return $this->order;
-    }
-
-    /**
      * Sets the order/shopping cart of the order as json string.
      *
      * @param string $order
@@ -256,6 +283,28 @@ class Order extends Model
     {
         $this->order = $order;
 
+        return $this;
+    }
+
+    /**
+     * Get the orderdetails
+     *
+     * @return Orderdetails[]
+     */
+    public function getOrderdetails(): array
+    {
+        return $this->orderdetails;
+    }
+
+    /**
+     * Set the orderdetails
+     *
+     * @param Orderdetails[] $orderdetails
+     * @return Order
+     */
+    public function setOrderdetails(Array $orderdetails): Order
+    {
+        $this->orderdetails = $orderdetails;
         return $this;
     }
 

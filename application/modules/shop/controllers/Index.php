@@ -217,7 +217,7 @@ class Index extends Frontend
                     if ($this->getRequest()->getPost('dropdownInvoiceAddress')) {
                         // Don't use possible user input. Get the address from the database.
                         if (empty($costumer)) {
-                            // Pretends to select a known address of him, but isn't a costumer? Redirect with error message.
+                            // Pretends to select a known address of him, but isn't a customer? Redirect with error message.
                             $this->addMessage('unknownCostumer', 'danger');
                             $this->redirect()
                                 ->to(['action' => 'order']);

@@ -107,9 +107,9 @@ class Items extends Admin
             foreach ($this->getRequest()->getPost('check_shops') as $itemId) {
                 $itemInUse = 0;
                 foreach ($ordersMapper->getOrders() as $val) {
-                    $orderItems = json_decode(str_replace("'", '"', $val->getOrder()), true);
+                    $orderItems = $val->getOrderdetails();
                     foreach ($orderItems as $valOrder) {
-                        if ($valOrder['id'] == $itemId) {
+                        if ($valOrder->getItemId() == $itemId) {
                             $itemInUse = 1;
                         }
                     }
@@ -228,9 +228,9 @@ class Items extends Admin
             $ordersMapper = new OrdersMapper();
             $itemInUse = 0;
             foreach ($ordersMapper->getOrders() as $val) {
-                $orderItems = json_decode(str_replace("'", '"', $val->getOrder()), true);
+                $orderItems = $val->getOrderdetails();
                 foreach ($orderItems as $valOrder) {
-                    if ($valOrder['id'] == $this->getRequest()->getParam('id')) {
+                    if ($valOrder->getItemId() == $this->getRequest()->getParam('id')) {
                         $itemInUse = 1;
                     }
                 }

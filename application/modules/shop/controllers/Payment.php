@@ -53,6 +53,6 @@ class Payment extends Frontend
         $this->getView()->set('itemsMapper', $itemsMapper);
         $this->getView()->set('order', $order);
         $this->getView()->set('settings', $settings);
-        $this->getView()->set('currency', $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0]);
+        $this->getView()->set('currency', $currencyMapper->getCurrencyById($order->getCurrencyId())[0]);
     }
 }

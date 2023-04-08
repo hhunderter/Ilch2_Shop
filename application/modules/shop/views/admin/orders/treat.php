@@ -82,11 +82,11 @@ $settingsMapper = $this->get('settingsMapper');
             </thead>
             <tbody>
                 <?php 
-                $orderItems = json_decode(str_replace("'", '"', $order->getOrder()), true);
+                $orderItems = $order->getOrderdetails();
                 $subtotal_price = 0;
                 $pdfOrderNr = 1;
                 foreach ($orderItems as $orderItem):
-                    $itemId = $orderItem['id'];
+                    $itemId = $orderItem->getItemId();
                     $item = $itemsMapper->getShopItemById($itemId);
                     $itemImg = $item->getImage();
                     $itemName = $item->getName();
@@ -98,8 +98,8 @@ $settingsMapper = $this->get('settingsMapper');
                     $itemShippingTime = $item->getShippingTime();
                     $arrayShippingTime[] = $itemShippingTime;
                     $arrayTaxes[] = $itemTax;
-                    $arrayPrices[] = $itemPrice * $orderItem['quantity'];
-                    $arrayPricesWithoutTax[] = $itemPriceWithoutTax * $orderItem['quantity'];
+                    $arrayPrices[] = $itemPrice * $orderItem->getQuantity();
+                    $arrayPricesWithoutTax[] = $itemPriceWithoutTax * $orderItem->getQuantity();
                     $shopImgPath = '/application/modules/shop/static/img/';
                     if ($itemImg AND file_exists(ROOT_PATH.'/'.$itemImg)) {
                         $img = BASE_URL.'/'.$itemImg;
@@ -113,8 +113,8 @@ $settingsMapper = $this->get('settingsMapper');
                         number_format($itemPriceWithoutTax, 2, '.', '').' '.$currency,
                         $itemTax.' %',
                         number_format($itemPrice, 2, '.', '').' '.$currency,
-                        $orderItem['quantity'],
-                        number_format($itemPrice * $orderItem['quantity'], 2, '.', '').' '.$currency,
+                        $orderItem->getQuantity(),
+                        number_format($itemPrice * $orderItem->getQuantity(), 2, '.', '').' '.$currency,
                         utf8_decode($this->getTrans('itemNumberShort')).' '.$itemNumber];
                 ?>
                 <tr>
@@ -131,13 +131,13 @@ $settingsMapper = $this->get('settingsMapper');
                         <b><?=number_format($itemPrice, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
                     </td>
                     <td class="text-center">
-                        <b><?=$orderItem['quantity'] ?></b>
+                        <b><?=$orderItem->getQuantity() ?></b>
                     </td>
                     <td class="text-right">
-                        <b><?=number_format($itemPrice * $orderItem['quantity'], 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
+                        <b><?=number_format($itemPrice * $orderItem->getQuantity(), 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
                     </td>
                 </tr>
-                <?php $subtotal_price += round($itemPrice * $orderItem['quantity'], 2); ?>
+                <?php $subtotal_price += round($itemPrice * $orderItem->getQuantity(), 2); ?>
                 <?php endforeach; ?>
                 <tr>
                     <td colspan="7" class="text-right finished">
