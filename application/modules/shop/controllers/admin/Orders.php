@@ -101,7 +101,7 @@ class Orders extends Admin
                 $this->addMessage('deleteSuccess');
             }
         }
-        
+
         $this->getView()->set('ordersMapper', $ordersMapper->getOrders());
     }
 

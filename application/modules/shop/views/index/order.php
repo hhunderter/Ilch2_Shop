@@ -397,12 +397,12 @@ if(!empty($_SESSION['shopping_cart'])) {
                     </tr>
                 </table>
             </div>
-            
+
             <h4><?=$this->getTrans('confirmation') ?></h4>
             <div class="row space20"></div>
-            
+
             <div class="form-group <?=$this->validation()->hasError('acceptOrder') ? 'has-error' : '' ?>">
-                <label class="col-lg-2 control-label">
+                <label for="acceptOrder" class="col-lg-2 control-label">
                     <?=$this->getTrans('acceptOrder') ?>&nbsp;*
                 </label>
                 <div class="col-lg-9">
@@ -414,7 +414,7 @@ if(!empty($_SESSION['shopping_cart'])) {
                            <?=($this->originalInput('acceptOrder') != '' ? 'checked' : '') ?> />
                 </div>
             </div>
-            
+
             <div class="row space20"></div>
             <?=$this->getTrans('acceptText') ?>
 

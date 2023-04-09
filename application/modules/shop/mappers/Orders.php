@@ -169,6 +169,10 @@ class Orders extends Mapper
                 ->execute();
         }
 
+        foreach($order->getOrderdetails() as $orderdetail) {
+            $orderdetail->setOrderId($id);
+        }
+
         $orderdetailsMapper->save($order->getOrderdetails());
         return $id;
     }

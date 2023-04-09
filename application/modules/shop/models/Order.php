@@ -61,13 +61,6 @@ class Order extends Model
     protected $email;
 
     /**
-     * The json string of the order.
-     *
-     * @var string
-     */
-    protected $order;
-
-    /**
      * The array of the order details models.
      *
      * @var Orderdetails[]
@@ -269,19 +262,6 @@ class Order extends Model
     public function setEmail(string $email): Order
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Sets the order/shopping cart of the order as json string.
-     *
-     * @param string $order
-     * @return $this
-     */
-    public function setOrder(string $order): Order
-    {
-        $this->order = $order;
 
         return $this;
     }
