@@ -16,8 +16,9 @@ use Modules\Shop\Mappers\Costumer as CostumerMapper;
 use Modules\Shop\Mappers\Currency as CurrencyMapper;
 use Modules\Shop\Mappers\Items as ItemsMapper;
 use Modules\Shop\Mappers\Orders as OrdersMapper;
-use Modules\Shop\Models\Order as OrdersModel;
 use Modules\Shop\Mappers\Settings as SettingsMapper;
+use Modules\Shop\Models\Order as OrdersModel;
+use Modules\Shop\Models\Orderdetails as OrderdetailsModel;
 use Modules\User\Mappers\User as UserMapper;
 use Ilch\Validation;
 
@@ -175,6 +176,7 @@ class Index extends Frontend
             if ($validation->isValid()) {
                 $model = new OrdersModel();
                 $model->setDatetime($ilchDate->toDb());
+                $model->setCurrencyId($currency->getId());
 
                 if (!empty($costumer)) {
                     $addresses = $addressMapper->getAddressesByCostumerId($costumer->getId());
@@ -211,13 +213,39 @@ class Index extends Frontend
                 }
 
                 $model->setEmail($this->getRequest()->getPost('email'));
-                $model->setOrder($this->getRequest()->getPost('order'));
+                $arrayOrder = json_decode(str_replace("'", '"', $this->getRequest()->getPost('order')), true);
+
+                $itemIds = [];
+                foreach($arrayOrder as $orderItem) {
+                    $itemIds[] = $orderItem['id'];
+                }
+
+                $items = $itemsMapper->getShopItems(['id' => $itemIds]);
+                $itemDetails = [];
+                foreach($items as $item) {
+                    $itemDetails[$item->getId()]['price'] = $item->getPrice();
+                    $itemDetails[$item->getId()]['tax'] = $item->getTax();
+                    $itemDetails[$item->getId()]['shippingCosts'] = $item->getShippingCosts();
+                }
+
+                $orderdetails = [];
+                foreach($arrayOrder as $orderItem) {
+                    $orderdetail = new OrderdetailsModel();
+                    // orderId is unknown at this point and gets added in the save function of the order mapper.
+                    $orderdetail->setItemId($orderItem['id']);
+                    $orderdetail->setPrice($itemDetails[$orderItem['id']]['price']);
+                    $orderdetail->setQuantity($orderItem['quantity']);
+                    $orderdetail->setTax($itemDetails[$orderItem['id']]['tax']);
+                    $orderdetail->setShippingCosts($itemDetails[$orderItem['id']]['shippingCosts']);
+                    $orderdetails[] = $orderdetail;
+                }
+                $model->setOrderdetails($orderdetails);
 
                 if ($this->getRequest()->getPost('differentInvoiceAddress')) {
                     if ($this->getRequest()->getPost('dropdownInvoiceAddress')) {
                         // Don't use possible user input. Get the address from the database.
                         if (empty($costumer)) {
-                            // Pretends to select a known address of him, but isn't a costumer? Redirect with error message.
+                            // Pretends to select a known address of him, but isn't a customer? Redirect with error message.
                             $this->addMessage('unknownCostumer', 'danger');
                             $this->redirect()
                                 ->to(['action' => 'order']);
@@ -242,9 +270,6 @@ class Index extends Frontend
                 } else {
                     $model->setInvoiceAddress($model->getDeliveryAddress());
                 }
-
-                $arrayOrder = $this->getRequest()->getPost('order');
-                $arrayOrder = json_decode(str_replace("'", '"', $arrayOrder), true);
 
                 // Check if stock is sufficient for this order.
                 $messages = [];

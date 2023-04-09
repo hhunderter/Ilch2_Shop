@@ -26,7 +26,14 @@ class Order extends Model
     protected $datetime;
 
     /**
-     * The id of the order.
+     * The currency id of the order.
+     *
+     * @var int
+     */
+    protected $currencyId;
+
+    /**
+     * The costumer id of the order.
      *
      * @var int
      */
@@ -54,11 +61,11 @@ class Order extends Model
     protected $email;
 
     /**
-     * The json string of the order.
+     * The array of the order details models.
      *
-     * @var string
+     * @var Orderdetails[]
      */
-    protected $order;
+    protected $orderdetails;
 
     /**
      * The filename of the invoice.
@@ -99,6 +106,7 @@ class Order extends Model
     {
         $this->deliveryAddress = new AddressModel();
         $this->invoiceAddress = new AddressModel();
+        $this->orderdetails = new Orderdetails();
     }
 
     /**
@@ -144,6 +152,28 @@ class Order extends Model
     {
         $this->datetime = $datetime;
 
+        return $this;
+    }
+
+    /**
+     * Get the currency id of the order.
+     *
+     * @return int
+     */
+    public function getCurrencyId(): int
+    {
+        return $this->currencyId;
+    }
+
+    /**
+     * Set the currency id of the order.
+     *
+     * @param int $currencyId
+     * @return Order
+     */
+    public function setCurrencyId(int $currencyId): Order
+    {
+        $this->currencyId = $currencyId;
         return $this;
     }
 
@@ -237,25 +267,24 @@ class Order extends Model
     }
 
     /**
-     * Gets the order/shopping cart of the order as json string.
+     * Get the orderdetails
      *
-     * @return string
+     * @return Orderdetails[]
      */
-    public function getOrder(): string
+    public function getOrderdetails(): array
     {
-        return $this->order;
+        return $this->orderdetails;
     }
 
     /**
-     * Sets the order/shopping cart of the order as json string.
+     * Set the orderdetails
      *
-     * @param string $order
-     * @return $this
+     * @param Orderdetails[] $orderdetails
+     * @return Order
      */
-    public function setOrder(string $order): Order
+    public function setOrderdetails(Array $orderdetails): Order
     {
-        $this->order = $order;
-
+        $this->orderdetails = $orderdetails;
         return $this;
     }
 

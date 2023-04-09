@@ -10,6 +10,7 @@ use Ilch\Mapper;
 use Modules\Shop\Models\Address;
 use Modules\Shop\Models\Order as OrdersModel;
 use Modules\Shop\Mappers\Address as AddressMapper;
+use Modules\Shop\Mappers\Orderdetails as OrderdetailsMapper;
 
 class Orders extends Mapper
 {
@@ -21,10 +22,13 @@ class Orders extends Mapper
      */
     public function getOrders(array $where = []): array
     {
+        $orderdetailsMapper = new OrderdetailsMapper();
+
         $ordersArray = $this->db()->select()
-            ->fields(['o.id', 'o.invoiceAddressId', 'o.deliveryAddressId', 'o.datetime', 'o.order', 'o.invoicefilename', 'o.datetimeInvoiceSent', 'o.selector', 'o.confirmCode', 'o.status'])
+            ->fields(['o.id', 'o.invoiceAddressId', 'o.deliveryAddressId', 'o.datetime', 'o.invoicefilename', 'o.datetimeInvoiceSent', 'o.selector', 'o.confirmCode', 'o.status'])
             ->from(['o' => 'shop_orders'])
             ->join(['c' => 'shop_costumers'], 'o.costumerId = c.id', 'INNER', ['costumerId' => 'c.id', 'c.email'])
+            ->join(['cu' => 'shop_currencies'], 'o.currencyId = cu.id', 'INNER', ['currencyId' => 'cu.id'])
             ->join(['ia' => 'shop_addresses'], 'o.invoiceAddressId = ia.id', 'INNER', ['invoiceAddressId' => 'ia.id', 'invoiceAddressCostumerId' => 'ia.costumerId', 'invoiceAddressPrename' => 'ia.prename', 'invoiceAddressLastname' => 'ia.lastname', 'invoiceAddressStreet' => 'ia.street', 'invoiceAddressPostcode' => 'ia.postcode', 'invoiceAddressCity' => 'ia.city', 'invoiceAddressCountry' => 'ia.country'])
             ->join(['da' => 'shop_addresses'], 'o.deliveryAddressId = da.id', 'INNER', ['deliveryAddressId' => 'da.id', 'deliveryAddressCostumerId' => 'da.costumerId', 'deliveryAddressPrename' => 'da.prename', 'deliveryAddressLastname' => 'da.lastname', 'deliveryAddressStreet' => 'da.street', 'deliveryAddressPostcode' => 'da.postcode', 'deliveryAddressCity' => 'da.city', 'deliveryAddressCountry' => 'da.country'])
             ->where($where)
@@ -36,11 +40,24 @@ class Orders extends Mapper
             return [];
         }
 
+        $orderIds = [];
+        foreach($ordersArray as $orderRow) {
+            $orderIds[] = $orderRow['id'];
+        }
+
+        $orderdetails = $orderdetailsMapper->getOrderdetailsBy(['orderId' => $orderIds]);
+
+        $orderdetailsAssoc = [];
+        foreach($orderdetails as $orderdetail) {
+            $orderdetailsAssoc[$orderdetail->getOrderId()][] = $orderdetail;
+        }
+
         $orders = [];
         foreach ($ordersArray as $orderRow) {
             $orderModel = new OrdersModel();
             $orderModel->setId($orderRow['id']);
             $orderModel->setDatetime($orderRow['datetime']);
+            $orderModel->setCurrencyId($orderRow['currencyId']);
             $orderModel->setCostumerId($orderRow['costumerId']);
 
             $addressModel = new Address();
@@ -66,7 +83,7 @@ class Orders extends Mapper
             $orderModel->setDeliveryAddress($addressModel);
 
             $orderModel->setEmail($orderRow['email']);
-            $orderModel->setOrder($orderRow['order']);
+            $orderModel->setOrderdetails($orderdetailsAssoc[$orderRow['id']]);
             $orderModel->setInvoiceFilename($orderRow['invoicefilename']);
             $orderModel->setDatetimeInvoiceSent($orderRow['datetimeInvoiceSent']);
             $orderModel->setSelector($orderRow['selector'] ?? '');
@@ -123,16 +140,17 @@ class Orders extends Mapper
     public function save(OrdersModel $order): int
     {
         $addressMapper = new AddressMapper();
+        $orderdetailsMapper = new OrderdetailsMapper();
 
         $order->getInvoiceAddress()->setId($addressMapper->save($order->getInvoiceAddress()));
         $order->getDeliveryAddress()->setId($addressMapper->save($order->getDeliveryAddress()));
 
         $fields = [
             'datetime' => $order->getDatetime(),
+            'currencyId' => $order->getCurrencyId(),
             'costumerId' => $order->getCostumerId(),
             'invoiceAddressId' => $order->getInvoiceAddress()->getId(),
             'deliveryAddressId' => $order->getDeliveryAddress()->getId(),
-            'order' => $order->getOrder(),
             'invoicefilename' => $order->getInvoiceFilename(),
             'datetimeInvoiceSent' => $order->getDatetimeInvoiceSent(),
             'selector' => $order->getSelector(),
@@ -141,16 +159,22 @@ class Orders extends Mapper
         ];
 
         if ($order->getId()) {
-            $this->db()->update('shop_orders')
+            $id = $this->db()->update('shop_orders')
                 ->values($fields)
                 ->where(['id' => $order->getId()])
                 ->execute();
-            return $order->getId();
         } else {
-            return $this->db()->insert('shop_orders')
+            $id = $this->db()->insert('shop_orders')
                 ->values($fields)
                 ->execute();
         }
+
+        foreach($order->getOrderdetails() as $orderdetail) {
+            $orderdetail->setOrderId($id);
+        }
+
+        $orderdetailsMapper->save($order->getOrderdetails());
+        return $id;
     }
 
     /**

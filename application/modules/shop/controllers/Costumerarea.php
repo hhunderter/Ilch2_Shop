@@ -46,7 +46,6 @@ class Costumerarea extends Frontend
         $costumerMapper = new CostumerMapper();
         $itemsMapper = new ItemsMapper();
 
-        $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
         $order = [];
 
         $this->getLayout()->header()->css('static/css/style_front.css');
@@ -60,14 +59,21 @@ class Costumerarea extends Frontend
 
             if ($costumer) {
                 $order = $ordersMapper->getOrders(['o.id' => $this->getRequest()->getParam('id'), 'o.costumerId' => $costumer->getId()]);
-                $order = (!empty($order)) ? $order[0] : [];
+
+                if (!empty($order)) {
+                    $order = $order[0];
+                    // Get the currency from the order as you don't want a currency change for existing orders.
+                    $currency = $currencyMapper->getCurrencyById($order->getCurrencyId())[0];
+                } else {
+                    $order = [];
+                }
             }
         } else {
             $this->addMessage('loginRequiredCostumerArea', 'danger');
             $this->redirect(['module' => 'user', 'controller' => 'login', 'action' => 'index']);
         }
 
-        $this->getView()->set('currency', $currency->getName());
+        $this->getView()->set('currency', (!empty($currency) ? $currency->getName() : ''));
         $this->getView()->set('order', $order);
         $this->getView()->set('itemsMapper', $itemsMapper);
     }

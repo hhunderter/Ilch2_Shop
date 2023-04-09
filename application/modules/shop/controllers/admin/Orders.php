@@ -101,7 +101,7 @@ class Orders extends Admin
                 $this->addMessage('deleteSuccess');
             }
         }
-        
+
         $this->getView()->set('ordersMapper', $ordersMapper->getOrders());
     }
 
@@ -117,11 +117,12 @@ class Orders extends Admin
             ->add($this->getTranslator()->trans('menuOrders'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('manage'), ['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
 
-        $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
         $order = null;
 
         if ($this->getRequest()->getParam('id') && is_numeric($this->getRequest()->getParam('id'))) {
             $order = $ordersMapper->getOrderById($this->getRequest()->getParam('id'));
+            // Get the currency from the order as you don't want a currency change for existing orders.
+            $currency = $currencyMapper->getCurrencyById($order->getCurrencyId())[0];
             $this->getView()->set('order', $order);
             $this->getView()->set('currency', $currency->getName());
             $this->getView()->set('itemsMapper', $itemsMapper);
@@ -134,19 +135,18 @@ class Orders extends Admin
             $stockSufficient = true;
 
             if ($this->getRequest()->getPost('status') != '') {
-
-                $items = json_decode(str_replace("'", '"', $order->getOrder()), true);
+                $items = $order->getOrderdetails();
 
                 if ($this->getRequest()->getPost('status') == 2 && $this->getRequest()->getPost('confirmTransferBackToStock') === 'true') {
                     foreach ($items as $item) {
-                        $itemsMapper->addStock($item['id'], $item['quantity']);
+                        $itemsMapper->addStock($item->getItemId(), $item->getQuantity());
                     }
                 } elseif ($this->getRequest()->getPost('status') != 2 && $this->getRequest()->getPost('confirmRemoveFromStock') === 'true') {
                     foreach ($items as $item) {
-                        $currentStock = $itemsMapper->getShopItemById($item['id']);
+                        $currentStock = $itemsMapper->getShopItemById($item->getItemId());
 
-                        if ($currentStock->getStock() >= $item['quantity']) {
-                            $itemsMapper->removeStock($item['id'], $item['quantity']);
+                        if ($currentStock->getStock() >= $item->getQuantity()) {
+                            $itemsMapper->removeStock($item->getItemId(), $item->getQuantity());
                         } else {
                             $stockSufficient = false;
                             $this->addMessage('currentStockInsufficient', 'danger');
