@@ -4,6 +4,11 @@
     <?=($this->getRequest()->getParam('id')) ? $this->getTrans('edit') : $this->getTrans('add'); ?>
 </h1>
 
+<?php if ($this->get('currencyInUse')) : ?>
+<div class="alert alert-danger">
+    <b><?=$this->getTrans('currencyInUseWarning') ?></b>
+</div>
+<?php endif; ?>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">

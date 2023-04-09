@@ -48,6 +48,7 @@ return [
     'currencyCode' => 'Code (ISO 4217)',
     'currencyCodeInfo' => 'These are three letter acronyms. ISO 4217 is a standard published by the International Organization for Standardization (ISO) that defines alpha codes and numeric codes for the representation of currencies and provides information about the relationships between individual currencies and their minor units.',
     'currencyInUse' => 'This currency is currently in use and therefore cannot be deleted.',
+    'currencyInUseWarning' => 'This currency is currently in use. Changes affect the entire shop.',
     'notSupportedForPayPal' => 'This currency code is possibly not supported by PayPal.',
     'editCurrencyFailedNotFound' => 'This currency could not be edited, because it wasn\'t found.',
     'deleteCurrencyFailed' => 'This currency could not be deleted.',
