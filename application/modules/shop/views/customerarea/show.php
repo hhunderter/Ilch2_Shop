@@ -27,7 +27,7 @@ $itemsMapper = $this->get('itemsMapper');
     $file_location = ROOT_PATH.$shopInvoicePath.$invoiceFilename.'.pdf';
     ?>
 
-    <h4><?=$this->getTrans('CustomerAreaInfoBuyer') ?></h4>
+    <h4><?=$this->getTrans('customerAreaInfoBuyer') ?></h4>
     <div class="table-responsive">
         <table class="table">
             <colgroup>

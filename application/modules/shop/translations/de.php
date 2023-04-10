@@ -260,5 +260,5 @@ return [
     'customerAreaNoPreviousOrder' => 'Sie haben bisher noch nichts bestellt. Schauen Sie sich doch im Online Shop um.',
     'showOrderDetails' => 'Details zu ihrer Bestellung ansehen',
     'customerAreaOrderNotFound' => 'Bestellung nicht gefunden.',
-    'CustomerAreaInfoBuyer' => 'Ihre Informationen zur Bestellung',
+    'customerAreaInfoBuyer' => 'Ihre Informationen zur Bestellung',
 ];

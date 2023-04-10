@@ -260,5 +260,5 @@ return [
     'customerAreaNoPreviousOrder' => 'You haven\'t ordered anything before. Take a look in the online shop.',
     'showOrderDetails' => 'View details of your order',
     'customerAreaOrderNotFound' => 'Order not found.',
-    'CustomerAreaInfoBuyer' => 'Your information for this order',
+    'customerAreaInfoBuyer' => 'Your information for this order',
 ];
