@@ -33,7 +33,7 @@ class Address extends Mapper
         foreach ($addressesArray as $addressRow) {
             $addressModel = new AddressModel();
             $addressModel->setId($addressRow['id']);
-            $addressModel->setCostumerID($addressRow['costumerId']);
+            $addressModel->setCustomerID($addressRow['customerId']);
             $addressModel->setPrename($addressRow['prename']);
             $addressModel->setLastname($addressRow['lastname']);
             $addressModel->setStreet($addressRow['street']);
@@ -60,14 +60,14 @@ class Address extends Mapper
     }
 
     /**
-     * Get addresses by costumer id.
+     * Get addresses by customer id.
      *
-     * @param int $costumerId
+     * @param int $customerId
      * @return AddressModel[]
      */
-    public function getAddressesByCostumerId(int $costumerId): array
+    public function getAddressesByCustomerId(int $customerId): array
     {
-        return $this->getAddresses(['costumerId' => $costumerId]);
+        return $this->getAddresses(['customerId' => $customerId]);
     }
 
     /**
@@ -79,7 +79,7 @@ class Address extends Mapper
     public function save(AddressModel $address): int
     {
         $fields = [
-            'costumerId' => $address->getCostumerID(),
+            'customerId' => $address->getCustomerID(),
             'prename' => $address->getPrename(),
             'lastname' => $address->getLastname(),
             'street' => $address->getStreet(),

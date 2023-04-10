@@ -8,31 +8,31 @@ namespace Modules\Shop\Models;
 
 use Ilch\Model;
 
-class Costumer extends Model
+class Customer extends Model
 {
     /**
-     * The id of the costumer.
+     * The id of the customer.
      *
      * @var int
      */
     protected $id;
 
     /**
-     * The user id of the costumer.
+     * The user id of the customer.
      *
      * @var int
      */
     protected $userId;
 
     /**
-     * The email of the costumer.
+     * The email of the customer.
      *
      * @var string
      */
     protected $email;
 
     /**
-     * Gets the id of the costumer.
+     * Gets the id of the customer.
      *
      * @return int
      */
@@ -42,12 +42,12 @@ class Costumer extends Model
     }
 
     /**
-     * Sets the id of the costumer.
+     * Sets the id of the customer.
      *
      * @param int $id
      * @return $this
      */
-    public function setId(int $id): Costumer
+    public function setId(int $id): Customer
     {
         $this->id = $id;
 
@@ -55,7 +55,7 @@ class Costumer extends Model
     }
 
     /**
-     * Gets the user id of the costumer.
+     * Gets the user id of the customer.
      *
      * @return int
      */
@@ -65,19 +65,19 @@ class Costumer extends Model
     }
 
     /**
-     * Sets the user id of the costumer.
+     * Sets the user id of the customer.
      *
      * @param int $userId
      * @return $this
      */
-    public function setUserId(int $userId): Costumer
+    public function setUserId(int $userId): Customer
     {
         $this->userId = $userId;
         return $this;
     }
 
     /**
-     * Gets the email of the costumer.
+     * Gets the email of the customer.
      *
      * @return string
      */
@@ -87,12 +87,12 @@ class Costumer extends Model
     }
 
     /**
-     * Sets the email of the costumer.
+     * Sets the email of the customer.
      *
      * @param string $email
      * @return $this
      */
-    public function setEmail(string $email): Costumer
+    public function setEmail(string $email): Customer
     {
         $this->email = $email;
 

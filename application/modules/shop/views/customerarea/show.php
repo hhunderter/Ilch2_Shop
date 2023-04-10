@@ -3,7 +3,7 @@ $itemsMapper = $this->get('itemsMapper');
 ?>
 
 <h1>
-    <?=$this->getTrans('menuCostumerArea') ?>
+    <?=$this->getTrans('menuCustomerArea') ?>
 </h1>
 
 <?php if (!empty($this->get('order'))) : ?>
@@ -27,7 +27,7 @@ $itemsMapper = $this->get('itemsMapper');
     $file_location = ROOT_PATH.$shopInvoicePath.$invoiceFilename.'.pdf';
     ?>
 
-    <h4><?=$this->getTrans('CostumerAreaInfoBuyer') ?></h4>
+    <h4><?=$this->getTrans('customerAreaInfoBuyer') ?></h4>
     <div class="table-responsive">
         <table class="table">
             <colgroup>
@@ -57,7 +57,14 @@ $itemsMapper = $this->get('itemsMapper');
             </tr>
             <tr>
                 <th><?=$this->getTrans('invoice') ?></th>
-                <td><?=$this->getTrans('invoice') ?> - <?=utf8_decode($this->getTrans('numberShort')) ?> <?=$invoiceNr ?></td>
+                <td>
+                    <?=$this->getTrans('invoice') ?> - <?=utf8_decode($this->getTrans('numberShort')) ?> <?=$invoiceNr ?>
+                    <?php if (file_exists($file_location)) : ?>
+                    <a href="<?=$this->getUrl(['action' => 'download', 'id' => $order->getId()], null, true) ?>" target="_blank" class="btn btn-sm alert-success">
+                        <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('showPDF') ?>
+                    </a>
+                    <?php endif; ?>
+                </td>
             </tr>
             <tr>
                 <th><?=$this->getTrans('status') ?></th>
@@ -73,16 +80,6 @@ $itemsMapper = $this->get('itemsMapper');
                     <?php endif; ?>
                 </td>
             </tr>
-            <?php if (file_exists($file_location)) : ?>
-            <tr>
-                <th><?=$this->getTrans('invoice') ?></th>
-                <td>
-                    <a href="<?=$this->getUrl(['action' => 'download', 'id' => $order->getId()], null, true) ?>" target="_blank" class="btn btn-sm alert-success">
-                        <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('showPDF') ?>
-                    </a>
-                </td>
-            </tr>
-            <?php endif; ?>
             </tbody>
         </table>
     </div>
@@ -209,5 +206,5 @@ $itemsMapper = $this->get('itemsMapper');
         </table>
     </div>
 <?php else : ?>
-<p><?=$this->getTrans('costumerAreaOrderNotFound') ?></p>
+<p><?=$this->getTrans('customerAreaOrderNotFound') ?></p>
 <?php endif; ?>

@@ -176,7 +176,7 @@ class Settings extends Mapper
             ->where(['id <=' => 7])
             ->execute();
 
-        $this->db()->delete('shop_costumers')
+        $this->db()->delete('shop_customers')
             ->where(['id <=' => 4])
             ->execute();
 

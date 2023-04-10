@@ -39,10 +39,10 @@ class Items extends Admin
                 ]
             ],
             [
-                'name' => 'menuCostumers',
+                'name' => 'menuCustomers',
                 'active' => false,
                 'icon' => 'fa-solid fa-users',
-                'url' => $this->getLayout()->getUrl(['controller' => 'costumers', 'action' => 'index'])
+                'url' => $this->getLayout()->getUrl(['controller' => 'customers', 'action' => 'index'])
             ],
             [
                 'name' => 'menuOrders',

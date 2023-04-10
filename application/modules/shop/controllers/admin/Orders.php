@@ -34,10 +34,10 @@ class Orders extends Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'items', 'action' => 'index'])
             ],
             [
-                'name' => 'menuCostumers',
+                'name' => 'menuCustomers',
                 'active' => false,
                 'icon' => 'fa-solid fa-users',
-                'url' => $this->getLayout()->getUrl(['controller' => 'costumers', 'action' => 'index'])
+                'url' => $this->getLayout()->getUrl(['controller' => 'customers', 'action' => 'index'])
             ],
             [
                 'name' => 'menuOrders',
@@ -268,14 +268,9 @@ class Orders extends Admin
             '{shopname}' => $this->getLayout()->escape($settings->getShopName()),
             '{date}' => $date->format('l, d. F Y', true),
             '{name}' => $name,
+            '{paymentLink}' => '<a href="'.BASE_URL.'/index.php/shop/payment/index/selector/'.$order->getSelector().'/code/'.$order->getConfirmCode().'">'.$this->getTranslator()->trans('paymentInvoiceLink').'</a>',
             '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
         ];
-
-        if (!$settings->getClientID() && $settings->getPayPalMe()) {
-            $messageReplace['{paymentLink}'] = '<a href="https://paypal.me/'.urlencode($settings->getPayPalMe()).'">'.$this->getTranslator()->trans('paymentInvoiceLink').'</a>';
-        } else {
-            $messageReplace['{paymentLink}'] = '<a href="'.BASE_URL.'/index.php/shop/payment/index/selector/'.$order->getSelector().'/code/'.$order->getConfirmCode().'">'.$this->getTranslator()->trans('paymentInvoiceLink').'</a>';
-        }
 
         $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 

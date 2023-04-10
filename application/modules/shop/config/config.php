@@ -49,7 +49,7 @@ class Config extends Install
             DROP TABLE `[prefix]_shop_addresses`;
             DROP TABLE `[prefix]_shop_orderdetails`;
             DROP TABLE `[prefix]_shop_orders`;
-            DROP TABLE `[prefix]_shop_costumers`;
+            DROP TABLE `[prefix]_shop_customers`;
             DROP TABLE `[prefix]_shop_settings`;');
 
         $this->db()->queryMulti("DELETE FROM `[prefix]_emails` WHERE `moduleKey` = 'shop';");
@@ -109,7 +109,7 @@ class Config extends Install
                     PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
-                CREATE TABLE IF NOT EXISTS `[prefix]_shop_costumers` (
+                CREATE TABLE IF NOT EXISTS `[prefix]_shop_customers` (
                     `id` INT(11) NOT NULL AUTO_INCREMENT,
                     `userId` INT(11) NOT NULL,
                     `invoiceAddressId` INT(11) NOT NULL,
@@ -120,7 +120,7 @@ class Config extends Install
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_shop_addresses` (
                     `id` INT(11) NOT NULL AUTO_INCREMENT,
-                    `costumerId` INT(11) NOT NULL,
+                    `customerId` INT(11) NOT NULL,
                     `prename` VARCHAR(255) NOT NULL,
                     `lastname` VARCHAR(255) NOT NULL,
                     `street` VARCHAR(255) NOT NULL,
@@ -128,15 +128,15 @@ class Config extends Install
                     `city` VARCHAR(255) NOT NULL,
                     `country` VARCHAR(255) NOT NULL,
                     PRIMARY KEY (`id`) USING BTREE,
-                    INDEX `FK_[prefix]_shop_addresses_[prefix]_shop_costumers` (`costumerId`) USING BTREE,
-                    CONSTRAINT `FK_[prefix]_shop_addresses_[prefix]_shop_costumers` FOREIGN KEY (`costumerId`) REFERENCES `[prefix]_shop_costumers` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                    INDEX `FK_[prefix]_shop_addresses_[prefix]_shop_customers` (`customerId`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_shop_addresses_[prefix]_shop_customers` FOREIGN KEY (`customerId`) REFERENCES `[prefix]_shop_customers` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_shop_orders` (
                     `id` INT(11) NOT NULL AUTO_INCREMENT,
                     `datetime` DATETIME NOT NULL,
                     `currencyId` INT(11) NOT NULL,
-                    `costumerId` INT(11) NOT NULL,
+                    `customerId` INT(11) NOT NULL,
                     `invoiceAddressId` INT(11) NOT NULL,
                     `deliveryAddressId` INT(11) NOT NULL,
                     `invoicefilename` VARCHAR(255) NOT NULL,
@@ -145,8 +145,8 @@ class Config extends Install
                     `confirmCode` char(64),
                     `status` INT(1) NULL DEFAULT 0,
                     PRIMARY KEY (`id`) USING BTREE,
-                    INDEX `FK_[prefix]_shop_orders_[prefix]_shop_costumers` (`costumerId`) USING BTREE,
-                    CONSTRAINT `FK_[prefix]_shop_orders_[prefix]_shop_costumers` FOREIGN KEY (`costumerId`) REFERENCES `[prefix]_shop_costumers` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                    INDEX `FK_[prefix]_shop_orders_[prefix]_shop_customers` (`customerId`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_shop_orders_[prefix]_shop_customers` FOREIGN KEY (`customerId`) REFERENCES `[prefix]_shop_customers` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_shop_orderdetails` (
@@ -292,19 +292,19 @@ class Config extends Install
                     "Wir bitten um Zahlung der Gesamtsumme, innerhalb von 14 Tagen ab Rechnungseingang, ohne Abzüge an die unten angegebene Bankverbindung. Vielen Dank für ihr Vertrauen.",
                     "<div class=\"alert alert-warning text-justify\" role=\"alert\">Es handelt sich bei der hier aufgef&uuml;hrten AGB lediglich um ein unverbindliches Muster, das nicht Ihren individuellen Bed&uuml;rfnissen angepasst wurde. Es wird keinerlei Haftung f&uuml;r die Verwendung der Allgemeinen Gesch&auml;ftsbedingungen &uuml;bernommen. Shopbetreiber m&uuml;ssen sich unbedingt um zahlreiche rechtliche Fragen wie AGB, Impressum, Widerruf und einer passenden Datenschutzerkl&auml;rung den eigenen Online Shop k&uuml;mmern.</div><p><strong>&sect; 1 Grundlegende Bestimmungen</strong></p><ol><li>Die nachstehenden Gesch&auml;ftsbedingungen gelten f&uuml;r Vertr&auml;ge die &uuml;ber DOMAINNAME geschlossen werden. Soweit nicht anders vereinbart, wird eigens von Ihnen verwendeten Bedingungen widersprochen.</li><li>Verbraucher im Sinne dieser Regelung ist jede nat&uuml;rliche Person, die ein Rechtsgesch&auml;ft mit privaten Anliegen abschlie&szlig;t. Unternehmer ist jede nat&uuml;rliche oder juristische Person, die bei Abschluss des Rechtsgesch&auml;fts im Sinne ihrer beruflichen oder gewerblichen Interessen handelt.</li></ol><p>&nbsp;</p><p><strong>&sect; 2 Zustandekommen des Vertrages</strong></p><ol><li>Vertragsgegenstand ist der Verkauf von Waren.</li><li>Mit der Bereitstellung eines Produktes in unserem Shop unterbreiten wir unseren Kunden ein verbindliches Angebot zum Abschluss eines Kaufvertrages.</li><li>Alle zum Kauf beabsichtigten Produkte werden vom Kunden im Warenkorb abgelegt. Nach Eingabe der pers&ouml;nlichen Daten und Zahlungsinformationen hat der Kunde die M&ouml;glichkeit alle eingegebenen Informationen zu &uuml;berpr&uuml;fen. Mit dem Absenden der Bestellung durch Klick auf die daf&uuml;r vorgesehene Schaltfl&auml;che erkl&auml;rt der Kunde rechtsverbindlich die Annahme des Angebotes. Damit ist der Kaufvertrag zustande gekommen. Bei der Zahlungs-Option &uuml;ber Payment-Dienstleister wie PayPal oder Sofort&uuml;berweisung, wird der Kunde von unserem unserem Onlineshop auf die Webseite des Anbieters weitergeleitet. Nach Eingabe aller erforderlichen Daten wird der Kunde abschlie&szlig;end zur&uuml;ck in unseren Shop geleitet.</li><li>Die &Uuml;bermittlung aller Informationen im Zusammenhang mit dem Vertragsschluss erfolgt automatisiert per E-Mail. Der Kunde hat daher sicherzustellen, dass die bei uns hinterlegte E-Mail-Adresse erreichbar ist.</li></ol><p>&nbsp;</p><p><strong>&sect; 3 Eigentumsvorbehalt und Zur&uuml;ckbehaltungsrecht</strong></p><ol><li>Ein Zur&uuml;ckbehaltungsrecht kann vom Kunden nur dann ausge&uuml;bt werden, sofern es nicht Forderungen aus selbigem Vertragsverh&auml;ltnis sind.</li><li>Bis zur vollst&auml;ndigen Zahlung des Kaufpreises bleibt die Ware Eigentum des Shop-Betreibers.</li></ol><p>&nbsp;</p><p><strong>&sect; 4 Bestimmungen zur Haftung</strong></p><ol><li>F&uuml;r Sch&auml;den an K&ouml;rper oder der Gesundheit haften wir uneingeschr&auml;nkt, sowie in F&auml;llen des Vorsatzes und grober Fahrl&auml;ssigkeit. Weiterhin bei arglistigem Verschweigen eines Mangels und in allen anderen gesetzlich geregelten F&auml;llen. Die Haftung f&uuml;r M&auml;ngel im Rahmen der gesetzlichen Gew&auml;hrleistung ist der entsprechenden Regelung in unseren Kundeninformationen zu entnehmen.</li><li>Sofern wesentliche Vertragspflichten nicht erf&uuml;llt werden, ist die Haftung des Onlineshops bei leichter Fahrl&auml;ssigkeit auf den vorhersehbaren, vertragstypischen Schaden beschr&auml;nkt.</li><li>Bei der Verletzung unwesentlicher Pflichten die aus dem Vertrag hervorgehen, ist die Haftung bei leicht fahrl&auml;ssigen Pflichtverletzungen ausgeschlossen.</li><li>Es erfolgt keine Haftung f&uuml;r die stetige Verf&uuml;gbarkeit dieser Website und der darauf angebotenen Waren.</li></ol><p>&nbsp;</p><p><strong>&sect; 5 Rechtswahl</strong></p><ol><li>Es gilt deutsches Recht. Die Bestimmungen des UN-Kaufrechts finden ausdr&uuml;cklich keine Anwendung.</li></ol><p>&nbsp;</p><p><strong>&sect; 6 Streitbeilegung</strong></p><ol><li>Die Europ&auml;ische Kommission stellt f&uuml;r die au&szlig;ergerichtliche Online-Streitbeilegung eine Plattform bereit(OS-Plattform), die unter <a href=\"https://ec.europa.eu/odr\" target=\"_blank\">https://ec.europa.eu/odr</a> abrufbar ist.</li></ol><p>&nbsp;</p><p><strong>&sect; 7 Vertragssprache, Vertragstextspeicherung</strong></p><ol><li>Vertragssprache ist deutsch.</li><li>Der vollst&auml;ndige Vertragstext wird von uns nicht gespeichert. Kunden k&ouml;nnen dies vor Absenden der Bestellung &uuml;ber die Druckfunktion des Browsers elektronisch sichern.</li></ol><p>&nbsp;</p><p><strong>&sect; 8 Preise und Zahlungsmodalit&auml;ten Merkmale der Waren</strong></p><ol><li>Die ausgewiesenen Preise sowie die Versandkosten stellen Brutto-Preise dar.</li><li>Versandkosten sind nicht im Kaufpreis enthalten. Sie sind explizit gekennzeichnet oder werden im Laufe des Bestellvorganges gesondert ausgewiesen und sind vom Kunden zus&auml;tzlich zu tragen, soweit nicht eine kostenfreie Lieferung zugesagt ist.</li><li>Die zur Verf&uuml;gung stehenden Zahlungsmethoden sind auf unserer Webseite oder in der jeweiligen Artikelbeschreibung ausgewiesen, sp&auml;testens aber im abschlie&szlig;enden Bestellprozess an der &quot;Kasse&quot; genannt. Soweit nicht anders angegeben, sind die Zahlungsanspr&uuml;che aus dem Vertrag unmittelbar zur Zahlung f&auml;llig.</li><li>Die wesentlichen Merkmale der Ware und/oder Dienstleistung finden sich in der Artikelbeschreibung und den erg&auml;nzenden Angaben auf unserer Internetseite.</li></ol><p>&nbsp;</p><p><strong>&sect; 9 Lieferbedingungen</strong></p><ol><li>Lieferbedingungen,Lieferzeit sowie ggf. bestehende Beschr&auml;nkungen zur Lieferung finden sich unter dem entsprechend bezeichneten Link in unserem Onlineshop oder in der jeweiligen Artikelbeschreibung.</li><li>F&uuml;r Verbraucher gilt, dass die Gefahr des zuf&auml;lligen Untergangs oder der Verschlechterung der verkauften Ware w&auml;hrend der Versendung erst mit der &Uuml;bergabe der Ware an den Kunden &uuml;bergeht. Die Regelung gilt unabh&auml;ngig davon,ob die Versendung versichert oder unversichert erfolgt.</li></ol><p>&nbsp;</p><p><strong>&sect; 10 Gesetzliches M&auml;ngelhaftungsrecht</strong></p><ol><li>Die gesetzlichen M&auml;ngelhaftungsrechte haben bestand.</li><li>Verbraucher werden gebeten, die Ware bei Lieferung auf Vollst&auml;ndigkeit, offensichtliche M&auml;ngel und Transportsch&auml;den zu &uuml;berpr&uuml;fen und dem Shop-Betreiber schnellstm&ouml;glich mitzuteilen. Wird dem nicht vom Kunden nachgekommen hat dies keine Auswirkung auf seine gesetzlichen Gew&auml;hrleistungsanspr&uuml;che.</li></ol><p>&nbsp;</p><p><b>Quelle:</b> Diese AGB und Kundeninformationen f&uuml;r Onlineshops wurden mit der Vorlage von <a href=\"https://website-tutor.com/agb-muster/\" rel=\"nofollow\" target=\"_blank\">Website-Tutor.com</a> erstellt.</p>", 19, 0.00, 7, "", 1);
 
-                INSERT INTO `[prefix]_shop_costumers` (`id`, `userId`, `invoiceAddressId`, `deliveryAddressId`, `email`) VALUES
+                INSERT INTO `[prefix]_shop_customers` (`id`, `userId`, `invoiceAddressId`, `deliveryAddressId`, `email`) VALUES
                     (1, 1, 1, 1, "max@mustermann.de"),
                     (2, 2, 2, 2, "eva@musterfrau.de"),
                     (3, 3, 3, 3, "bernd@mustermann.de"),
                     (4, 4, 4, 4, "ingrid@musterfrau.de");
 
-                INSERT INTO `[prefix]_shop_addresses` (`id`, `costumerId`, `prename`, `lastname`, `street`, `postcode`, `city`, `country`) VALUES
+                INSERT INTO `[prefix]_shop_addresses` (`id`, `customerId`, `prename`, `lastname`, `street`, `postcode`, `city`, `country`) VALUES
                     (1, 1, "Max", "Mustermann", "Musterstr. 1", 12345, "Musterstadt", "Deutschland"),
                     (2, 2, "Eva", "Musterfrau", "Musterstr. 7", 98765, "Musterhausen", "Deutschland"),
                     (3, 3, "Bernd", "Mustermann", "Musterstr. 13", 56789, "Musterdorf", "Deutschland"),
                     (4, 4, "Ingrid", "Musterfrau", "Musterstr. 7", 34567, "Musterort", "Deutschland");
 
-                INSERT INTO `[prefix]_shop_orders` (`id`, `currencyId`, `costumerId`, `invoiceAddressId`, `deliveryAddressId`, `datetime`, `invoicefilename`, `datetimeInvoiceSent`, `selector`, `confirmCode`, `status`) VALUES
+                INSERT INTO `[prefix]_shop_orders` (`id`, `currencyId`, `customerId`, `invoiceAddressId`, `deliveryAddressId`, `datetime`, `invoicefilename`, `datetimeInvoiceSent`, `selector`, `confirmCode`, `status`) VALUES
                     (1, 1, 1, 1, 1, "2020-04-22 11:47:27", "", "", "", "", 3),
                     (2, 1, 2, 2, 2, "2020-04-25 05:39:12", "", "", "", "", 1),
                     (3, 1, 3, 3, 3, "2020-04-25 11:51:36", "", "", "", "", 1),
