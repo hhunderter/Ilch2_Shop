@@ -9,30 +9,30 @@ namespace Modules\Shop\Controllers;
 use Ilch\Controller\Frontend;
 use Modules\Shop\Mappers\Currency as CurrencyMapper;
 use Modules\Shop\Mappers\Orders as OrdersMapper;
-use Modules\Shop\Mappers\Costumer as CostumerMapper;
+use Modules\Shop\Mappers\Customer as CustomerMapper;
 use Modules\Shop\Mappers\Items as ItemsMapper;
 
-class Costumerarea extends Frontend
+class Customerarea extends Frontend
 {
     public function indexAction()
     {
         $ordersMapper = new OrdersMapper();
-        $costumerMapper = new CostumerMapper();
+        $customerMapper = new CustomerMapper();
         $orders = [];
 
         $this->getLayout()->header()->css('static/css/style_front.css');
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
-            ->add($this->getTranslator()->trans('menuCostumerArea'), ['controller' => 'costumerarea', 'action' => 'index']);
+            ->add($this->getTranslator()->trans('menuCustomerArea'), ['controller' => 'customerarea', 'action' => 'index']);
 
         if ($this->getUser()) {
-            $costumer = $costumerMapper->getCostumerByUserId($this->getUser()->getId());
+            $customer = $customerMapper->getCustomerByUserId($this->getUser()->getId());
 
-            if ($costumer) {
-                $orders = $ordersMapper->getOrdersByCostumerId($costumer->getId());
+            if ($customer) {
+                $orders = $ordersMapper->getOrdersByCustomerId($customer->getId());
             }
         } else {
-            $this->addMessage('loginRequiredCostumerArea', 'danger');
+            $this->addMessage('loginRequiredCustomerArea', 'danger');
             $this->redirect(['module' => 'user', 'controller' => 'login', 'action' => 'index']);
         }
 
@@ -43,7 +43,7 @@ class Costumerarea extends Frontend
     {
         $currencyMapper = new CurrencyMapper();
         $ordersMapper = new OrdersMapper();
-        $costumerMapper = new CostumerMapper();
+        $customerMapper = new CustomerMapper();
         $itemsMapper = new ItemsMapper();
 
         $order = [];
@@ -51,14 +51,14 @@ class Costumerarea extends Frontend
         $this->getLayout()->header()->css('static/css/style_front.css');
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
-            ->add($this->getTranslator()->trans('menuCostumerArea'), ['controller' => 'costumerarea', 'action' => 'index'])
-            ->add($this->getTranslator()->trans('menuCostumerAreaOrderDetails'), ['controller' => 'costumerarea', 'action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
+            ->add($this->getTranslator()->trans('menuCustomerArea'), ['controller' => 'customerarea', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuCustomerAreaOrderDetails'), ['controller' => 'customerarea', 'action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
 
         if ($this->getUser()) {
-            $costumer = $costumerMapper->getCostumerByUserId($this->getUser()->getId());
+            $customer = $customerMapper->getCustomerByUserId($this->getUser()->getId());
 
-            if ($costumer) {
-                $order = $ordersMapper->getOrders(['o.id' => $this->getRequest()->getParam('id'), 'o.costumerId' => $costumer->getId()]);
+            if ($customer) {
+                $order = $ordersMapper->getOrders(['o.id' => $this->getRequest()->getParam('id'), 'o.customerId' => $customer->getId()]);
 
                 if (!empty($order)) {
                     $order = $order[0];
@@ -69,7 +69,7 @@ class Costumerarea extends Frontend
                 }
             }
         } else {
-            $this->addMessage('loginRequiredCostumerArea', 'danger');
+            $this->addMessage('loginRequiredCustomerArea', 'danger');
             $this->redirect(['module' => 'user', 'controller' => 'login', 'action' => 'index']);
         }
 
@@ -119,6 +119,6 @@ class Costumerarea extends Frontend
             $this->addMessage('invoiceNotFound', 'danger');
         }
 
-        $this->redirect(['controller' => 'costumerarea', 'action' => 'show', 'id' => $id]);
+        $this->redirect(['controller' => 'customerarea', 'action' => 'show', 'id' => $id]);
     }
 }

@@ -18,11 +18,11 @@ class Address extends Model
     protected $id;
 
     /**
-     * The costumer id.
+     * The customer id.
      *
      * @var int
      */
-    protected $costumerID;
+    protected $customerID;
 
     /**
      * The prename of the address.
@@ -90,24 +90,24 @@ class Address extends Model
     }
 
     /**
-     * Gets the costumer id.
+     * Gets the customer id.
      *
      * @return int
      */
-    public function getCostumerID(): int
+    public function getCustomerID(): int
     {
-        return $this->costumerID;
+        return $this->customerID;
     }
 
     /**
-     * Sets the costumer id.
+     * Sets the customer id.
      *
-     * @param int $costumerID
+     * @param int $customerID
      * @return $this
      */
-    public function setCostumerID(int $costumerID): Address
+    public function setCustomerID(int $customerID): Address
     {
-        $this->costumerID = $costumerID;
+        $this->customerID = $customerID;
         return $this;
     }
 

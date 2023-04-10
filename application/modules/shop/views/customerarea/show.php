@@ -3,7 +3,7 @@ $itemsMapper = $this->get('itemsMapper');
 ?>
 
 <h1>
-    <?=$this->getTrans('menuCostumerArea') ?>
+    <?=$this->getTrans('menuCustomerArea') ?>
 </h1>
 
 <?php if (!empty($this->get('order'))) : ?>
@@ -27,7 +27,7 @@ $itemsMapper = $this->get('itemsMapper');
     $file_location = ROOT_PATH.$shopInvoicePath.$invoiceFilename.'.pdf';
     ?>
 
-    <h4><?=$this->getTrans('CostumerAreaInfoBuyer') ?></h4>
+    <h4><?=$this->getTrans('CustomerAreaInfoBuyer') ?></h4>
     <div class="table-responsive">
         <table class="table">
             <colgroup>
@@ -206,5 +206,5 @@ $itemsMapper = $this->get('itemsMapper');
         </table>
     </div>
 <?php else : ?>
-<p><?=$this->getTrans('costumerAreaOrderNotFound') ?></p>
+<p><?=$this->getTrans('customerAreaOrderNotFound') ?></p>
 <?php endif; ?>

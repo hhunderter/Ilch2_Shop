@@ -1,8 +1,8 @@
 <link href="<?=$this->getModuleUrl('static/css/shop_admin.css') ?>" rel="stylesheet">
 
-<h1><?=$this->getTrans('menuCostumer') ?></h1>
+<h1><?=$this->getTrans('menuCustomer') ?></h1>
 
-<h2><?=$this->getTrans('infoCostumer') ?></h2>
+<h2><?=$this->getTrans('infoCustomer') ?></h2>
 <div class="table-responsive">
     <table class="table">
         <colgroup>
@@ -11,22 +11,22 @@
         </colgroup>
         <tbody>
         <tr>
-            <th><?=$this->getTrans('costumerId') ?></th>
-            <td><?=$this->escape($this->get('costumer')->getId()) ?></td>
+            <th><?=$this->getTrans('customerId') ?></th>
+            <td><?=$this->escape($this->get('customer')->getId()) ?></td>
         </tr>
         <tr>
             <th><?=$this->getTrans('username') ?></th>
-            <td><?=$this->escape($this->get('costumerUsername')) ?></td>
+            <td><?=$this->escape($this->get('customerUsername')) ?></td>
         </tr>
         <tr>
             <th><?=$this->getTrans('emailAdress') ?></th>
-            <td><a href="mailto:<?=$this->escape($this->get('costumer')->getEmail()) ?>"><?=$this->escape($this->get('costumer')->getEmail()) ?></a></td>
+            <td><a href="mailto:<?=$this->escape($this->get('customer')->getEmail()) ?>"><?=$this->escape($this->get('customer')->getEmail()) ?></a></td>
         </tr>
         </tbody>
     </table>
 </div>
 
-<h2><?=$this->getTrans('costumerAddresses') ?></h2>
+<h2><?=$this->getTrans('customerAddresses') ?></h2>
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>
@@ -62,7 +62,7 @@
     </table>
 </div>
 
-<h2><?=$this->getTrans('costumerOrders') ?></h2>
+<h2><?=$this->getTrans('customerOrders') ?></h2>
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>

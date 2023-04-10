@@ -12,7 +12,7 @@ use Ilch\Mail;
 use Modules\Shop\Mappers\Address as AddressMapper;
 use Modules\Admin\Mappers\Emails as EmailsMapper;
 use Modules\Shop\Mappers\Category as CategoryMapper;
-use Modules\Shop\Mappers\Costumer as CostumerMapper;
+use Modules\Shop\Mappers\Customer as CustomerMapper;
 use Modules\Shop\Mappers\Currency as CurrencyMapper;
 use Modules\Shop\Mappers\Items as ItemsMapper;
 use Modules\Shop\Mappers\Orders as OrdersMapper;
@@ -117,7 +117,7 @@ class Index extends Frontend
     {
         $addressMapper = new AddressMapper();
         $emailsMapper = new EmailsMapper();
-        $costumerMapper = new CostumerMapper();
+        $customerMapper = new CustomerMapper();
         $currencyMapper = new CurrencyMapper();
         $itemsMapper = new ItemsMapper();
         $ordersMapper = new OrdersMapper();
@@ -126,7 +126,7 @@ class Index extends Frontend
         $captchaNeeded = captchaNeeded();
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
         $addresses = [];
-        $costumer = null;
+        $customer = null;
 
         $this->getLayout()->header()->css('static/css/style_front.css');
         $this->getLayout()->getHmenu()
@@ -135,11 +135,11 @@ class Index extends Frontend
             ->add($this->getTranslator()->trans('menuOrder'), ['action' => 'order']);
 
         if (!empty($this->getUser())) {
-            $costumer = $costumerMapper->getCostumerByUserId($this->getUser()->getId());
+            $customer = $customerMapper->getCustomerByUserId($this->getUser()->getId());
         }
 
-        if (!empty($costumer)) {
-            $addresses = $addressMapper->getAddressesByCostumerId($costumer->getId());
+        if (!empty($customer)) {
+            $addresses = $addressMapper->getAddressesByCustomerId($customer->getId());
         }
 
         if ($this->getRequest()->getPost('saveOrder')) {
@@ -178,23 +178,23 @@ class Index extends Frontend
                 $model->setDatetime($ilchDate->toDb());
                 $model->setCurrencyId($currency->getId());
 
-                if (!empty($costumer)) {
-                    $addresses = $addressMapper->getAddressesByCostumerId($costumer->getId());
+                if (!empty($customer)) {
+                    $addresses = $addressMapper->getAddressesByCustomerId($customer->getId());
 
-                    $model->setCostumerId($costumer->getId());
-                    $model->getDeliveryAddress()->setCostumerID($costumer->getId());
-                    $model->getInvoiceAddress()->setCostumerID($costumer->getId());
+                    $model->setCustomerId($customer->getId());
+                    $model->getDeliveryAddress()->setCustomerID($customer->getId());
+                    $model->getInvoiceAddress()->setCustomerID($customer->getId());
                 }
 
                 if ($this->getRequest()->getPost('dropdownDeliveryAddress')) {
                     // Don't use possible user input. Get the address from the database.
-                    if (empty($costumer)) {
-                        // Pretends to select a known address of him, but isn't a costumer? Redirect with error message.
-                        $this->addMessage('unknownCostumer', 'danger');
+                    if (empty($customer)) {
+                        // Pretends to select a known address of him, but isn't a customer? Redirect with error message.
+                        $this->addMessage('unknownCustomer', 'danger');
                         $this->redirect()
                             ->to(['action' => 'order']);
                     }
-                    $address = $addressMapper->getAddresses(['id' => $this->getRequest()->getPost('dropdownDeliveryAddress'), 'costumerId' => $costumer->getId()])[0];
+                    $address = $addressMapper->getAddresses(['id' => $this->getRequest()->getPost('dropdownDeliveryAddress'), 'customerId' => $customer->getId()])[0];
 
                     $model->getDeliveryAddress()->setId($address->getId());
                     $model->getDeliveryAddress()->setPrename($address->getPrename());
@@ -244,13 +244,13 @@ class Index extends Frontend
                 if ($this->getRequest()->getPost('differentInvoiceAddress')) {
                     if ($this->getRequest()->getPost('dropdownInvoiceAddress')) {
                         // Don't use possible user input. Get the address from the database.
-                        if (empty($costumer)) {
+                        if (empty($customer)) {
                             // Pretends to select a known address of him, but isn't a customer? Redirect with error message.
-                            $this->addMessage('unknownCostumer', 'danger');
+                            $this->addMessage('unknownCustomer', 'danger');
                             $this->redirect()
                                 ->to(['action' => 'order']);
                         }
-                        $address = $addressMapper->getAddresses(['id' => $this->getRequest()->getPost('dropdownInvoiceAddress'), 'costumerId' => $costumer->getId()])[0];
+                        $address = $addressMapper->getAddresses(['id' => $this->getRequest()->getPost('dropdownInvoiceAddress'), 'customerId' => $customer->getId()])[0];
 
                         $model->getInvoiceAddress()->setId($address->getId());
                         $model->getInvoiceAddress()->setPrename($address->getPrename());

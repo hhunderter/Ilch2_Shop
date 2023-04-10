@@ -33,11 +33,11 @@ class Order extends Model
     protected $currencyId;
 
     /**
-     * The costumer id of the order.
+     * The customer id of the order.
      *
      * @var int
      */
-    protected $costumerId;
+    protected $customerId;
 
     /**
      * The invoice address of the order.
@@ -75,7 +75,7 @@ class Order extends Model
     protected $invoicefilename;
 
     /**
-     * The datetime when the invoice was sent to the costumer.
+     * The datetime when the invoice was sent to the customer.
      *
      * @var string
      */
@@ -178,24 +178,24 @@ class Order extends Model
     }
 
     /**
-     * Get the costumer id.
+     * Get the customer id.
      *
      * @return int
      */
-    public function getCostumerId(): int
+    public function getCustomerId(): int
     {
-        return $this->costumerId;
+        return $this->customerId;
     }
 
     /**
-     * Set the costumer id.
+     * Set the customer id.
      *
-     * @param int $costumerId
+     * @param int $customerId
      * @return Order
      */
-    public function setCostumerId(int $costumerId): Order
+    public function setCustomerId(int $customerId): Order
     {
-        $this->costumerId = $costumerId;
+        $this->customerId = $customerId;
         return $this;
     }
 
@@ -312,7 +312,7 @@ class Order extends Model
     }
 
     /**
-     * Gets the datetime when the invoice was sent to the costumer.
+     * Gets the datetime when the invoice was sent to the customer.
      *
      * @return string
      */
@@ -322,7 +322,7 @@ class Order extends Model
     }
 
     /**
-     * Sets the datetime when the invoice was sent to the costumer.
+     * Sets the datetime when the invoice was sent to the customer.
      *
      * @param string $datetimeInvoiceSent
      * @return $this

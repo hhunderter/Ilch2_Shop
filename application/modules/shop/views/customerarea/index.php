@@ -1,5 +1,5 @@
 <h1>
-    <?=$this->getTrans('menuCostumerArea') ?>
+    <?=$this->getTrans('menuCustomerArea') ?>
 </h1>
 
 <?php if (!empty($this->get('orders'))) : ?>
@@ -72,7 +72,7 @@
         </table>
     </div>
 <?php else : ?>
-<p><?=$this->getTrans('costumerAreaNoPreviousOrder') ?></p>
+<p><?=$this->getTrans('customerAreaNoPreviousOrder') ?></p>
 <?php endif; ?>
 
 <script>

@@ -27,10 +27,10 @@ class Orders extends Mapper
         $ordersArray = $this->db()->select()
             ->fields(['o.id', 'o.invoiceAddressId', 'o.deliveryAddressId', 'o.datetime', 'o.invoicefilename', 'o.datetimeInvoiceSent', 'o.selector', 'o.confirmCode', 'o.status'])
             ->from(['o' => 'shop_orders'])
-            ->join(['c' => 'shop_costumers'], 'o.costumerId = c.id', 'INNER', ['costumerId' => 'c.id', 'c.email'])
+            ->join(['c' => 'shop_customers'], 'o.customerId = c.id', 'INNER', ['customerId' => 'c.id', 'c.email'])
             ->join(['cu' => 'shop_currencies'], 'o.currencyId = cu.id', 'INNER', ['currencyId' => 'cu.id'])
-            ->join(['ia' => 'shop_addresses'], 'o.invoiceAddressId = ia.id', 'INNER', ['invoiceAddressId' => 'ia.id', 'invoiceAddressCostumerId' => 'ia.costumerId', 'invoiceAddressPrename' => 'ia.prename', 'invoiceAddressLastname' => 'ia.lastname', 'invoiceAddressStreet' => 'ia.street', 'invoiceAddressPostcode' => 'ia.postcode', 'invoiceAddressCity' => 'ia.city', 'invoiceAddressCountry' => 'ia.country'])
-            ->join(['da' => 'shop_addresses'], 'o.deliveryAddressId = da.id', 'INNER', ['deliveryAddressId' => 'da.id', 'deliveryAddressCostumerId' => 'da.costumerId', 'deliveryAddressPrename' => 'da.prename', 'deliveryAddressLastname' => 'da.lastname', 'deliveryAddressStreet' => 'da.street', 'deliveryAddressPostcode' => 'da.postcode', 'deliveryAddressCity' => 'da.city', 'deliveryAddressCountry' => 'da.country'])
+            ->join(['ia' => 'shop_addresses'], 'o.invoiceAddressId = ia.id', 'INNER', ['invoiceAddressId' => 'ia.id', 'invoiceAddressCustomerId' => 'ia.customerId', 'invoiceAddressPrename' => 'ia.prename', 'invoiceAddressLastname' => 'ia.lastname', 'invoiceAddressStreet' => 'ia.street', 'invoiceAddressPostcode' => 'ia.postcode', 'invoiceAddressCity' => 'ia.city', 'invoiceAddressCountry' => 'ia.country'])
+            ->join(['da' => 'shop_addresses'], 'o.deliveryAddressId = da.id', 'INNER', ['deliveryAddressId' => 'da.id', 'deliveryAddressCustomerId' => 'da.customerId', 'deliveryAddressPrename' => 'da.prename', 'deliveryAddressLastname' => 'da.lastname', 'deliveryAddressStreet' => 'da.street', 'deliveryAddressPostcode' => 'da.postcode', 'deliveryAddressCity' => 'da.city', 'deliveryAddressCountry' => 'da.country'])
             ->where($where)
             ->order(['o.status' => 'ASC', 'o.id' => 'DESC'])
             ->execute()
@@ -58,11 +58,11 @@ class Orders extends Mapper
             $orderModel->setId($orderRow['id']);
             $orderModel->setDatetime($orderRow['datetime']);
             $orderModel->setCurrencyId($orderRow['currencyId']);
-            $orderModel->setCostumerId($orderRow['costumerId']);
+            $orderModel->setCustomerId($orderRow['customerId']);
 
             $addressModel = new Address();
             $addressModel->setId($orderRow['invoiceAddressId']);
-            $addressModel->setCostumerID($orderRow['invoiceAddressCostumerId']);
+            $addressModel->setCustomerID($orderRow['invoiceAddressCustomerId']);
             $addressModel->setPrename($orderRow['invoiceAddressPrename']);
             $addressModel->setLastname($orderRow['invoiceAddressLastname']);
             $addressModel->setStreet($orderRow['invoiceAddressStreet']);
@@ -73,7 +73,7 @@ class Orders extends Mapper
 
             $addressModel = new Address();
             $addressModel->setId($orderRow['deliveryAddressId']);
-            $addressModel->setCostumerID($orderRow['deliveryAddressCostumerId']);
+            $addressModel->setCustomerID($orderRow['deliveryAddressCustomerId']);
             $addressModel->setPrename($orderRow['deliveryAddressPrename']);
             $addressModel->setLastname($orderRow['deliveryAddressLastname']);
             $addressModel->setStreet($orderRow['deliveryAddressStreet']);
@@ -121,14 +121,14 @@ class Orders extends Mapper
     }
 
     /**
-     * Get orders by costumer id. Or in other words all orders of a costumer.
+     * Get orders by customer id. Or in other words all orders of a customer.
      *
-     * @param int $costumerId
+     * @param int $customerId
      * @return OrdersModel[]
      */
-    public function getOrdersByCostumerId(int $costumerId): array
+    public function getOrdersByCustomerId(int $customerId): array
     {
-        return $this->getOrders(['c.id' => $costumerId]);
+        return $this->getOrders(['c.id' => $customerId]);
     }
 
     /**
@@ -148,7 +148,7 @@ class Orders extends Mapper
         $fields = [
             'datetime' => $order->getDatetime(),
             'currencyId' => $order->getCurrencyId(),
-            'costumerId' => $order->getCostumerId(),
+            'customerId' => $order->getCustomerId(),
             'invoiceAddressId' => $order->getInvoiceAddress()->getId(),
             'deliveryAddressId' => $order->getDeliveryAddress()->getId(),
             'invoicefilename' => $order->getInvoiceFilename(),
