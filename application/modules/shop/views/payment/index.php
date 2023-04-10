@@ -28,11 +28,11 @@ $purchaseUnits = [];
                 </thead>
                 <tbody>
                 <?php
-                $orderItems = json_decode(str_replace("'", '"', $order->getOrder()), true);
+                $orderItems = $order->getOrderdetails();
                 $subtotal_price = 0;
                 $pdfOrderNr = 1;
                 foreach ($orderItems as $orderItem):
-                    $itemId = $orderItem['id'];
+                    $itemId = $orderItem->getItemId();
                     $item = $itemsMapper->getShopItemById($itemId);
                     $itemImg = $item->getImage();
                     $itemName = $item->getName();
@@ -44,8 +44,8 @@ $purchaseUnits = [];
                     $itemShippingTime = $item->getShippingTime();
                     $arrayShippingTime[] = $itemShippingTime;
                     $arrayTaxes[] = $itemTax;
-                    $arrayPrices[] = $itemPrice * $orderItem['quantity'];
-                    $arrayPricesWithoutTax[] = $itemPriceWithoutTax * $orderItem['quantity'];
+                    $arrayPrices[] = $itemPrice * $orderItem->getQuantity();
+                    $arrayPricesWithoutTax[] = $itemPriceWithoutTax * $orderItem->getQuantity();
                     $shopImgPath = '/application/modules/shop/static/img/';
                     if ($itemImg AND file_exists(ROOT_PATH.'/'.$itemImg)) {
                         $img = BASE_URL.'/'.$itemImg;
@@ -59,8 +59,8 @@ $purchaseUnits = [];
                         number_format($itemPriceWithoutTax, 2, '.', '').' '.$currency,
                         $itemTax.' %',
                         number_format($itemPrice, 2, '.', '').' '.$currency,
-                        $orderItem['quantity'],
-                        number_format($itemPrice * $orderItem['quantity'], 2, '.', '').' '.$currency,
+                        $orderItem->getQuantity(),
+                        number_format($itemPrice * $orderItem->getQuantity(), 2, '.', '').' '.$currency,
                         utf8_decode($this->getTrans('itemNumberShort')).' '.$itemNumber];
                     ?>
                     <tr>
@@ -77,17 +77,19 @@ $purchaseUnits = [];
                             <b><?=number_format($itemPrice, 2, '.', '') ?> <?=$this->escape($this->get('currency')->getName()) ?></b>
                         </td>
                         <td class="text-center">
-                            <b><?=$orderItem['quantity'] ?></b>
+                            <b><?=$orderItem->getQuantity() ?></b>
                         </td>
                         <td class="text-right">
-                            <b><?=number_format($itemPrice * $orderItem['quantity'], 2, '.', '') ?> <?=$this->escape($this->get('currency')->getName()) ?></b>
+                            <b><?=number_format($itemPrice * $orderItem->getQuantity(), 2, '.', '') ?> <?=$this->escape($this->get('currency')->getName()) ?></b>
                         </td>
                     </tr>
                     <?php
-                    $subtotal_price += round($itemPrice * $orderItem['quantity'], 2);
+                    $subtotal_price += round($itemPrice * $orderItem->getQuantity(), 2);
 
-                    // Fill purchase_units array for PayPal.
-                    $purchaseUnits['items'][] = ['name' => $this->escape($itemName), 'unit_amount' => ['value' => $itemPrice, 'currency_code' => $this->escape($this->get('currency')->getCode())], 'quantity' => $orderItem['quantity'], 'sku' => $this->escape($itemNumber)];
+                    if (!$this->get('settings')->getClientID()) {
+                        // Fill purchase_units array for PayPal.
+                        $purchaseUnits['items'][] = ['name' => $this->escape($itemName), 'unit_amount' => ['value' => $itemPrice, 'currency_code' => $this->escape($this->get('currency')->getCode())], 'quantity' => $orderItem->getQuantity(), 'sku' => $this->escape($itemNumber)];
+                    }
                     ?>
                 <?php endforeach; ?>
                 <tr>
@@ -140,6 +142,10 @@ $purchaseUnits = [];
     </div>
 </div>
 
+<?php if (!$this->get('settings')->getClientID() && $this->get('settings')->getPayPalMe()) : ?>
+<?php $presetAmount = ($this->get('settings')->isPaypalMePresetAmount()) ? '/' . number_format($total_price, 2, '.', '') . $this->get('currency')->getCode() : '' ?>
+<a href="https://paypal.me/<?=urlencode($this->get('settings')->getPayPalMe()) . urlencode($presetAmount) ?>"><?=$this->getTrans('paymentInvoiceLink') ?></a>
+<?php else : ?>
 <?php
 // Create "purchase_units" for PayPal.
 $purchaseUnits['amount']['value'] = number_format($total_price, 2, '.', '');
@@ -173,7 +179,10 @@ $purchaseUnits['invoice_id'] = substr($order->getInvoiceFilename(),0, strrpos($o
             });
         }
     }).render('#paypal-button-container');
+</script>
+<?php endif; ?>
 
+<script>
     const $this = $('#orderDetails');
 
     $this.on('show.bs.collapse', function () {
