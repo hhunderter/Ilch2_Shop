@@ -57,7 +57,14 @@ $itemsMapper = $this->get('itemsMapper');
             </tr>
             <tr>
                 <th><?=$this->getTrans('invoice') ?></th>
-                <td><?=$this->getTrans('invoice') ?> - <?=utf8_decode($this->getTrans('numberShort')) ?> <?=$invoiceNr ?></td>
+                <td>
+                    <?=$this->getTrans('invoice') ?> - <?=utf8_decode($this->getTrans('numberShort')) ?> <?=$invoiceNr ?>
+                    <?php if (file_exists($file_location)) : ?>
+                    <a href="<?=$this->getUrl(['action' => 'download', 'id' => $order->getId()], null, true) ?>" target="_blank" class="btn btn-sm alert-success">
+                        <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('showPDF') ?>
+                    </a>
+                    <?php endif; ?>
+                </td>
             </tr>
             <tr>
                 <th><?=$this->getTrans('status') ?></th>
@@ -73,16 +80,6 @@ $itemsMapper = $this->get('itemsMapper');
                     <?php endif; ?>
                 </td>
             </tr>
-            <?php if (file_exists($file_location)) : ?>
-            <tr>
-                <th><?=$this->getTrans('invoice') ?></th>
-                <td>
-                    <a href="<?=$this->getUrl(['action' => 'download', 'id' => $order->getId()], null, true) ?>" target="_blank" class="btn btn-sm alert-success">
-                        <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('showPDF') ?>
-                    </a>
-                </td>
-            </tr>
-            <?php endif; ?>
             </tbody>
         </table>
     </div>
