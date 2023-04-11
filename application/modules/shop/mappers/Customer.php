@@ -70,8 +70,9 @@ class Customer extends Mapper
      * Inserts or updates customer model.
      *
      * @param CustomerModel $customer
+     * @return int
      */
-    public function save(CustomerModel $customer)
+    public function save(CustomerModel $customer): int
     {
         $fields = [
             'userId' => $customer->getUserId(),
@@ -79,12 +80,12 @@ class Customer extends Mapper
         ];
 
         if ($customer->getId()) {
-            $this->db()->update('shop_customers')
+            return $this->db()->update('shop_customers')
                 ->values($fields)
                 ->where(['id' => $customer->getId()])
                 ->execute();
         } else {
-            $this->db()->insert('shop_customers')
+            return $this->db()->insert('shop_customers')
                 ->values($fields)
                 ->execute();
         }

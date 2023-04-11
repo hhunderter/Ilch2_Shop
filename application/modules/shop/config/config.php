@@ -112,8 +112,6 @@ class Config extends Install
                 CREATE TABLE IF NOT EXISTS `[prefix]_shop_customers` (
                     `id` INT(11) NOT NULL AUTO_INCREMENT,
                     `userId` INT(11) NOT NULL,
-                    `invoiceAddressId` INT(11) NOT NULL,
-                    `deliveryAddressId` INT(11) NOT NULL,
                     `email` VARCHAR(255) NOT NULL,
                     PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
