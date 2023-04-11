@@ -158,6 +158,7 @@ if(!empty($_SESSION['shopping_cart'])) {
                 <?=$this->getTrans('invoiceAddress') ?>
                 <div class="row space20"></div>
 
+                <?php if ($this->get('addresses')) : ?>
                 <div class="form-group <?=$this->validation()->hasError('dropdownInvoiceAddress') ? 'has-error' : '' ?>">
                     <label for="dropdownInvoiceAddress" class="control-label col-lg-2">
                         <?=$this->getTrans('dropdownInvoiceAddress') ?>
@@ -171,6 +172,7 @@ if(!empty($_SESSION['shopping_cart'])) {
                         </select>
                     </div>
                 </div>
+                <?php endif; ?>
 
                 <div class="form-group <?=$this->validation()->hasError('invoiceAddressPrename') ? 'has-error' : '' ?>">
                     <label for="invoiceAddressPrename" class="control-label col-lg-2">
