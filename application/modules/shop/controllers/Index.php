@@ -19,6 +19,7 @@ use Modules\Shop\Mappers\Orders as OrdersMapper;
 use Modules\Shop\Mappers\Settings as SettingsMapper;
 use Modules\Shop\Models\Order as OrdersModel;
 use Modules\Shop\Models\Orderdetails as OrderdetailsModel;
+use Modules\Shop\Models\Customer as CustomerModel;
 use Modules\User\Mappers\User as UserMapper;
 use Ilch\Validation;
 
@@ -178,14 +179,6 @@ class Index extends Frontend
                 $model->setDatetime($ilchDate->toDb());
                 $model->setCurrencyId($currency->getId());
 
-                if (!empty($customer)) {
-                    $addresses = $addressMapper->getAddressesByCustomerId($customer->getId());
-
-                    $model->setCustomerId($customer->getId());
-                    $model->getDeliveryAddress()->setCustomerID($customer->getId());
-                    $model->getInvoiceAddress()->setCustomerID($customer->getId());
-                }
-
                 if ($this->getRequest()->getPost('dropdownDeliveryAddress')) {
                     // Don't use possible user input. Get the address from the database.
                     if (empty($customer)) {
@@ -289,6 +282,16 @@ class Index extends Frontend
                         ->to(['action' => 'cart']);
                 }
 
+                if (empty($customer)) {
+                    $customer = new CustomerModel();
+                    $customer->setEmail($this->getUser()->getEmail());
+                    $customer->setUserId($this->getUser()->getId());
+                    $customer->setId($customerMapper->save($customer));
+                }
+
+                $model->setCustomerId($customer->getId());
+                $model->getDeliveryAddress()->setCustomerID($customer->getId());
+                $model->getInvoiceAddress()->setCustomerID($customer->getId());
                 $ordersMapper->save($model);
 
                 foreach ($arrayOrder as $product) {
