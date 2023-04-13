@@ -76,7 +76,7 @@ return [
     'editOrder' => 'Bestellung bearbeiten',
     'dateTimeAt' => 'um',
     'dateTimeoClock' => 'Uhr',
-    'emailAdress' => 'E-Mailadresse',
+    'emailAddress' => 'E-Mailadresse',
     'entries' => 'Anzahl',
     'existingQuantity' => 'Vorhandene Menge',
     'filter' => 'Filter',

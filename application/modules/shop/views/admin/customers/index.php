@@ -18,7 +18,7 @@
             <th></th>
             <th></th>
             <th><?=$this->getTrans('customerId') ?></th>
-            <th><?=$this->getTrans('emailAdress') ?></th>
+            <th><?=$this->getTrans('emailAddress') ?></th>
         </tr>
         </thead>
         <tbody>

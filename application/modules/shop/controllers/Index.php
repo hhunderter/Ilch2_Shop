@@ -150,6 +150,7 @@ class Index extends Frontend
                 'street' => 'required',
                 'postcode' => 'required',
                 'city' => 'required',
+                'email' => 'required|email',
                 'acceptOrder' =>  'required'
             ];
 
@@ -283,10 +284,15 @@ class Index extends Frontend
                 }
 
                 if (empty($customer)) {
+                    // Add the user as a new customer.
                     $customer = new CustomerModel();
                     $customer->setEmail($this->getUser()->getEmail());
                     $customer->setUserId($this->getUser()->getId());
                     $customer->setId($customerMapper->save($customer));
+                } elseif ($customer->getEmail() !== $this->getUser()->getEmail()) {
+                    // The customers email address changed. Update it.
+                    $customer->setEmail($this->getUser()->getEmail());
+                    $customerMapper->save($customer);
                 }
 
                 $model->setCustomerId($customer->getId());

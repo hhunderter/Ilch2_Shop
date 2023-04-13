@@ -139,14 +139,14 @@ if(!empty($_SESSION['shopping_cart'])) {
 
                 <div class="form-group <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
                     <label for="email" class="control-label col-lg-2">
-                        <?=$this->getTrans('emailAdress') ?>&nbsp;*
+                        <?=$this->getTrans('emailAddress') ?>&nbsp;*
                     </label>
                     <div class="col-lg-9">
                         <input type="text"
                                class="form-control"
                                id="email"
                                name="email"
-                               placeholder="<?=$this->getTrans('emailAdress') ?>"
+                               placeholder="<?=$this->getTrans('emailAddress') ?>"
                                value="<?=$this->getUser()->getEmail() ?>"
                                readonly />
                     </div>
