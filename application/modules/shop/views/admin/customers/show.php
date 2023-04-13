@@ -19,7 +19,7 @@
             <td><?=$this->escape($this->get('customerUsername')) ?></td>
         </tr>
         <tr>
-            <th><?=$this->getTrans('emailAdress') ?></th>
+            <th><?=$this->getTrans('emailAddress') ?></th>
             <td><a href="mailto:<?=$this->escape($this->get('customer')->getEmail()) ?>"><?=$this->escape($this->get('customer')->getEmail()) ?></a></td>
         </tr>
         </tbody>

@@ -48,7 +48,7 @@ $itemsMapper = $this->get('itemsMapper');
                 <td><?=$this->escape($order->getDeliveryAddress()->getStreet()) ?>, <?=$this->escape($order->getDeliveryAddress()->getPostcode()) ?> <?=$this->escape($order->getDeliveryAddress()->getCity()) ?>, <?=$this->escape($order->getDeliveryAddress()->getCountry()) ?></td>
             </tr>
             <tr>
-                <th><?=$this->getTrans('emailAdress') ?></th>
+                <th><?=$this->getTrans('emailAddress') ?></th>
                 <td><a href="mailto:<?=$this->escape($order->getEmail()) ?>"><?=$this->escape($order->getEmail()) ?></a></td>
             </tr>
             <tr>

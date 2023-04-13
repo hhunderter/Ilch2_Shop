@@ -76,7 +76,7 @@ return [
     'editOrder' => 'Edit your order',
     'dateTimeAt' => 'at',
     'dateTimeoClock' => '',
-    'emailAdress' => 'E-mail address',
+    'emailAddress' => 'E-mail address',
     'entries' => 'Number',
     'existingQuantity' => 'Existing quantity',
     'filter' => 'Filter',
