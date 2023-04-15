@@ -254,7 +254,9 @@ class Orders extends Admin
             $templateName = 'sendinvoicenopaymentlink.php';
         }
 
-        $name = $this->getLayout()->escape($order->getInvoiceAddress()->getLastname());
+        $prename = $this->getLayout()->escape($order->getInvoiceAddress()->getPrename());
+        $lastname = $this->getLayout()->escape($order->getInvoiceAddress()->getLastname());
+        $name = $prename . ' ' . $lastname;
 
         $layout = $_SESSION['layout'] ?? '';
 

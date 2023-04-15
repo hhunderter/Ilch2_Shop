@@ -308,7 +308,9 @@ class Index extends Frontend
                 $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
                 $date = new Date();
                 $mailContent = $emailsMapper->getEmail('shop', 'order_confirmed_mail', $this->getTranslator()->getLocale());
-                $name = $this->getLayout()->escape($model->getDeliveryAddress()->getLastname());
+                $prename = $this->getLayout()->escape($model->getDeliveryAddress()->getPrename());
+                $lastname = $this->getLayout()->escape($model->getDeliveryAddress()->getLastname());
+                $name = $prename . ' ' . $lastname;
 
                 $layout = $_SESSION['layout'] ?? '';
 

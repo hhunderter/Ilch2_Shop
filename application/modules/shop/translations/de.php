@@ -261,4 +261,10 @@ return [
     'showOrderDetails' => 'Details zu ihrer Bestellung ansehen',
     'customerAreaOrderNotFound' => 'Bestellung nicht gefunden.',
     'customerAreaInfoBuyer' => 'Ihre Informationen zur Bestellung',
+    'invoiceAddressPrename' => 'Vorname des Rechnungsempfängers',
+    'invoiceAddressLastname' => 'Nachname des Rechnungsempfängers',
+    'invoiceAddressStreet' => 'Straße des Rechnungsempfängers',
+    'invoiceAddressPostcode' => 'Postleitzahl des Rechnungsempfängers',
+    'invoiceAddressCity' => 'Ort des Rechnungsempfängers',
+    'placeOfDelivery' => 'Lieferort',
 ];

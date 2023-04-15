@@ -26,7 +26,7 @@ if(!empty($_SESSION['shopping_cart'])) {
             <?=$this->getTokenField() ?>
             <?php $order = str_replace('"', "'", json_encode($_SESSION['shopping_cart'])); ?>
             <input type="hidden" name="order" value="<?=$order ?>" />
-            <input type="checkbox" id="differentInvoiceAddress" name="differentInvoiceAddress">
+            <input type="checkbox" id="differentInvoiceAddress" name="differentInvoiceAddress" <?=($this->originalInput('differentInvoiceAddress') != '' ? 'checked' : '') ?> />
             <label for="differentInvoiceAddress"><?=$this->getTrans('differentInvoiceAddress') ?></label>
 
             <div class="row space20"></div>
@@ -507,7 +507,11 @@ if(!empty($_SESSION['shopping_cart'])) {
         let dropdownInvoiceAddress = $('#dropdownInvoiceAddress');
 
         //set initial state.
-        differentInvoiceAddress.val(this.checked);
+        if(differentInvoiceAddress.is(':checked')) {
+            $('#invoiceAddress').show();  // checked
+        } else {
+            $('#invoiceAddress').hide();  // unchecked
+        }
 
         differentInvoiceAddress.change(function() {
             $('#invoiceAddress').toggle();

@@ -52,11 +52,11 @@ $settingsMapper = $this->get('settingsMapper');
                 </tr>
                 <tr>
                     <th><?=$this->getTrans('deliveryAddress') ?></th>
-                    <td><?=$this->escape($order->getInvoiceAddress()->getStreet()) ?>, <?=$this->escape($order->getInvoiceAddress()->getPostcode()) ?> <?=$this->escape($order->getInvoiceAddress()->getCity()) ?>, <?=$this->escape($order->getInvoiceAddress()->getCountry()) ?></td>
+					<td><?=$this->escape($order->getDeliveryAddress()->getPrename()) ?> <?=$this->escape($order->getDeliveryAddress()->getLastname()) ?>, <?=$this->escape($order->getDeliveryAddress()->getStreet()) ?>, <?=$this->escape($order->getDeliveryAddress()->getPostcode()) ?> <?=$this->escape($order->getDeliveryAddress()->getCity()) ?>, <?=$this->escape($order->getDeliveryAddress()->getCountry()) ?></td>
                 </tr>
                 <tr>
                     <th><?=$this->getTrans('invoiceAddress') ?></th>
-                    <td><?=$this->escape($order->getDeliveryAddress()->getStreet()) ?>, <?=$this->escape($order->getDeliveryAddress()->getPostcode()) ?> <?=$this->escape($order->getDeliveryAddress()->getCity()) ?>, <?=$this->escape($order->getDeliveryAddress()->getCountry()) ?></td>
+                    <td><?=$this->escape($order->getInvoiceAddress()->getPrename()) ?> <?=$this->escape($order->getInvoiceAddress()->getLastname()) ?>, <?=$this->escape($order->getInvoiceAddress()->getStreet()) ?>, <?=$this->escape($order->getInvoiceAddress()->getPostcode()) ?> <?=$this->escape($order->getInvoiceAddress()->getCity()) ?>, <?=$this->escape($order->getInvoiceAddress()->getCountry()) ?></td>
                 </tr>
                 <tr>
                     <th><?=$this->getTrans('emailAddress') ?></th>
@@ -310,9 +310,16 @@ $settingsMapper = $this->get('settingsMapper');
                 $this->Cell(130, 5, $this->ReceiverCountry, 0, 0, 'L');
                 $this->SetFont('Arial', '', 10);
                 $this->Cell(40, 5, $this->DeliveryDate, 0, 1, 'R');
-                $this->Ln(2);
+                $this->Ln(4);
                 $this->SetFont('Arial', 'I', 9);
-                $this->Cell(170, 5, $this->nameByEmail.': '.$this->ReceiverEmail, 0, 1, 'L');
+                $this->Cell(130, 5, $this->nameByEmail.': '.$this->ReceiverEmail, 0, 0, 'L');
+                $this->SetFont('Arial', 'B', 11);
+                $this->Cell(40, 5, $this->nameDeliveryPlace, 0, 1, 'R');
+                $this->SetFont('Arial', '', 10);
+                $this->Cell(170, 5, $this->DeliveryPrename.' '.$this->DeliveryLastname, 0, 1, 'R');
+                $this->Cell(170, 5, $this->DeliveryStreet, 0, 1, 'R');
+                $this->Cell(170, 5, $this->DeliveryPostcode.' '.$this->DeliveryCity, 0, 1, 'R');
+                $this->Cell(170, 5, $this->DeliveryCountry, 0, 1, 'R');
             }
             function TitleLine() 
             {
@@ -456,6 +463,13 @@ $settingsMapper = $this->get('settingsMapper');
         $pdf->ReceiverCountry = utf8_decode($this->escape($order->getInvoiceAddress()->getCountry()));
         $pdf->nameByEmail = utf8_decode($this->getTrans('byEmail'));
         $pdf->ReceiverEmail = $this->escape($order->getEmail());
+        $pdf->nameDeliveryPlace = utf8_decode($this->getTrans('placeOfDelivery'));
+        $pdf->DeliveryPrename = utf8_decode($this->escape($order->getDeliveryAddress()->getPrename()));
+        $pdf->DeliveryLastname = utf8_decode($this->escape($order->getDeliveryAddress()->getLastname()));
+        $pdf->DeliveryStreet = utf8_decode($this->escape($order->getDeliveryAddress()->getStreet()));
+        $pdf->DeliveryPostcode = $this->escape($order->getDeliveryAddress()->getPostcode());
+        $pdf->DeliveryCity = utf8_decode($this->escape($order->getDeliveryAddress()->getCity()));
+        $pdf->DeliveryCountry = utf8_decode($this->escape($order->getDeliveryAddress()->getCountry()));
         $pdf->nameInvoice = strtoupper($nameInvoice);
         $pdf->nameOrder = $nameOrder = utf8_decode($this->getTrans('order'));
         $pdf->nameFrom = $nameFrom = utf8_decode($this->getTrans('from'));
@@ -502,11 +516,11 @@ $settingsMapper = $this->get('settingsMapper');
         $pdf->AddPage();
         $pdf->Ln(40);
         $pdf->InvoiceHead();
-        $pdf->Ln(20);
+        $pdf->Ln(5);
         $pdf->TitleLine();
         $pdf->Ln(5);
         $pdf->OrderTable();
-        $pdf->Ln(7);
+        $pdf->Ln(5);
         $pdf->payInfo();
         // document
         $pdf->SetTitle($nameInvoice.' '.$nameNumber.' '.$invoiceNr);
