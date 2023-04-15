@@ -20,9 +20,8 @@
                 <th class="sort"><?=$this->getTrans('status') ?></th>
                 <th class="sort"><?=$this->getTrans('orderDate') ?></th>
                 <th class="sort"><?=$this->getTrans('invoice').' '.$this->getTrans('numberShort') ?></th>
-                <th class="sort"><?=$this->getTrans('name') ?></th>
-                <th class="sort"><?=$this->getTrans('deliveryAddress') ?></th>
                 <th class="sort"><?=$this->getTrans('invoiceAddress') ?></th>
+                <th class="sort"><?=$this->getTrans('deliveryAddress') ?></th>
             </tr>
             </thead>
             <tbody>
@@ -54,14 +53,13 @@
                         <?=$invoiceNr ?>
                     </td>
                     <td>
-                        <?=$this->escape($order->getInvoiceAddress()->getPrename()) ?> <?=$this->escape($order->getInvoiceAddress()->getLastname()) ?>
-                    </td>
-                    <td>
+                        <?=$this->escape($order->getInvoiceAddress()->getPrename()) ?> <?=$this->escape($order->getInvoiceAddress()->getLastname()) ?>,
                         <?=$this->escape($order->getInvoiceAddress()->getStreet()) ?>,
                         <?=$this->escape($order->getInvoiceAddress()->getPostcode()) ?> <?=$this->escape($order->getInvoiceAddress()->getCity()) ?>,
                         <?=$this->escape($order->getInvoiceAddress()->getCountry()) ?>
                     </td>
                     <td>
+                        <?=$this->escape($order->getDeliveryAddress()->getPrename()) ?> <?=$this->escape($order->getDeliveryAddress()->getLastname()) ?>,
                         <?=$this->escape($order->getDeliveryAddress()->getStreet()) ?>,
                         <?=$this->escape($order->getDeliveryAddress()->getPostcode()) ?> <?=$this->escape($order->getDeliveryAddress()->getCity()) ?>,
                         <?=$this->escape($order->getDeliveryAddress()->getCountry()) ?>
