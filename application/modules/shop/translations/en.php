@@ -113,7 +113,7 @@ return [
     'invoiceTextTop' => 'Invoice listing sentence',
     'deliveryTextTop' => 'Delivery note listing sentence',
     'infoInvoiceTextTop' => 'This sentence is on the invoice above the list of the ordered items.',
-	'infoDeliveryTextTop' => 'This sentence is on the delivery note above the listing of items shipped.',
+    'infoDeliveryTextTop' => 'This sentence is on the delivery note above the listing of items shipped.',
     'invoiceTextBottom' => 'Invoice processing sentence',
     'infoInvoiceTextBottom' => 'This sentence can be found on the invoice below the list of the items ordered.',
     'itemNumber' => 'Item number',
