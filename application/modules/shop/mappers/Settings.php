@@ -44,6 +44,7 @@ class Settings extends Mapper
         $model->setBankOwner($serverRow['bankOwner']);
         $model->setBankIBAN($serverRow['bankIBAN']);
         $model->setBankBIC($serverRow['bankBIC']);
+        $model->setDeliveryTextTop($serverRow['deliveryTextTop']);
         $model->setInvoiceTextTop($serverRow['invoiceTextTop']);
         $model->setInvoiceTextBottom($serverRow['invoiceTextBottom']);
         $model->setAGB($serverRow['agb']);

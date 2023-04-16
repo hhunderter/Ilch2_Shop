@@ -116,6 +116,13 @@ class Settings extends Model
     protected $bankBIC;
 
     /**
+     * The deliveryTextTop of the settings.
+     *
+     * @var string
+     */
+    protected $deliveryTextTop;
+
+    /**
      * The invoiceTextTop of the settings.
      *
      * @var string
@@ -483,6 +490,26 @@ class Settings extends Model
     public function setBankBIC(string $bankBIC)
     {
         $this->bankBIC = $bankBIC;
+    }
+
+    /**
+     * Gets the deliveryTextTop of the settings.
+     *
+     * @return string
+     */
+    public function getDeliveryTextTop(): string
+    {
+        return $this->deliveryTextTop;
+    }
+
+    /**
+     * Sets the deliveryTextTop of the settings.
+     *
+     * @param string $deliveryTextTop
+     */
+    public function setDeliveryTextTop(string $deliveryTextTop)
+    {
+        $this->deliveryTextTop = $deliveryTextTop;
     }
 
     /**
