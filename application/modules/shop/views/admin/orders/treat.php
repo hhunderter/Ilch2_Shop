@@ -248,11 +248,26 @@ $settingsMapper = $this->get('settingsMapper');
                                 <i class="fa-solid fa-minus-square" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('deletePDF') ?>
                             </button>
                         <?php } else { ?>
-                            <button type="submit" name="PDF" value="create" class="btn btn-sm alert-default">
+                            <button type="submit" name="PDF" value="createInvoice" class="btn btn-sm alert-default">
                                 <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('createPDF') ?>
                             </button>
                         <?php } ?>
                     </form>
+                </td>
+            </tr>
+            <tr>			
+                <th><?=$this->getTrans('deliveryNote') ?></th>
+            </tr>
+            <tr>			
+                <td>
+                    <div class="btn-group btn-group-sm">
+                        <button type="submit" formtarget="_blank" name="PDF" value="showDeliveryNote" class="btn btn-sm alert-default">
+                            <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('showPDF') ?>
+                        </button>
+                        <span class="btn btn-sm alert-default" style="pointer-events: none">
+                            <i class="fa-solid fa-info"></i> <?=$this->getTrans('infoDeliveryNote') ?>
+                        </span>
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -278,7 +293,7 @@ $settingsMapper = $this->get('settingsMapper');
 
     <?php
     /* A4: 210mm x 297mm with border 20mm */
-    if (isset($_POST['PDF']) && $_POST['PDF'] == 'create') {
+    if (isset($_POST['PDF']) && $_POST['PDF'] == 'createInvoice') {
         ob_end_clean();
         require(ROOT_PATH.'/application/modules/shop/static/class/fpdf/fpdf.php');
         
@@ -540,7 +555,183 @@ $settingsMapper = $this->get('settingsMapper');
         unlink($file_location);
         header('Location: '.$order->getId());
         exit();
-    }?>
+    } elseif (isset($_POST['PDF']) && $_POST['PDF'] == 'showDeliveryNote') {
+        ob_end_clean();
+        require(ROOT_PATH.'/application/modules/shop/static/class/fpdf/fpdf.php');
+        
+        class PDF extends FPDF
+        {
+            function Header()
+            {
+                $this->SetMargins(20, 20, 20);
+                $this->Image($this->shopLogo, 140, 15, 50);
+            }
+            function DeliveryHead()
+            {
+                $this->SetFont('Arial', 'U', 8);
+                $this->SetTextColor(100, 100, 100);
+                $this->Cell(130, 5, $this->shopName.' | '.$this->shopStreet.' | '.$this->shopPLZ.' '.$this->shopCity, 0, 0, 'L');
+                $this->SetTextColor(0, 0, 0);
+                $this->SetFont('Arial', 'B', 11);
+                $this->Cell(40, 5, $this->nameShippingDate, 0, 1, 'R');
+                $this->SetFont('Arial', '', 11);
+                $this->Cell(130, 5, $this->DeliveryPrename.' '.$this->DeliveryLastname, 0, 0, 'L');
+                $this->SetFont('Arial', '', 10);
+                $this->Cell(40, 5, $this->shippingDate, 0, 1, 'R');
+                $this->SetFont('Arial', '', 11);
+                $this->Cell(170, 5, $this->DeliveryStreet, 0, 1, 'L');
+                $this->Cell(170, 5, $this->DeliveryPostcode.' '.$this->DeliveryCity, 0, 1, 'L');
+                $this->Cell(170, 5, $this->DeliveryCountry, 0, 1, 'L');
+            }
+            function TitleLine() 
+            {
+                $this->SetFont('Arial', 'B', 14);
+                $this->SetTextColor(0, 0, 0);
+                $this->Cell(0, 8, $this->nameDeliveryNote, 0, 1, 'L');
+                $this->SetFont('Arial', 'I', 10);
+                $this->Cell(0, 5, $this->nameOrder.' '.$this->nameNumber.' '.$this->invoiceNr.' '.$this->nameFrom.' '.$this->orderDate, 0, 1, 'L');
+                $this->SetFont('Arial', '', 11);
+                $this->Ln(15);
+                $this->MultiCell(170, 5, $this->deliveryTextTop);
+            }
+            function DeliveryTable()
+            {
+                $this->SetFillColor(220, 220, 220);
+                $this->SetTextColor(0);
+                $this->SetDrawColor(100, 100, 100);
+                $this->SetLineWidth(.1);
+                $this->SetFont('Arial', 'B', 9);
+                $w = [10, 100, 40, 20];
+                $this->Cell($w[0], 6, $this->OrderHeader[0], 1, 0, 'R', true);
+                $this->Cell($w[1], 6, $this->OrderHeader[1], 1, 0, 'L', true);
+				$this->Cell($w[2], 6, $this->OrderHeader[2], 1, 0, 'L', true);
+                $this->Cell($w[3], 6, $this->OrderHeader[3], 1, 0, 'R', true);
+                $this->Ln();
+                $this->SetFillColor(240, 240, 240);
+                $this->SetTextColor(0);
+                $fill = false;
+                foreach($this->OrderData as $row) {
+                    $this->SetFont('Arial', '', 9);
+                    $this->Cell($w[0], 6, $row[0], 'LR', 0, 'R', $fill);
+                    $this->Cell($w[1], 6, $row[1], 'LR', 0, 'L', $fill);
+					$this->Cell($w[2], 6, $row[7], 'LR', 0, 'L', $fill);
+                    $this->Cell($w[3], 6, $row[5], 'LR', 0, 'R', $fill);
+                    $this->Ln();
+                    $fill = !$fill;
+                }
+                $this->Cell(170, 0, '', 'T');
+                $this->Ln(1);
+            }
+            function DeliveryInfo()
+            {
+                $this->SetFont('Arial', '', 11);
+				$this->Cell(170, 5, $this->deliveryInfoGreetings, 0, 1);
+                $this->SetFont('Times', 'I', 14);
+                $this->SetTextColor(100, 100, 100);
+                $this->Cell(170, 10, $this->shopName, 0, 1);
+            }
+            function Footer()
+            {   
+                $this->SetY(-30);
+                $this->SetTextColor(75, 75, 75);
+                $this->SetFont('Courier', 'I', 8);
+                $this->Cell(170, 6, $this->nameSite.' '.$this->PageNo().' / {nb}', 0, 1, 'R');
+                $this->SetFont('Courier', '', 8);
+                $this->SetDrawColor(150, 150, 150);
+                $this->SetLineWidth(.1);
+                $this->Cell(170, 1, '', 'T', 1);
+                $this->Cell(55, 4, $this->shopName, 0, 0, 'L');
+                $this->Cell(10, 4, 'TEL:', 0, 0, 'L');
+                $this->Cell(50, 4, $this->shopTel, 0, 0, 'L');
+                $this->Cell(10, 4, 'BANK:', 0, 0, 'L');
+                $this->Cell(45, 4, $this->bankName, 0, 1, 'L');
+                $this->Cell(55, 4, $this->shopStreet, 0, 0, 'L');
+                $this->Cell(10, 4, 'FAX:', 0, 0, 'L');
+                $this->Cell(50, 4, $this->shopFax, 0, 0, 'L');
+                $this->Cell(10, 4, 'IBAN:', 0, 0, 'L');
+                $this->Cell(45, 4, $this->bankIBAN, 0, 1, 'L');
+                $this->Cell(55, 4, $this->shopPLZ.' '.$this->shopCity, 0, 0, 'L');
+                $this->Cell(10, 4, 'MAIL:', 0, 0, 'L');
+                $this->Cell(50, 4, $this->shopMail, 0, 0, 'L');
+                $this->Cell(10, 4, 'BIC:', 0, 0, 'L');
+                $this->Cell(45, 4, $this->bankBIC, 0, 1, 'L');
+                $this->Cell(55, 4, 'Ust-IdNr.: '.$this->shopStNr, 0, 0, 'L');
+                $this->Cell(10, 4, 'WEB:', 0, 0, 'L');
+                $this->Cell(50, 4, $this->shopWeb, 0, 0, 'L');
+                $this->Cell(10, 4, 'INH:', 0, 0, 'L');
+                $this->Cell(45, 4, $this->bankOwner, 0, 1, 'L');
+                $this->Cell(170, 1, '', 'B', 1);
+            }
+        }
+
+        // render
+        $pdf = new PDF('P','mm','A4');
+        // data
+        if ($settingsMapper->getSettings()->getShopLogo() && file_exists(ROOT_PATH.'/'.$settingsMapper->getSettings()->getShopLogo())) {
+            $pdf->shopLogo = ROOT_PATH.'/'.$settingsMapper->getSettings()->getShopLogo();
+        } else {
+            $pdf->shopLogo = ROOT_PATH.'/application/modules/shop/static/img/empty.jpg';
+        }
+        $pdf->nameShippingDate = utf8_decode($this->getTrans('shippingDate'));
+        $pdf->shippingDate = date('d.m.Y', time());
+        $pdf->nameDeliveryDate = utf8_decode($this->getTrans('expectedDelivery'));
+              $maxDeliveryTime = max($arrayShippingTime);
+              $sumDeliveryTime = time() + ($maxDeliveryTime * 24 * 60 * 60);
+        $pdf->DeliveryDate = utf8_decode($this->getTrans('approx')).' '.date('d.m.Y', $sumDeliveryTime);
+              $nameDeliveryNote = utf8_decode($this->getTrans('deliveryNote'));
+		$pdf->nameDeliveryNote = strtoupper($nameDeliveryNote);
+        $pdf->DeliveryPrename = utf8_decode($this->escape($order->getDeliveryAddress()->getPrename()));
+        $pdf->DeliveryLastname = utf8_decode($this->escape($order->getDeliveryAddress()->getLastname()));
+        $pdf->DeliveryStreet = utf8_decode($this->escape($order->getDeliveryAddress()->getStreet()));
+        $pdf->DeliveryPostcode = $this->escape($order->getDeliveryAddress()->getPostcode());
+        $pdf->DeliveryCity = utf8_decode($this->escape($order->getDeliveryAddress()->getCity()));
+        $pdf->DeliveryCountry = utf8_decode($this->escape($order->getDeliveryAddress()->getCountry()));
+        $pdf->nameOrder = $nameOrder = utf8_decode($this->getTrans('order'));
+        $pdf->nameFrom = $nameFrom = utf8_decode($this->getTrans('from'));
+        $pdf->orderDate = $orderDate;
+        $pdf->nameNumber = $nameNumber = utf8_decode($this->getTrans('numberShort'));
+        $pdf->invoiceNr = $invoiceNr;
+        $pdf->deliveryTextTop = utf8_decode($settingsMapper->getSettings()->getDeliveryTextTop());
+        $pdf->OrderHeader = ['#',
+              utf8_decode($this->getTrans('productName')),
+			  utf8_decode($this->getTrans('itemNumber')),
+              utf8_decode($this->getTrans('amount'))];
+        $pdf->OrderData = $pdfOrderData;
+        $pdf->deliveryInfoGreetings = utf8_decode($this->getTrans('greetings'));
+        $pdf->nameSite = utf8_decode($this->getTrans('site'));
+        $pdf->shopName = $shopName = utf8_decode($settingsMapper->getSettings()->getShopName());
+        $pdf->shopStreet = utf8_decode($settingsMapper->getSettings()->getShopStreet());
+        $pdf->shopPLZ = utf8_decode($settingsMapper->getSettings()->getShopPLZ());
+        $pdf->shopCity = utf8_decode($settingsMapper->getSettings()->getShopCity());
+        $pdf->shopStNr = utf8_decode($settingsMapper->getSettings()->getShopStNr());
+        $pdf->shopTel = utf8_decode($settingsMapper->getSettings()->getShopTel());
+        $pdf->shopFax = utf8_decode($settingsMapper->getSettings()->getShopFax());
+        $pdf->shopMail = utf8_decode($settingsMapper->getSettings()->getShopMail());
+        $pdf->shopWeb = $shopWeb = utf8_decode($settingsMapper->getSettings()->getShopWeb());
+        $pdf->bankName = utf8_decode($settingsMapper->getSettings()->getBankName());
+        $pdf->bankIBAN = utf8_decode($settingsMapper->getSettings()->getBankIBAN());
+        $pdf->bankBIC = utf8_decode($settingsMapper->getSettings()->getBankBIC());
+        $pdf->bankOwner = utf8_decode($settingsMapper->getSettings()->getBankOwner());
+        //
+        $pdf->AliasNbPages();
+        $pdf->AddPage();
+        $pdf->Ln(40);
+        $pdf->DeliveryHead();
+        $pdf->Ln(30);
+        $pdf->TitleLine();
+        $pdf->Ln(5);
+        $pdf->DeliveryTable();
+        $pdf->Ln(20);
+        $pdf->DeliveryInfo();
+        // document
+        $pdf->SetTitle($nameDeliveryNote.' '.$nameNumber.' '.$invoiceNr);
+        $pdf->SetSubject($nameOrder.' '.$nameFrom.' '.$orderDate);
+        $pdf->SetAuthor($shopName.' ('.$shopWeb.')');
+        $pdf->SetCreator('Shop-Modul by ilch.de');
+        $pdf->SetKeywords($nameDeliveryNote);
+        $pdf->Output($nameDeliveryNote,'I');
+        exit();
+    } ?>
 
 <?php else: ?>
     <h1><?=$this->getTrans('menuOrder'); ?></h1>

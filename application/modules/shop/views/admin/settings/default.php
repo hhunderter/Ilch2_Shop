@@ -147,6 +147,23 @@
             </div>
         </div>
     </div>
+    <div class="form-group <?=$this->validation()->hasError('deliveryTextTop') ? 'has-error' : '' ?>">
+        <label for="deliveryTextTop" class="col-lg-2 control-label">
+            <?=$this->getTrans('deliveryTextTop') ?>:
+        </label>
+        <div class="col-lg-10">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('infoDeliveryTextTop') ?>"></span>
+                </span>
+                <input type="text"
+                       class="form-control"
+                       id="deliveryTextTop"
+                       name="deliveryTextTop"
+                       value="<?=($this->escape($this->get('settings')->getDeliveryTextTop()) != '') ? $this->escape($this->get('settings')->getDeliveryTextTop()) : $this->escape($this->originalInput('deliveryTextTop')) ?>" />
+            </div>
+        </div>
+    </div>
     <?=$this->getSaveBar('saveButton') ?>
 </form>
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
