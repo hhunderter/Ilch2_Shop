@@ -266,5 +266,5 @@ return [
     'invoiceAddressStreet' => 'Street of the invoice recipient',
     'invoiceAddressPostcode' => 'Invoice recipients zip code',
     'invoiceAddressCity' => 'City of the invoice recipient',
-    'placeOfDelivery' => 'Place of delivery',
+    'placeOfDelivery' => 'Delivery address',
 ];

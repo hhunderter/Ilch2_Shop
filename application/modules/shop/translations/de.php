@@ -266,5 +266,5 @@ return [
     'invoiceAddressStreet' => 'Straße des Rechnungsempfängers',
     'invoiceAddressPostcode' => 'Postleitzahl des Rechnungsempfängers',
     'invoiceAddressCity' => 'Ort des Rechnungsempfängers',
-    'placeOfDelivery' => 'Lieferort',
+    'placeOfDelivery' => 'Lieferadresse',
 ];
