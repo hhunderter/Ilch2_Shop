@@ -261,7 +261,7 @@ return [
     'showOrderDetails' => 'View details of your order',
     'customerAreaOrderNotFound' => 'Order not found.',
     'customerAreaInfoBuyer' => 'Your information for this order',
-	'invoiceAddressPrename' => 'First name of the invoice recipient',
+    'invoiceAddressPrename' => 'First name of the invoice recipient',
     'invoiceAddressLastname' => 'Last name of the invoice recipient',
     'invoiceAddressStreet' => 'Street of the invoice recipient',
     'invoiceAddressPostcode' => 'Invoice recipients zip code',
