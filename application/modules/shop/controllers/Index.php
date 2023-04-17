@@ -47,6 +47,11 @@ class Index extends Frontend
         }
 
         $categories = $categoryMapper->getCategoriesByAccess($readAccess);
+        $catIds = [];
+        foreach ($categories as $category) {
+            $catIds[] = $category->getId();
+        }
+        $countCats = $itemsMapper->getCountOfItemsPerCategory($catIds);
 
         if ($this->getRequest()->getParam('catId') && is_numeric($this->getRequest()->getParam('catId'))) {
             $category = $categoryMapper->getCategoryById($this->getRequest()->getParam('catId'));
@@ -82,6 +87,7 @@ class Index extends Frontend
         }
 
         $this->getView()->set('categories', $categories);
+        $this->getView()->set('countCats', $countCats);
         $this->getView()->set('currency', $currency->getName());
         $this->getView()->set('itemsMapper', $itemsMapper);
         $this->getView()->set('shopItems', $shopItems);
