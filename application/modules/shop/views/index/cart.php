@@ -63,10 +63,21 @@ if (!empty($_SESSION['shopping_cart'])) {
                 </tr>
             </thead>
             <tbody>
-                <?php	
+                <?php
+                $itemIds = [];
+                foreach ($_SESSION['shopping_cart'] as $product) {
+                    $itemIds[] = $product['id'];
+                }
+
+                $itemsAssoc = [];
+                $items = $itemsMapper->getShopItems(['id' => $itemIds]);
+                foreach ($items as $item) {
+                    $itemsAssoc[$item->getId()] = $item;
+                }
+
                 foreach ($_SESSION['shopping_cart'] as $product) {
                     $itemId = $product['id'];
-                    $item = $itemsMapper->getShopItemById($itemId);
+                    $item = $itemsAssoc[$itemId];
                     $itemCode = '';
                     $itemName = '';
                     $itemPrice = 0;
