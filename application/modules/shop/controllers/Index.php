@@ -271,10 +271,21 @@ class Index extends Frontend
                     $model->setInvoiceAddress($model->getDeliveryAddress());
                 }
 
-                // Check if stock is sufficient for this order.
+                // Check if stock is sufficient for this order. Get stock of all items with one query to save queries.
+                $itemIds = [];
+                foreach ($arrayOrder as $product) {
+                    $itemIds[] = $product['id'];
+                }
+                $items = $itemsMapper->getShopItems(['id' => $itemIds]);
+
+                $itemsAssoc = [];
+                foreach ($items as $item) {
+                    $itemsAssoc[$item->getId()] = $item;
+                }
+
                 $messages = [];
                 foreach ($arrayOrder as $product) {
-                    $item = $itemsMapper->getShopItemById($product['id']);
+                    $item = $itemsAssoc[$product['id']];
 
                     if ($item->getStock() < $product['quantity']) {
                         $messages[] = $this->getTranslator()->trans('currentStockInsufficientDetails', $item->getName(), $item->getStock(), $item->getUnitName());

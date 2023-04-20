@@ -38,7 +38,7 @@ return [
     'completed' => 'abgeschlossen',
     'completedBIG' => 'ABGESCHLOSSEN',
     'completePurchase' => 'Kauf abschließen',
-    'confirmation' => 'Bestätigung und Abschluß',
+    'confirmation' => 'Bestätigung und Abschluss',
     'contentShopCart' => 'Inhalt des Warenkorbs',
     'cordon' => 'Infoband',
     'cordonColor' => 'Infoband Farbe',
