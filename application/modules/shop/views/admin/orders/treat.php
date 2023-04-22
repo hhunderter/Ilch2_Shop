@@ -11,31 +11,32 @@ $settingsMapper = $this->get('settingsMapper');
     $ilchDate = new Ilch\Date($this->escape($order->getDatetime()));
     $orderTime = $ilchDate->format(' H:i ', true);
     $orderDate = $ilchDate->format('d.m.Y ', true);
+    $orderDateInvoice = $ilchDate->format('d.m.Y ');
     $invoiceNr = $ilchDate->format('ymd').'-'.$order->getId();
     ?>
     <?php if ($order->getStatus() == 0) { ?>
         <div class="alert alert-danger">
             <i class="fa-solid fa-plus-square" aria-hidden="true"></i>&nbsp;
             <b><?=$this->getTrans('newBIG') ?></b>
-            &emsp;|&emsp;<?=$orderDate . $this->getTrans('dateTimeAt') . $orderTime .$this->getTrans('dateTimeoClock') ?>&emsp;|&emsp;<?=$this->getTrans('infoOrderOpen') ?>
+            &emsp;|&emsp;<?=$orderDate . $this->getTrans('dateTimeAt') . $orderTime . $this->getTrans('dateTimeoClock') ?>&emsp;|&emsp;<?=$this->getTrans('infoOrderOpen') ?>
         </div>
     <?php } elseif ($order->getStatus() == 1) { ?>
         <div class="alert alert-warning">
             <i class="fa-solid fa-pencil-square" aria-hidden="true"></i>&nbsp;
             <b><?=$this->getTrans('processingBIG') ?></b>
-            &emsp;|&emsp;<?=$orderDate . $this->getTrans('dateTimeAt') . $orderTime .$this->getTrans('dateTimeoClock') ?>&emsp;|&emsp;<?=$this->getTrans('infoOrderProcessing') ?>
+            &emsp;|&emsp;<?=$orderDate . $this->getTrans('dateTimeAt') . $orderTime . $this->getTrans('dateTimeoClock') ?>&emsp;|&emsp;<?=$this->getTrans('infoOrderProcessing') ?>
         </div>
     <?php } elseif ($order->getStatus() == 2) { ?>
         <div class="alert alert-info">
             <i class="fa-solid fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;
             <b><?=$this->getTrans('canceledBIG') ?></b>
-            &emsp;|&emsp;<?=$orderDate . $this->getTrans('dateTimeAt') . $orderTime .$this->getTrans('dateTimeoClock') ?>>&emsp;|&emsp;<?=$this->getTrans('infoOrderCanceled') ?>
+            &emsp;|&emsp;<?=$orderDate . $this->getTrans('dateTimeAt') . $orderTime . $this->getTrans('dateTimeoClock') ?>>&emsp;|&emsp;<?=$this->getTrans('infoOrderCanceled') ?>
         </div>
     <?php } else { ?>
         <div class="alert alert-success">
             <i class="fa-solid fa-check-square" aria-hidden="true"></i>&nbsp;
             <b><?=$this->getTrans('completedBIG') ?></b>
-            &emsp;|&emsp;<?=$orderDate . $this->getTrans('dateTimeAt') . $orderTime .$this->getTrans('dateTimeoClock') ?>&emsp;|&emsp;<?=$this->getTrans('infoOrderFinished') ?>
+            &emsp;|&emsp;<?=$orderDate . $this->getTrans('dateTimeAt') . $orderTime . $this->getTrans('dateTimeoClock') ?>&emsp;|&emsp;<?=$this->getTrans('infoOrderFinished') ?>
         </div>
     <?php } ?>
     <h4><?=$this->getTrans('infoBuyer') ?></h4>
@@ -220,7 +221,8 @@ $settingsMapper = $this->get('settingsMapper');
             <tr>
                 <td>
                     <?php if ($order->getDateTimeInvoiceSent() != '0000-00-00 00:00:00') : ?>
-                        <p><?=$this->getTrans('invoiceLastSent').$order->getDateTimeInvoiceSent() ?></p>
+                    <?php $ilchDate = new Ilch\Date($order->getDateTimeInvoiceSent()); ?>
+                        <p><?=$this->getTrans('invoiceLastSent') . $ilchDate->format('d.m.Y H:i ', true) . $this->getTrans('dateTimeoClock') ?></p>
                     <?php endif ?>
                     <form class="form-horizontal" method="POST" action="">
                         <?php
@@ -488,7 +490,7 @@ $settingsMapper = $this->get('settingsMapper');
         $pdf->nameInvoice = strtoupper($nameInvoice);
         $pdf->nameOrder = $nameOrder = utf8_decode($this->getTrans('order'));
         $pdf->nameFrom = $nameFrom = utf8_decode($this->getTrans('from'));
-        $pdf->orderDate = $orderDate;
+        $pdf->orderDate = $orderDateInvoice;
         $pdf->nameNumber = $nameNumber = utf8_decode($this->getTrans('numberShort'));
         $pdf->invoiceNr = $invoiceNr;
         $pdf->invoiceTextTop = utf8_decode($settingsMapper->getSettings()->getInvoiceTextTop());
@@ -539,7 +541,7 @@ $settingsMapper = $this->get('settingsMapper');
         $pdf->payInfo();
         // document
         $pdf->SetTitle($nameInvoice.' '.$nameNumber.' '.$invoiceNr);
-        $pdf->SetSubject($nameOrder.' '.$nameFrom.' '.$orderDate);
+        $pdf->SetSubject($nameOrder.' '.$nameFrom.' '.$orderDateInvoice);
         $pdf->SetAuthor($shopName.' ('.$shopWeb.')');
         $pdf->SetCreator('Shop-Modul by ilch.de');
         $pdf->SetKeywords($nameInvoice.', '.$nameOrder);
@@ -688,7 +690,7 @@ $settingsMapper = $this->get('settingsMapper');
         $pdf->DeliveryCountry = utf8_decode($this->escape($order->getDeliveryAddress()->getCountry()));
         $pdf->nameOrder = $nameOrder = utf8_decode($this->getTrans('order'));
         $pdf->nameFrom = $nameFrom = utf8_decode($this->getTrans('from'));
-        $pdf->orderDate = $orderDate;
+        $pdf->orderDate = $orderDateInvoice;
         $pdf->nameNumber = $nameNumber = utf8_decode($this->getTrans('numberShort'));
         $pdf->invoiceNr = $invoiceNr;
         $pdf->deliveryTextTop = utf8_decode($settingsMapper->getSettings()->getDeliveryTextTop());
@@ -725,7 +727,7 @@ $settingsMapper = $this->get('settingsMapper');
         $pdf->DeliveryInfo();
         // document
         $pdf->SetTitle($nameDeliveryNote.' '.$nameNumber.' '.$invoiceNr);
-        $pdf->SetSubject($nameOrder.' '.$nameFrom.' '.$orderDate);
+        $pdf->SetSubject($nameOrder.' '.$nameFrom.' '.$orderDateInvoice);
         $pdf->SetAuthor($shopName.' ('.$shopWeb.')');
         $pdf->SetCreator('Shop-Modul by ilch.de');
         $pdf->SetKeywords($nameDeliveryNote);

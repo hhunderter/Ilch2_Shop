@@ -3,6 +3,8 @@
 $itemsMapper = $this->get('itemsMapper');
 $order = $this->get('order');
 $purchaseUnits = [];
+$orderDateTime = new Ilch\Date($order->getDatetime());
+$invoiceSentDateTime = new Ilch\Date($order->getDatetimeInvoiceSent());
 ?>
 
 <h1>
@@ -10,7 +12,7 @@ $purchaseUnits = [];
 </h1>
 
 <div class="panel panel-default">
-    <div class="panel-heading" id="orderHeading" data-toggle="collapse" data-target="#orderDetails"><?=$this->getTrans('paymentPanelHeading', substr($order->getInvoiceFilename(),0,strrpos($order->getInvoiceFilename(), '_')), $order->getDatetimeInvoiceSent(), $order->getDatetime()) ?><span class="pull-right clickable"><i class="fa-solid fa-chevron-down"></i></span></div>
+    <div class="panel-heading" id="orderHeading" data-toggle="collapse" data-target="#orderDetails"><?=$this->getTrans('paymentPanelHeading', substr($order->getInvoiceFilename(),0,strrpos($order->getInvoiceFilename(), '_')), $invoiceSentDateTime->format('d.m.Y | H:i ', true) . $this->getTrans('dateTimeoClock'), $orderDateTime->format('d.m.Y | H:i ', true) . $this->getTrans('dateTimeoClock')) ?><span class="pull-right clickable"><i class="fa-solid fa-chevron-down"></i></span></div>
     <div class="panel-body collapse" id="orderDetails">
         <div class="table-responsive order">
             <table class="table table-striped">

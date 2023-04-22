@@ -286,7 +286,7 @@ class Orders extends Admin
             ->addAttachment($pathInvoice, $publicFileNameInvoice)
             ->send();
 
-        $order->setDatetimeInvoiceSent(new Date('now', $this->getConfig()->get('timezone')));
+        $order->setDatetimeInvoiceSent(new Date('now'));
         $orderMapper->save($order);
 
         $this->addMessage('sendInvoiceSuccess');
