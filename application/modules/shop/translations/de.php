@@ -39,6 +39,7 @@ return [
     'completedBIG' => 'ABGESCHLOSSEN',
     'completePurchase' => 'Kauf abschließen',
     'confirmation' => 'Bestätigung und Abschluss',
+    'invalidOrder' => 'Es ist ein Fehler beim Auswerten Ihrer Bestellung aufgetreten.',
     'contentShopCart' => 'Inhalt des Warenkorbs',
     'cordon' => 'Infoband',
     'cordonColor' => 'Infoband Farbe',

@@ -39,6 +39,7 @@ return [
     'completedBIG' => 'COMPLETED',
     'completePurchase' => 'Complete purchase',
     'confirmation' => 'Confirmation and completion',
+    'invalidOrder' => 'An error occured while processing your order.',
     'contentShopCart' => 'Contents of the shopping cart',
     'cordon' => 'Ribbon',
     'cordonColor' => 'Ribbon color',
