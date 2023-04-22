@@ -8,10 +8,10 @@ $settingsMapper = $this->get('settingsMapper');
     <h1><?=$this->getTrans('editOrder'); ?></h1>
     <?php 
     $order = $this->get('order');
-    $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $this->escape($order->getDatetime()));
-    $orderTime = date_format($myDateTime, ' H:i ');
-    $orderDate = date_format($myDateTime, 'd.m.Y ');
-    $invoiceNr = date_format($myDateTime, 'ymd').'-'.$order->getId();
+    $ilchDate = new Ilch\Date($this->escape($order->getDatetime()));
+    $orderTime = $ilchDate->format(' H:i ', true);
+    $orderDate = $ilchDate->format('d.m.Y ', true);
+    $invoiceNr = $ilchDate->format('ymd').'-'.$order->getId();
     ?>
     <?php if ($order->getStatus() == 0) { ?>
         <div class="alert alert-danger">
