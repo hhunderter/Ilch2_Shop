@@ -1,5 +1,6 @@
 <?php
 $categories = $this->get('categories');
+$countCats = $this->get('countCats');
 $shopItems = $this->get('shopItems');
 $itemsMapper = $this->get('itemsMapper');
 $readAccess = $this->get('readAccess');
@@ -67,18 +68,18 @@ if(!empty($_SESSION['shopping_cart'])) {
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=$this->getTrans('menuCats') ?> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <?php foreach ($categories as $category):
-                                $countCats = count($itemsMapper->getShopItems(['cat_id' => $category->getId(), 'status' => 1]));
+                                $countCat = (isset($countCats[$category->getId()])) ? $countCats[$category->getId()] : 0;
                                 if ($category->getId() == $this->get('firstCatId') || $category->getId() == $this->getRequest()->getParam('catId')) {
                                     $active = 'class="active"';
                                 } else {
                                     $active = '';
                                 }
 
-                                if ($countCats > 0): ?>
+                                if ($countCat > 0): ?>
                                     <li <?=$active ?>>
                                         <a href="<?=$this->getUrl('shop/index/index/catId/'.$category->getId()) ?>#shopAnker">
                                             <?=$this->escape($category->getTitle()) ?>
-                                            <span class="countItems">[<?=$countCats ?>]</span>
+                                            <span class="countItems">[<?=$countCat ?>]</span>
                                         </a>
                                         
                                     </li>

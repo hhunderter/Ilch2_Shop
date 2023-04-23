@@ -9,10 +9,10 @@ $itemsMapper = $this->get('itemsMapper');
 <?php if (!empty($this->get('order'))) : ?>
     <?php
     $order = $this->get('order');
-    $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $this->escape($order->getDatetime()));
-    $orderTime = date_format($myDateTime, ' H:i ');
-    $orderDate = date_format($myDateTime, 'd.m.Y ');
-    $invoiceNr = date_format($myDateTime, 'ymd').'-'.$order->getId();
+    $ilchDate = new Ilch\Date($this->escape($order->getDatetime()));
+    $orderTime = $ilchDate->format(' H:i ', true);
+    $orderDate = $ilchDate->format('d.m.Y ', true);
+    $invoiceNr = $ilchDate->format('ymd').'-'.$order->getId();
 
     $invoiceFilename = '';
     $nameInvoice = utf8_decode($this->getTrans('invoice'));

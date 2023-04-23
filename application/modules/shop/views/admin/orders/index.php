@@ -74,18 +74,14 @@
                                     </a>
                                 <?php } ?>
                             </td>
-                            <?php 
-                            $myDateTime = DateTime::createFromFormat('Y-m-d H:i:s', $this->escape($order->getDatetime()));
-                            ?>
-                            <td>
-                                <?=date_format($myDateTime, 'd.m.Y | H:i ') . $this->getTrans('dateTimeoClock') ?>
-                            </td>
                             <?php
-                            $orderDate = date_format($myDateTime, 'd.m.Y');
-                            $invoiceNr = date_format($myDateTime, 'ymd').'-'.$order->getId();
+                            $ilchDate = new Ilch\Date($this->escape($order->getDatetime()));
                             ?>
                             <td>
-                                <?=$invoiceNr ?>
+                                <?=$ilchDate->format('d.m.Y | H:i ', true) . $this->getTrans('dateTimeoClock') ?>
+                            </td>
+                            <td>
+                                <?=$ilchDate->format('ymd').'-'.$order->getId() ?>
                             </td>
                             <td>
                                 <?=$this->escape($order->getInvoiceAddress()->getPrename()) ?> <?=$this->escape($order->getInvoiceAddress()->getLastname()) ?>,

@@ -3,7 +3,7 @@ $shopItem = $this->get('shopItem');
 $status = '';
 
 /* shopcart session */
-if (isset($_POST['code']) && $_POST['code'] != '') {
+if (isset($_POST['code']) && $_POST['code'] != '' && isset($_POST['quantity']) && $_POST['quantity'] != '' && is_numeric($_POST['quantity'])) {
     $code = $_POST['code'];
     $quantity = $_POST['quantity'];
     $id = $shopItem->getId();
@@ -52,7 +52,7 @@ if(!empty($_SESSION['shopping_cart'])) {
 </div>
 
 <?php $shopImgPath = '/application/modules/shop/static/img/';
-if ($shopItem->getImage() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage())) {
+if ($shopItem->getImage() && file_exists(ROOT_PATH.'/'.$shopItem->getImage())) {
     $img = BASE_URL.'/'.$shopItem->getImage();
 } else {
     $img = BASE_URL.$shopImgPath.'noimg.jpg';
@@ -72,13 +72,13 @@ if ($shopItem->getImage() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage())) 
                                     <!-- Indicators -->
                                     <ol class="carousel-indicators">
                                         <?php echo '<li data-target="#carousel-shop" data-slide-to="0" class="active"></li>';
-                                        if ($shopItem->getImage1() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage1())) {
+                                        if ($shopItem->getImage1() && file_exists(ROOT_PATH.'/'.$shopItem->getImage1())) {
                                             echo '<li data-target="#carousel-shop" data-slide-to="1"></li>';
                                         }
-                                        if ($shopItem->getImage2() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage2())) {
+                                        if ($shopItem->getImage2() && file_exists(ROOT_PATH.'/'.$shopItem->getImage2())) {
                                             echo '<li data-target="#carousel-shop" data-slide-to="2"></li>';
                                         }
-                                        if ($shopItem->getImage3() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage3())) {
+                                        if ($shopItem->getImage3() && file_exists(ROOT_PATH.'/'.$shopItem->getImage3())) {
                                             echo '<li data-target="#carousel-shop" data-slide-to="3"></li>';
                                         } ?>
                                     </ol>
@@ -86,13 +86,13 @@ if ($shopItem->getImage() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage())) 
                                     <div class="carousel-inner" role="listbox">
                                         <div class="item active"><img src="<?=$img ?>" alt="<?=$this->escape($shopItem->getName()) ?>"></div>
                                         <?php
-                                        if ($shopItem->getImage1() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage1())) {
+                                        if ($shopItem->getImage1() && file_exists(ROOT_PATH.'/'.$shopItem->getImage1())) {
                                             echo '<div class="item"><img src="'.BASE_URL.'/'.$shopItem->getImage1().'"></div>';
                                         } 
-                                        if ($shopItem->getImage2() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage2())) {
+                                        if ($shopItem->getImage2() && file_exists(ROOT_PATH.'/'.$shopItem->getImage2())) {
                                             echo '<div class="item"><img src="'.BASE_URL.'/'.$shopItem->getImage2().'"></div>';
                                         }
-                                        if ($shopItem->getImage3() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage3())) {
+                                        if ($shopItem->getImage3() && file_exists(ROOT_PATH.'/'.$shopItem->getImage3())) {
                                             echo '<div class="item"><img src="'.BASE_URL.'/'.$shopItem->getImage3().'"></div>';
                                         } ?>
                                     </div>
@@ -126,13 +126,13 @@ if ($shopItem->getImage() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage())) 
                 <td class="thumb text-center">
                     <a href="javascript:void(0)" class="thumbimg"><img src="<?=$img ?>" class="selected" alt="<?=$this->escape($shopItem->getName()) ?>"></a>
                     <?php
-                    if ($shopItem->getImage1() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage1())) {
+                    if ($shopItem->getImage1() && file_exists(ROOT_PATH.'/'.$shopItem->getImage1())) {
                         echo '<a href="javascript:void(0)" class="thumbimg"><img src="'.BASE_URL.'/'.$shopItem->getImage1().'" class=""></a>';
                     } 
-                    if ($shopItem->getImage2() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage2())) {
+                    if ($shopItem->getImage2() && file_exists(ROOT_PATH.'/'.$shopItem->getImage2())) {
                         echo '<a href="javascript:void(0)" class="thumbimg"><img src="'.BASE_URL.'/'.$shopItem->getImage2().'" class=""></a>';
                     }
-                    if ($shopItem->getImage3() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage3())) {
+                    if ($shopItem->getImage3() && file_exists(ROOT_PATH.'/'.$shopItem->getImage3())) {
                         echo '<a href="javascript:void(0)" class="thumbimg"><img src="'.BASE_URL.'/'.$shopItem->getImage3().'" class=""></a>';
                     } ?>
                 </td>
