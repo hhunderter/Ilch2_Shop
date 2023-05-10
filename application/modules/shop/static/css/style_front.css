@@ -136,18 +136,22 @@ a.thumbnail:hover {
 .show table {
     border-collapse: collapse;  
 }
+.show td.big {
+    border: 1px solid #ddd !important;
+}
 .show .big {
     text-align: center;
 }
 .show .big .carousel-control.left,
-.show .big .carousel-control.right
-{
+.show .big .carousel-control.right {
     opacity: .3 !important;
 }
 .show .big .carousel-control:focus,
-.show .big .carousel-control:hover 
-{
+.show .big .carousel-control:hover {
     opacity: .6 !important;
+}
+.carousel-inner .item img {
+    margin: 0 auto;
 }
 .show .thumb a.thumbimg {
     margin: 0 3px 0 3px;
@@ -165,8 +169,6 @@ a.thumbnail:hover {
     border: 1px solid #F68B1E;
 }
 .show .big img.productimage {
-    border: 1px solid #ddd;
-    border-radius: 5px;
     padding: 5px;
     cursor: pointer;
 }
@@ -327,10 +329,6 @@ a.thumbnail:hover {
     position: absolute;
     top: -1px;
     left: 14px;
-}
-.cordon-wrapper.big {
-    top: 7px;
-    left: 22px;
 }
 .cordon-wrapper .cordon {
     font-size: 15px;
