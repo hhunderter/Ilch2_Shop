@@ -13,37 +13,22 @@ _Small Shop Module for CMS Ilch 2_
 
 ### Links
 - **[Ilch.de - Website](https://www.ilch.de)**  |  **[Ilch - 2 CMS](https://github.com/IlchCMS/Ilch-2.0/releases/latest)**  |  **[Ilch 2 - Wiki](https://github.com/IlchCMS/Ilch-2.0/wiki)**
-
+ 
 ***
- 
-**Todo:**
-- Größen- / Farbangaben
-- PayPal / Bezahlmethoden einbinden
- 
-**Erledigte Hinweise:**
-- Direkter Aufruf des Produktes mit Klick auf Bild
-- Zeit der Info-Anzeigen verlängern
-- Darstellungsfehler Buttons und Checkbox
-- Integrierung Ust./MwSt und autom. Berechnungen
-- Preisangaben mit inkl. o. exkl. Steuer
-- Position Thumbs der Produkte
-- Vollansicht Bilder mit Slider und Touchfunktion
-- Verhinderung der Preismanipulation bei der POST-Übergabe
-- Einheitenangabe
-- Abweichende Lieferadresse
-- Kaufbestätigung (E-Mail, PDF…)
  
 **Frontend**
 - Navigation
 - Suchfunktion Produkte
 - Produktauswahl über Kategorie
 - Produktansicht mit allen Infos
+- Vollansicht Bilder mit Slider und Touchfunktion
 - Warenkorbsystem
 - Login im Shop
-- Berechnung und max. Auswahl der vorhandenen Menge
 - Kaufoption / Ausverkauft
 - Bestellansicht mit Formular und detaillierter Bestellübersicht
-- Produktmarkierung als Top, Neu, Sale…
+- Abweichende Lieferadresse
+- Kaufbestätigung und Rechnung per E-Mail als PDF
+- Kundenbereich mit Bestellübersicht
  
 **Backend**
 - Dashboard
@@ -54,10 +39,12 @@ _Small Shop Module for CMS Ilch 2_
 - Status (aktiv/inaktiv)
 - 1x Vorschau- und 3x zusätzliche Bilder
 - Kurz- & Vollbeschreibung
-- Preis
+- Preisangaben mit inkl. o. exkl. Steuer
 - Steuersatz
 - Versandzeit und -kosten
 - Produktkategorien
+- Produktmarkierung als Top, Neu, Sale…
+- PayPal / Bezahlmethode
 - Sortiermöglichkeit der Kategorien
 - Zusammenfassung der Bestellung
 - Käuferinformation
@@ -73,26 +60,38 @@ _Small Shop Module for CMS Ilch 2_
 - Zugriffsverbot: Wenn Produkt-ID nicht vorhanden
 - Zugriffsverbot: Wenn Produkt-inaktiv geschalten
 - Zugriffsverbot: Wenn Kategorie auf Recht beschränkt
+- Berechnung und max. Auswahl der vorhandenen Menge
 - Login notwendig für geprüfte E-Mailadresse
 - Formular-Check
 - Antispam
 - Eigene Tabellen-Umbruch-Funktion für < 900px
 - Responsive Umsetzung
 - Sprachen: DE / EN
+- Integrierte und löschbare Musterdaten
  
 ***
   
 **Shop:**  
-![Logo](https://github.com/LordSchirmer/Ilch2_Shop/blob/main/application/modules/media/static/upload/img/shop.jpg)
+![Logo](https://github.com/LordSchirmer/Ilch2_Shop/blob/main/application/modules/media/static/upload/img/product_view.jpg)
   
 **Warenkorb:**  
-![Logo](https://github.com/LordSchirmer/Ilch2_Shop/blob/main/application/modules/media/static/upload/img/basket.jpg)
+![Logo](https://github.com/LordSchirmer/Ilch2_Shop/blob/main/application/modules/media/static/upload/img/shopping_cart.jpg)
+  
+**Kundenbereich:**  
+![Logo](https://github.com/LordSchirmer/Ilch2_Shop/blob/main/application/modules/media/static/upload/img/customer_area.jpg)
   
 **Übersicht Administration:**  
-![Logo](https://github.com/LordSchirmer/Ilch2_Shop/blob/main/application/modules/media/static/upload/img/admin_view.jpg)
+![Logo](https://github.com/LordSchirmer/Ilch2_Shop/blob/main/application/modules/media/static/upload/img/product_overview.jpg)
   
-**Übersicht Bestellungen:**  
-![Logo](https://github.com/LordSchirmer/Ilch2_Shop/blob/main/application/modules/media/static/upload/img/org_order.jpg)
+**Übersicht Bestellung:**  
+![Logo](https://github.com/LordSchirmer/Ilch2_Shop/blob/main/application/modules/media/static/upload/img/order_view.jpg)
   
-**Rechnung wird als PDF erstellt:**  
-![Logo](https://github.com/LordSchirmer/Ilch2_Shop/blob/main/application/modules/media/static/upload/img/bill.jpg)
+**Shop Einstellungen:**  
+![Logo](https://github.com/LordSchirmer/Ilch2_Shop/blob/main/application/modules/media/static/upload/img/configuration.jpg)
+  
+**Rechnung als PDF:**  
+![Logo](https://github.com/LordSchirmer/Ilch2_Shop/blob/main/application/modules/media/static/upload/img/invoice.jpg)
+  
+**Lieferschein als PDF:**  
+![Logo](https://github.com/LordSchirmer/Ilch2_Shop/blob/main/application/modules/media/static/upload/img/delivery_note.jpg)
+  
