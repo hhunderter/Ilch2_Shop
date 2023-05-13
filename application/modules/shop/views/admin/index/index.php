@@ -10,7 +10,7 @@ $countCancelOrders = count($this->get('orders')->getOrders(['status'=>'2']));
 $countDoneOrders = count($this->get('orders')->getOrders(['status'=>'3']));
 ?>
 
-<?php if (str_starts_with($this->getURL(), 'http')) : ?>
+<?php if (!(strncmp($this->getURL(), 'https', 5) === 0)) : ?>
     <div class="alert alert-danger">
         <b><?=$this->getTrans('warningUnencryptedConnection') ?></b>
     </div>
